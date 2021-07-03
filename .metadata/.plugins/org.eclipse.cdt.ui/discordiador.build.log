@@ -1,0 +1,6 @@
+00:56:44 **** Incremental Build of configuration Default for project discordiador ****
+make all 
+make: Nothing to be done for 'all'.
+
+00:56:46 Build Finished (took 1s.401ms)
+

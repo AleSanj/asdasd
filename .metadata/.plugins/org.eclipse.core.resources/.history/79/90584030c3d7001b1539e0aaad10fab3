@@ -1,0 +1,64 @@
+/*
+ * conexion.h
+ *
+ *  Created on: 6 may. 2021
+ *      Author: utnso
+ */
+
+#ifndef SRC_CONEXION_H_
+#define SRC_CONEXION_H_
+
+typedef struct {
+    uint32_t size; // Tamaño del payload
+    void* stream; // Payload
+} t_buffer;
+
+typedef struct {
+    uint8_t codigo_operacion;
+    t_buffer* buffer;
+} t_paquete;
+
+
+void ejemplo();
+void crear_buffer(t_paquete* paquete);
+void eliminar_paquete(t_paquete* paquete);
+/*========================== TIPOS DE MENSAJES =================================*/
+typedef struct
+{
+	uint8_t idTripulante;
+	uint8_t posX;
+	uint8_t posY;
+}id_and_pos;
+
+typedef struct
+{
+	uint32_t idTripulante;
+	uint32_t estado_length;
+	char* estado;
+}cambio_estado;
+
+typedef struct
+{
+	uint8_t idPatota;
+	uint8_t cantTripulantes;
+	FILE* Tareas;
+}iniciar_patota;
+
+/*========================== TODOS =================================*/
+t_paquete* crear_paquete(CODE_OP codigo);
+t_paquete* recibir_paquete(int socket_cliente, int* respuesta);
+int enviar_paquete(t_paquete* paquete, int socket_cliente,t_log* logger);
+
+void liberar_conexion(int);
+/*========================== CLIENTE =================================*/
+int crear_conexion(char*, char*);
+
+
+/*========================== SERVIDOR =================================*/
+int crear_server(char*,char*);
+int esperar_cliente(int,int);
+
+
+
+
+#endif /* SRC_CONEXION_H_ */

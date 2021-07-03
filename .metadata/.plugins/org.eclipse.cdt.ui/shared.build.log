@@ -1,0 +1,16 @@
+00:28:55 **** Build of configuration Default for project shared ****
+make all 
+gcc  -Wall -DDEBUG -g -c -fmessage-length=0 -MMD -MP -MF"obj/conexion.d" -MT"obj/conexion.d" -o "obj/conexion.o" "shared/conexion.c"
+gcc  -Wall -DDEBUG -g -c -fmessage-length=0 -MMD -MP -MF"obj/serializacion.d" -MT"obj/serializacion.d" -o "obj/serializacion.o" "shared/serializacion.c"
+shared/serializacion.c: In function ‘agregar_paquete_eliminar_tripulante’:
+shared/serializacion.c:369:6: warning: unused variable ‘offset’ [-Wunused-variable]
+  int offset = 0;
+      ^
+shared/serializacion.c: In function ‘deserializar_eliminar_tripulante’:
+shared/serializacion.c:379:6: warning: unused variable ‘offset’ [-Wunused-variable]
+  int offset = 0;
+      ^
+ar rcs -o "bin/libshared.a"  obj/conexion.o  obj/serializacion.o  obj/TAD_TRIPULANTE.o  obj/TAD_PATOTA.o
+
+00:28:57 Build Finished (took 1s.188ms)
+

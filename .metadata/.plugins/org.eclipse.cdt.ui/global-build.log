@@ -1,0 +1,145 @@
+00:29:53 **** Incremental Build of configuration Default for project discordiador ****
+make all 
+gcc -I"../shared" -Wall -DDEBUG -g -c -fmessage-length=0 -MMD -MP -MF"obj/discordiador.d" -MT"obj/discordiador.d" -o "obj/discordiador.o" "src/discordiador.c"
+src/discordiador.c: In function ‘elimiarTripulante’:
+src/discordiador.c:209:15: warning: passing argument 1 of ‘pthread_exit’ makes pointer from integer without a cast [-Wint-conversion]
+  pthread_exit(tripulante->hilo);
+               ^
+In file included from src/discordiador.c:24:0:
+/usr/include/pthread.h:242:13: note: expected ‘void *’ but argument is of type ‘pthread_t {aka long unsigned int}’
+ extern void pthread_exit (void *__retval) __attribute__ ((__noreturn__));
+             ^
+src/discordiador.c: In function ‘ejecutando_a_bloqueado’:
+src/discordiador.c:242:58: warning: passing argument 2 of ‘list_remove_by_condition’ from incompatible pointer type [-Wincompatible-pointer-types]
+   queue_push(bloqueados,list_remove_by_condition(execute,esElMismoTripulante));
+                                                          ^
+In file included from src/discordiador.c:17:0:
+/usr/include/commons/collections/list.h:164:8: note: expected ‘_Bool (*)(void *)’ but argument is of type ‘_Bool (*)(Tripulante *) {aka _Bool (*)(struct <anonymous> *)}’
+  void *list_remove_by_condition(t_list *, bool(*condition)(void*));
+        ^
+src/discordiador.c: In function ‘moverTripulante’:
+src/discordiador.c:272:3: warning: implicit declaration of function ‘enviar_posicion’ [-Wimplicit-function-declaration]
+   enviar_posicion(tripu,socket_miram);
+   ^
+src/discordiador.c: At top level:
+src/discordiador.c:303:6: warning: conflicting types for ‘enviar_posicion’
+ void enviar_posicion(Tripulante* tripulante,int socket_miram){
+      ^
+src/discordiador.c:272:3: note: previous implicit declaration of ‘enviar_posicion’ was here
+   enviar_posicion(tripu,socket_miram);
+   ^
+src/discordiador.c: In function ‘hacerFifo’:
+src/discordiador.c:358:33: warning: passing argument 2 of ‘obtener_parametros_tarea’ makes integer from pointer without a cast [-Wint-conversion]
+  obtener_parametros_tarea(tripu,&tarea_x,&tarea_y);
+                                 ^
+src/discordiador.c:170:6: note: expected ‘int’ but argument is of type ‘int *’
+ void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
+      ^
+src/discordiador.c:358:42: warning: passing argument 3 of ‘obtener_parametros_tarea’ makes integer from pointer without a cast [-Wint-conversion]
+  obtener_parametros_tarea(tripu,&tarea_x,&tarea_y);
+                                          ^
+src/discordiador.c:170:6: note: expected ‘int’ but argument is of type ‘int *’
+ void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
+      ^
+src/discordiador.c: In function ‘hacerRoundRobin’:
+src/discordiador.c:392:38: warning: passing argument 2 of ‘obtener_parametros_tarea’ makes integer from pointer without a cast [-Wint-conversion]
+  obtener_parametros_tarea(tripulant, &tarea_x,&tarea_y);
+                                      ^
+src/discordiador.c:170:6: note: expected ‘int’ but argument is of type ‘int *’
+ void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
+      ^
+src/discordiador.c:392:47: warning: passing argument 3 of ‘obtener_parametros_tarea’ makes integer from pointer without a cast [-Wint-conversion]
+  obtener_parametros_tarea(tripulant, &tarea_x,&tarea_y);
+                                               ^
+src/discordiador.c:170:6: note: expected ‘int’ but argument is of type ‘int *’
+ void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
+      ^
+src/discordiador.c:433:53: warning: passing argument 2 of ‘list_remove_by_condition’ from incompatible pointer type [-Wincompatible-pointer-types]
+   queue_push(ready,list_remove_by_condition(execute,esElMismoTripulante));
+                                                     ^
+In file included from src/discordiador.c:17:0:
+/usr/include/commons/collections/list.h:164:8: note: expected ‘_Bool (*)(void *)’ but argument is of type ‘_Bool (*)(Tripulante *) {aka _Bool (*)(struct <anonymous> *)}’
+  void *list_remove_by_condition(t_list *, bool(*condition)(void*));
+        ^
+src/discordiador.c: In function ‘vivirTripulante’:
+src/discordiador.c:459:6: warning: unused variable ‘socketMongo’ [-Wunused-variable]
+  int socketMongo;
+      ^
+src/discordiador.c: In function ‘atender_sabotaje’:
+src/discordiador.c:551:16: warning: unused variable ‘mas_cerca’ [-Wunused-variable]
+    Tripulante* mas_cerca=iterado;
+                ^
+src/discordiador.c: In function ‘hacerConsola’:
+src/discordiador.c:688:4: warning: implicit declaration of function ‘liberar_t_iniciar_patota’ [-Wimplicit-function-declaration]
+    liberar_t_iniciar_patota(estructura);
+    ^
+src/discordiador.c:828:74: warning: passing argument 2 of ‘list_remove’ makes integer from pointer without a cast [-Wint-conversion]
+    Tripulante* trip_mostrar=(Tripulante*)list_remove(get_all_tripulantes,NULL);
+                                                                          ^
+In file included from src/discordiador.c:17:0:
+/usr/include/commons/collections/list.h:150:8: note: expected ‘int’ but argument is of type ‘void *’
+  void *list_remove(t_list *, int index);
+        ^
+src/discordiador.c:876:11: warning: unused variable ‘prueba_estado’ [-Wunused-variable]
+    char** prueba_estado =string_split(linea, " ");
+           ^
+src/discordiador.c: In function ‘cambiar_estado’:
+src/discordiador.c:887:2: warning: implicit declaration of function ‘enviar_estado’ [-Wimplicit-function-declaration]
+  enviar_estado(tripulante);
+  ^
+src/discordiador.c: At top level:
+src/discordiador.c:891:6: warning: conflicting types for ‘enviar_estado’
+ void enviar_estado (Tripulante* tripulante){
+      ^
+src/discordiador.c:887:2: note: previous implicit declaration of ‘enviar_estado’ was here
+  enviar_estado(tripulante);
+  ^
+src/discordiador.c: In function ‘enviar_estado’:
+src/discordiador.c:901:37: warning: passing argument 2 of ‘agregar_paquete_tripulante’ from incompatible pointer type [-Wincompatible-pointer-types]
+  agregar_paquete_tripulante(paquete,estado_actualizado);
+                                     ^
+In file included from src/discordiador.c:28:0:
+../shared/shared/conexion.h:146:6: note: expected ‘t_tripulante * {aka struct <anonymous> *}’ but argument is of type ‘t_cambio_estado * {aka struct <anonymous> *}’
+ void agregar_paquete_tripulante(t_paquete* paquete, t_tripulante* estructura);
+      ^
+src/discordiador.c: In function ‘main’:
+src/discordiador.c:934:21: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+  t_list* finalizado=list_create;
+                     ^
+src/discordiador.c:935:22: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+  t_queue* bloqueados=queue_create;
+                      ^
+src/discordiador.c:936:10: warning: unused variable ‘bloqueados_sabotaje’ [-Wunused-variable]
+  t_list* bloqueados_sabotaje=list_create();
+          ^
+src/discordiador.c:935:11: warning: unused variable ‘bloqueados’ [-Wunused-variable]
+  t_queue* bloqueados=queue_create;
+           ^
+src/discordiador.c:934:10: warning: unused variable ‘finalizado’ [-Wunused-variable]
+  t_list* finalizado=list_create;
+          ^
+src/discordiador.c:932:11: warning: unused variable ‘ready’ [-Wunused-variable]
+  t_queue* ready=queue_create();
+           ^
+src/discordiador.c:931:10: warning: unused variable ‘listaPatotas’ [-Wunused-variable]
+  t_list* listaPatotas=list_create();
+          ^
+src/discordiador.c:917:10: warning: unused variable ‘execute’ [-Wunused-variable]
+  t_list* execute=list_create();
+          ^
+src/discordiador.c: In function ‘iniciar_Planificacion’:
+src/discordiador.c:233:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+src/discordiador.c: In function ‘atender_sabotaje’:
+src/discordiador.c:553:6: warning: ‘posx’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   if(calcular_distancia(iterado, posx, posy)<calcular_distancia(mas_cerca, posx, posy))
+      ^
+src/discordiador.c:553:6: warning: ‘posy’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+gcc -Wall -DDEBUG -g -o "bin/discordiador"  obj/discordiador.o -L"../shared/bin" -lreadline -lcommons -lshared -lpthread
+00:36:36 **** Build of configuration Default for project miram ****
+make all 
+make: Nothing to be done for 'all'.
+00:56:44 **** Incremental Build of configuration Default for project discordiador ****
+make all 
+make: Nothing to be done for 'all'.
