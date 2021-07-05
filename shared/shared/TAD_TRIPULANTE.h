@@ -34,6 +34,7 @@ typedef struct
 	uint8_t posicionY;
 	int espera;
 	pthread_t hilo_vida;
+	pthread_t hilo_ejecucion;
 } Tripulante;
 
 Tripulante* tripulanteCreate(uint8_t id, uint8_t idPa, uint8_t posicionX,uint8_t posicionY);

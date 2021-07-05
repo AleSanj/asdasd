@@ -748,6 +748,44 @@ void enviar_tripulante(Tripulante* nuevo_tripulante){
 
 }
 
+void recorrer_lista(t_list* lista){
+	if (list_is_empty(lista)){
+		puts("(cola vacia)\n");
+		return;
+	}
+	int i;
+	for (i = 0; i < list_size(lista); i++) {
+		Tripulante* tripulante = (Tripulante*) list_get(lista,i);
+		printf("Tripulante: %d \t\t Estado: %s \t\t Patota: %d\n", tripulante->id,tripulante->estado,tripulante->idPatota);
+	}
+	puts("");
+}
+
+void imprimir_estado_nave() {
+	t_list* lista_ready = ready->elements;
+	t_list* lista_bloq = bloqueados->elements;
+
+	puts("------------------");
+	printf("Estado de la nave: %s\n",temporal_get_string_time("%d/%m/%y %H:%M:%S"));;
+
+	puts("COLA READY:");
+	recorrer_lista(lista_ready);
+
+	puts("COLA EXEC:");
+	recorrer_lista(execute);
+
+	puts("COLA BLOQUEADOS:");
+	recorrer_lista(lista_bloq);
+
+	puts("COLA EXIT:");
+	recorrer_lista(finalizado);
+
+
+	puts("------------------");
+
+
+}
+
 
 
 int hacerConsola() {
@@ -1001,6 +1039,18 @@ int hacerConsola() {
 			cambiar_estado(tripu_prueba_mov,prueba_estado[1]);
 
 		}
+
+		if (string_contains(linea,"PRUEBA_LISTAR"))
+		{
+			queue_push(ready,(void*) tripu_prueba_mov);
+			list_add(execute,tripu_prueba_mov);
+			queue_push(bloqueados,(void*) tripu_prueba_mov);
+			list_add(finalizado,tripu_prueba_mov);
+
+			imprimir_estado_nave();
+
+		}
+
 		free(linea);
 	}
 
@@ -1016,7 +1066,6 @@ int main() {
 	puertoMongoStore = config_get_string_value(config, "PUERTO_I_MONGO_STORE");
 	ipMongoStore = config_get_string_value(config, "IP_I_MONGO_STORE");
 	quantum = config_get_int_value(config, "QUANTUM");
-	t_list* execute=list_create();
 	//Patota* pat= iniciarPatota(1,1,execute,"TAREAD:TXT",t_totales);
 	//INICIALIAZAMOS LOS SEMAFOROS
 	sem_init(&multiProcesamiento, 0, multiProcesos);
@@ -1030,12 +1079,12 @@ int main() {
 	pthread_mutex_init(&socketMongo, NULL);
 
 	//INICIALIZAMOS LAS PILAS Y COLAS RARAS QUE CREAMOS
-	t_list* listaPatotas=list_create();
-	t_queue* ready=queue_create();
-
-	t_list* finalizado=list_create;
-	t_queue* bloqueados=queue_create;
-	t_list* bloqueados_sabotaje=list_create();
+	listaPatotas = list_create();
+	ready=queue_create();
+	execute = list_create();
+	finalizado = list_create();
+	bloqueados = queue_create();
+	bloqueados_sabotaje = list_create();
 
 	printf("hola mundo\n");
 	pthread_t consola;
