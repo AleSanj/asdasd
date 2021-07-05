@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;discordiador/src/Discordiado.c&apos; to &apos;discordiador.c&apos;" description="Rename resource &apos;Discordiado.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/Discordiado.c" name="discordiador.c" stamp="1624834536311" updateReferences="true"/>
-</session>

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Move &apos;conexion.c, conexion.h, serializacion.c, serializacion.h, TAD_PATOTA.c, TAD_PATOTA.h, TAD_TRIPULANTE.c, TAD_TRIPULANTE.h&apos; to &apos;shared&apos;" description="Move 8 resources to &apos;shared&apos;" destination="shared" element1="conexion.c" element2="conexion.h" element3="serializacion.c" element4="serializacion.h" element5="TAD_PATOTA.c" element6="TAD_PATOTA.h" element7="TAD_TRIPULANTE.c" element8="TAD_TRIPULANTE.h" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="8" stamp="1624834830979" updateReferences="true"/>
-</session>
