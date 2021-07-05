@@ -27,24 +27,22 @@ typedef struct
 {
 	uint8_t id;
 	uint8_t idPatota;
-	uint32_t estado_length;
 	char* estado;
 	_Bool vida;
-	uint32_t Tarea_length;
 	char* Tarea;
 	uint8_t posicionX;
 	uint8_t posicionY;
 	int espera;
-	pthread_t hilo;
-
+	pthread_t hilo_vida;
 } Tripulante;
 
 Tripulante* tripulanteCreate(uint8_t id, uint8_t idPa, uint8_t posicionX,uint8_t posicionY);
 
+Tripulante* crear_tripulante(uint8_t id_tripulante, uint8_t id_patota,uint8_t posicionX,uint8_t posicionY);
+
 void mostrarTripulante(Tripulante* tripulante);
 
 void eliminar_Tripulante(Tripulante* tripulante);
-
 
 
 #endif /* SRC_TAD_TRIPULANTE_H_ */

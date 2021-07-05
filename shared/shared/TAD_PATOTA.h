@@ -29,15 +29,13 @@ typedef struct
 
 typedef struct
 {
-   uint8_t id;
-	Tripulante* tripulacion [10] ;
+	uint8_t id;
 	char* tareas;
-	uint32_t tareas_length;
 }Patota;
 
 
 void agregarTripulantes(int cantidad,Patota* patota ,t_list* listaTripulantes, uint8_t t);
- Patota* iniciarPatota(int cantTripulantes,int id,t_list* listaTripulantes, char* tareas, uint8_t t );
+ Patota* iniciarPatota(int id_patota ,char* tareas);
 
 
 #endif

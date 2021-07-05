@@ -174,14 +174,14 @@ int enviar_paquete(t_paquete* paquete, int socket_cliente) {
 		puts("Paquete enviado");
 		recv(socket_cliente, &respuesta, sizeof(uint8_t), 0); // Recordar que aca se puede recibir cualquier estructura que se necesite, en este caso recibimos un int con el que verificamos que se envio \todo correctamente
 		if (respuesta) {
-			puts("Respuesta recibida");
+			puts("Respuesta recibida\n");
 
 
 		} else {
-			puts("No recibimos respuesta del servidor");
+			puts("No recibimos respuesta del servidor\n");
 		}
 	} else {
-		puts("No se pudo enviar el paquete");
+		puts("No se pudo enviar el paquete\n");
 	}
 		liberar_conexion(socket_cliente);
 		eliminar_paquete(paquete);

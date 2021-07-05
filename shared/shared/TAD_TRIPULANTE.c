@@ -27,25 +27,6 @@ struct tareaTripulante
 	uint8_t idPatota;
 };
 
-struct Tripulante
-{
-	//El estado_length al igual q tarea los pusimos con mati
-	//porque hay que guardar el sizeof del char estado y tarea en
-	//algun lugar para despues mandarselo al buffer (MIRAR DOC DE SERIALIZACION)
-	uint8_t id;
-	uint8_t idPatota;
-	uint32_t estado_length;
-	_Bool vida;
-	char* estado;
-	uint32_t Tarea_length;
-	char* Tarea;
-	uint8_t posicionX;
-	uint8_t posicionY;
-	int espera;
-	pthread_t hilo;
-
-};
-
 Tripulante* tripulanteCreate(uint8_t id,uint8_t idPa, uint8_t posicionX,uint8_t posicionY)
  {
 	Tripulante* devolverTripulante=malloc(sizeof(Tripulante));
@@ -57,6 +38,20 @@ Tripulante* tripulanteCreate(uint8_t id,uint8_t idPa, uint8_t posicionX,uint8_t 
 	devolverTripulante->estado=strdup("New");
 	return devolverTripulante ;
  }
+
+Tripulante* crear_tripulante(uint8_t id_tripulante, uint8_t id_patota,uint8_t posicionX,uint8_t posicionY){
+	Tripulante* tripulante =malloc(sizeof(Tripulante));
+	tripulante->id = id_tripulante;
+	tripulante->idPatota = id_patota;
+	tripulante->estado = strdup("NEW");
+	tripulante->vida= true;
+	tripulante->Tarea = NULL;
+	tripulante->posicionX = posicionX;
+	tripulante->posicionY = posicionY;
+	tripulante->espera = 0;
+
+	return tripulante;
+}
 
 
  void mostrarTripulante(Tripulante* tripulante)

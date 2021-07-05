@@ -148,25 +148,57 @@ int string_to_int(char* palabra)
 	}
 	return ret;
 }
-void obtener_parametros_patota(char* consol, int* ctidad,char* ptareas, t_list* poci)
+
+void completar_posiciones_iniciales(char* posiciones, t_list* poci)
 {
-	char** get_parametros= string_split(consol,(char*)" ");
-	char** get_posicion=string_split(get_parametros[3], "|");
-	for(int auxi=0; get_posicion[auxi]!=NULL; auxi++)
+	char** pares_xy = string_split(posiciones," ");
+	char** get_posicion;
+
+	for(int i=0 ; pares_xy[i] != NULL; i++)
 	{
-		list_add(poci,(void*)string_to_int(get_posicion[auxi]));
+		get_posicion = string_split(pares_xy[i],"|");
+		list_add(poci,(void*) strtol(get_posicion[0],NULL,10));
+		list_add(poci,(void*) strtol(get_posicion[1],NULL,10));
+
+		free(get_posicion[0]);		// No se si es necesario liberar cada posicion especifica
+		free(get_posicion[1]); 		// No se si es necesario liberar cada posicion especific
+		free(get_posicion);
 	}
+		free(pares_xy);					// No se cuantas posiciones especificas hay
 }
-char* obtener_tareasPat(char*consol)
-{
-	char** get_parametros= string_split(consol," ");
-	return (char*)get_parametros[2];
+
+char* leer_tareas(char* path, int* cantidad_tareas){
+	FILE* archivo;
+	char* raiz = strdup("/home/utnso/Escritorio/Conexiones/discordiador/src/tareas/");
+
+	string_append(&raiz,path);
+	archivo = fopen(raiz,"r");
+
+
+	if (archivo==NULL){
+		puts("no se pudo leer el path ingresado");
+		return NULL;
+	}
+	char* tareas = string_new();
+	char* leido = malloc(50);
+
+	while(!feof(archivo)){
+		fgets(leido,50,archivo);
+//		strtok(leido,"\n");			//con esto borro el \n que se lee
+		string_append(&tareas,leido);
+//		string_append(&tareas,"|");
+		(*cantidad_tareas)++;
+	}
+
+	int ultima_posicion = strlen(tareas);
+//	tareas[ultima_posicion-1] = '\0'; //Con esto borro el ultimo "|"
+	fclose(archivo);
+
+	free(raiz);
+	free(leido);
+	return tareas;
 }
-int obtener_cantidadTrip(char*consol)
-{
-	char** get_parametros= string_split(consol,(char*)" ");
-	return (int)string_to_int(get_parametros[1]);
-}
+
 void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
 {
 	if(es_tarea_IO(t->Tarea))
@@ -198,15 +230,26 @@ void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
 	}
 }
 
-void elimiarTripulante(Tripulante* tripulante)
+void eliminarTripulante(Tripulante* tripulante)
 {
-	int socketMiRam=conectarse_Mi_Ram();
-	serializar_eliminar_tripulante(tripulante->id,socketMiRam);
-	liberar_conexion(socketMiRam);
-	int socketMongo = conectarse_mongo();
-	serializar_eliminar_tripulante(tripulante->id,socketMongo);
-	liberar_conexion(socketMongo);
-	pthread_exit(tripulante->hilo);
+	int socket_miram=conectarse_Mi_Ram();
+	t_paquete* paquete = crear_paquete(ELIMINAR_TRIPULANTE);
+	t_eliminar_tripulante* estructura = malloc(sizeof(t_eliminar_tripulante));
+	estructura->id_tripulante = tripulante -> id;
+
+	agregar_paquete_eliminar_tripulante(paquete,estructura);
+	enviar_paquete(paquete,socket_miram);
+
+	int socket_mongo = conectarse_mongo();
+	paquete = crear_paquete(ELIMINAR_TRIPULANTE);
+	agregar_paquete_eliminar_tripulante(paquete,estructura);
+	enviar_paquete(paquete,socket_mongo);
+
+	liberar_t_eliminar_tripulante(estructura);
+	free(tripulante->Tarea);
+	free(tripulante->estado);
+
+	pthread_exit(&(tripulante->hilo_vida));
 }
 void* iniciar_Planificacion()
 {
@@ -220,10 +263,7 @@ void* iniciar_Planificacion()
 		pthread_mutex_lock(&ejecutando);
 		//AGREGO A LISTA DE EJECUCION
 		Tripulante* tripulante= (Tripulante*)queue_pop(ready);
-		tripulante->estado = "Execute";
-		int socketM=conectarse_Mi_Ram();
-		serializar_cambio_estado(tripulante, socketM);
-		liberar_conexion(socketM);
+		cambiar_estado(tripulante,"EXEC");
 		list_add(execute, queue_pop(ready));
 		pthread_mutex_unlock(&listos);
 		pthread_mutex_unlock(&ejecutando);
@@ -243,10 +283,7 @@ void ejecutando_a_bloqueado(Tripulante* trp )
 		pthread_mutex_unlock(&trip_comparar);
 		pthread_mutex_unlock(&bloqueadosIo);
 		pthread_mutex_unlock(&ejecutando);
-		trp->estado = "Bloqueado IO";
-		int socketMR=conectarse_Mi_Ram();
-		serializar_cambio_estado(trp,socketMR);
-		liberar_conexion(socketMR);
+		cambiar_estado(trp,"BLOQUEADO IO");
 }
 
 void bloqueado_a_ready(Tripulante* bloq)
@@ -254,10 +291,7 @@ void bloqueado_a_ready(Tripulante* bloq)
 	pthread_mutex_lock(&listos);
 	queue_push(ready,bloq);
 	pthread_mutex_unlock(&listos);
-	bloq->estado = "Ready";
-	int socketMR=conectarse_Mi_Ram();
-	serializar_cambio_estado(bloq,socketMR);
-	liberar_conexion(socketMR);
+	cambiar_estado(bloq,"READY");
 
 
 }
@@ -459,6 +493,7 @@ void* vivirTripulante(Tripulante* tripulante)
 	int socketMongo;
 	while (tripulante->vida)
 	{
+
 		//BUENO ACA ESTA LA MAGIC
 		//SI PLANIFICAR LO AGREGO A LA LISTA DE EJECUTAR VA A HACER UNA TAREA
 
@@ -527,7 +562,7 @@ void* vivirTripulante(Tripulante* tripulante)
 
 	}
 
-	elimiarTripulante(tripulante);
+	eliminarTripulante(tripulante);
 
 	//ESTE RETURN NULL ES PARA CASTEARLA EN EL CREATE UNA PEQUEÑA BOLUDEZ
 	return NULL;
@@ -638,6 +673,83 @@ void* atender_sabotaje(char* instruccion_sabotaje)
 	return NULL;
 }
 
+void enviar_iniciar_patota(Patota* pato,int cantidad_tripulantes){
+	int socket_iniciar_patota=conectarse_Mi_Ram();
+//Creamos un paquete vacio, que solo contiene el codigo de operacion --------------------
+	t_paquete* paquete = crear_paquete(INICIAR_PATOTA);
+//Luego creamos la estructura que queremos enviar y la completamos--------------------
+	t_iniciar_patota* estructura = malloc(sizeof(t_iniciar_patota));
+	estructura->idPatota = pato->id;
+	estructura->cantTripulantes = cantidad_tripulantes;
+	estructura->tamanio_tareas = strlen(pato->tareas)+1;
+	estructura->Tareas = strdup(pato->tareas);
+
+//Cuando tenemos la estructura la metemos al paquete vacio que teniamos--------------------
+	agregar_paquete_iniciar_patota(paquete,estructura);
+
+//comprobamos que esta bien --------------------
+	printf("TIPO DE PAQUETE: %d\n",paquete->codigo_operacion);
+	imprimir_paquete_iniciar_patota(estructura);
+//con un paquete ya creado podemos enviarlo y dejar que las funcionen hagan to do--------------------
+	enviar_paquete(paquete,socket_iniciar_patota);
+	liberar_t_iniciar_patota(estructura);
+
+}
+
+void cambiar_estado(Tripulante* tripulante,char* estado){
+	free(tripulante->estado);
+	tripulante->estado = strdup(estado);
+	enviar_estado(tripulante);
+
+}
+
+void enviar_estado (Tripulante* tripulante){
+	int socket_miram = conectarse_Mi_Ram();
+	t_paquete* paquete = crear_paquete(ACTUALIZAR_ESTADO);
+	t_cambio_estado* estado_actualizado  = malloc(sizeof(t_cambio_estado));
+
+	estado_actualizado->id_tripulante= tripulante->id;
+	estado_actualizado->id_patota = tripulante->idPatota;
+	estado_actualizado->tamanio_estado = strlen(tripulante->estado)+1;
+	estado_actualizado->estado = strdup(tripulante->estado);
+
+	agregar_paquete_cambio_estado(paquete,estado_actualizado);
+	enviar_paquete(paquete,socket_miram);
+	liberar_t_cambio_estado(estado_actualizado);
+
+}
+
+uint8_t obtener_pos(t_list* lista_posiciones_iniciales){
+	uint8_t pos;
+	if(!list_is_empty(lista_posiciones_iniciales)){
+		pos = (uint8_t)list_remove(lista_posiciones_iniciales,0);
+	}
+	else {
+		pos =0;
+	};
+	return pos;
+}
+
+void enviar_tripulante(Tripulante* nuevo_tripulante){
+	int socket_miram= conectarse_Mi_Ram();
+	t_paquete* paquete = crear_paquete(TRIPULANTE);
+	t_tripulante* tripulante = malloc(sizeof(t_tripulante));
+
+	tripulante->id_tripulante = nuevo_tripulante->id;
+	tripulante->id_patota = nuevo_tripulante->idPatota;
+	tripulante->posicion_x = nuevo_tripulante->posicionX;
+	tripulante->posicion_y= nuevo_tripulante->posicionY;
+	agregar_paquete_tripulante(paquete,tripulante);
+
+//	printf("TIPO DE PAQUETE: %d\n",paquete_tripulante_a_enviar->codigo_operacion);
+//	imprimir_paquete_tripulante(tripulante);
+	enviar_paquete(paquete,socket_miram);
+	liberar_t_tripulante(tripulante);
+
+}
+
+
+
 int hacerConsola() {
 	//SIEMPRE HAY QUE SER CORTEZ Y SALUDAR
 	puts("Bienvenido a A-MongOS de Cebollita Subcampeon \n");
@@ -654,85 +766,97 @@ int hacerConsola() {
 	while (1) {
 //leo los comandos
 		linea =readline(">");
-		string_to_upper(linea);
+		char** codigo_dividido = string_n_split(linea,2," ");
+//		[0] CODIGO - [1] PARAMETROS - [2] NULL
+		string_to_upper(codigo_dividido[0]);
 
-		if (string_contains(linea, "INICIAR_PATOTA")) {
-			//PD ESTE MANEJO DE STRINS TE TOCA A VOS PILAR
-			char* tarea=obtener_tareasPat(linea);
-			int cantidad=obtener_cantidadTrip(linea);
-			t_list* list_posicion=list_create();
+		if (string_contains(codigo_dividido[0], "INICIAR_PATOTA")) {
+
+			char** parametros_divididos = string_n_split(codigo_dividido[1],3," ");
+
+//			[0] CANTIDAD_TRIPULANTES - [1] PATH_ARCHIVO - [2] POSICIONES - [3] NULL
+
+			int cantidad_tripulantes= strtol(parametros_divididos[0],NULL,10);
+
+			int cantidad_tareas=0;
+			char* tareas = leer_tareas(parametros_divididos[1],&cantidad_tareas);
+			if(tareas == NULL)
+				continue;
+
+			t_list* posiciones_iniciales=list_create();
 			//todo//Los unicos paraametros que se usan en obtener parametros son linea y list_posicion
-			obtener_parametros_patota(linea,&cantidad,tarea,list_posicion);
-			Patota* pato = iniciarPatota((uint8_t)cantidad,p_totales, list_posicion,tarea,t_totales);
-			p_totales++;
-			t_totales +=cantidad;
+			completar_posiciones_iniciales(parametros_divididos[2],posiciones_iniciales);
+
+			Patota* pato = iniciarPatota(p_totales, tareas);
+			enviar_iniciar_patota(pato,cantidad_tripulantes);
 
 
-			int socket_iniciar_patota=conectarse_Mi_Ram();
-//---------- Creamos un paquete vacio, que solo contiene el codigo de operacion --------------------
-			t_paquete* paquete_iniciar_patota_a_enviar = crear_paquete(INICIAR_PATOTA);
-//---------- Luego creamos la estructura que queremos enviar y la completamos--------------------
-			t_iniciar_patota* estructura = malloc(sizeof(t_iniciar_patota));
-			estructura->idPatota = pato->id;
-			estructura->cantTripulantes=cantidad;
-			estructura->tamanio_tareas= strlen(tarea)+1;
-			estructura->Tareas = strdup(tarea);
+			Tripulante* nuevo_tripulante;
+			for(int i=0 ; i< cantidad_tripulantes;i++){
+				uint8_t posicionX = obtener_pos(posiciones_iniciales);
+				uint8_t posicionY = obtener_pos(posiciones_iniciales);
 
-//---------- Cuando tenemos la estructura la metemos al paquete vacio que teniamos--------------------
-			agregar_paquete_iniciar_patota(paquete_iniciar_patota_a_enviar,estructura);
-
-//---------- comprobamos que esta bien --------------------
-			printf("TIPO DE PAQUETE: %d\n",paquete_iniciar_patota_a_enviar->codigo_operacion);
-			imprimir_paquete_iniciar_patota(estructura);
-//---------- con un paquete ya creado podemos enviarlo y dejar que las funcionen hagan to do--------------------
-			enviar_paquete(paquete_iniciar_patota_a_enviar,socket_iniciar_patota);
-			liberar_t_iniciar_patota(estructura);
-
-			//LE PASO A MI RAM CADA TRIPULANTE PARA QUE MUESTRE EN PANTALLA
-			Tripulante* tripulante_iterator = pato->tripulacion[0];
-			for (int i = 0; tripulante_iterator != NULL; i++) {
-			int socket_tripulante = conectarse_Mi_Ram();
-				//SERIALIZO Y EN VIO
-//---------- Creamos un paquete vacio, que solo contiene el codigo de operacion --------------------
-				t_paquete* paquete_tripulante_a_enviar = crear_paquete(TRIPULANTE);
-//---------- Luego creamos la estructura que queremos enviar y la completamos--------------------
-				t_tripulante* tripulante = malloc(sizeof(t_tripulante));
-				tripulante->id_tripulante = tripulante_iterator->id;
-				tripulante->id_patota = tripulante_iterator->idPatota;
-				tripulante->posicion_x = tripulante_iterator->posicionX;
-				tripulante->posicion_y= tripulante_iterator->posicionY;
-				agregar_paquete_tripulante(paquete_tripulante_a_enviar,tripulante);
-//---------- comprobamos que esta bien --------------------
-				printf("TIPO DE PAQUETE: %d\n",paquete_tripulante_a_enviar->codigo_operacion);
-				imprimir_paquete_tripulante(tripulante);
-
-//---------- con un paquete ya creado podemos enviarlo y dejar que las funcionen hagan to do--------------------
-				enviar_paquete(paquete_tripulante_a_enviar,socket_tripulante);
-				free(tripulante_iterator->estado);
-				tripulante_iterator->estado = strdup("READY");
-				//LO AGREGO A LA COLA
-//				todo No se pq rompe al tratar de pushearlo en la cola ????????
-//				queue_push(ready, tripulante_iterator);
-				//CORRO EL HILO DEL TRIPULANTE
-
-				pthread_create(&(tripulante_iterator->hilo), NULL, (void*) vivirTripulante, (void*) tripulante_iterator);
-				tripulante_iterator = pato->tripulacion[i+1];
+				nuevo_tripulante = crear_tripulante(t_totales, p_totales, posicionX, posicionY);
+				enviar_tripulante(nuevo_tripulante);
+				queue_push(ready, (void*) nuevo_tripulante);
+				//inicializamos su hilo
+//				pthread_create(&(nuevo_tripulante->hilo_vida), NULL, (void*) vivirTripulante, (void*) nuevo_tripulante);
+				t_totales++;
 			}
-			/*
-			//////	HILO PARA TESTEAR //////
-			//todo
-			sem_t prueba;
-			sem_init(&prueba, 0, 0);
-			puts("ME QUEDO EN EL SEMAFORO DE PRUEBAS");
-			sem_wait(&prueba);
-			///////////////////////////////
-			*/
-			//LIBERO MEMORIA BORRANDO EL ARRAY FEO DE TRIPULANTES
-			//free(pato->tripulacion);
-			free(pato->tareas);
-			free(pato);
+			p_totales++;
 
+//			//////	SEMAFORO PARA TESTEAR //////
+//			//todo
+//			sem_t prueba;
+//			sem_init(&prueba, 0, 0);
+//			puts("ME QUEDO EN EL SEMAFORO DE PRUEBAS");
+//			sem_wait(&prueba);
+//			//////////////////////////////
+
+
+//			Tripulante* tripulante_iterator = pato->tripulacion[0];
+//			for (int i = 0; i<cantidad_tripulantes; i++) {
+//			int socket_tripulante = conectarse_Mi_Ram();
+//				//SERIALIZO Y EN VIO
+////---------- Creamos un paquete vacio, que solo contiene el codigo de operacion --------------------
+//				t_paquete* paquete_tripulante_a_enviar = crear_paquete(TRIPULANTE);
+////---------- Luego creamos la estructura que queremos enviar y la completamos--------------------
+//				t_tripulante* tripulante = malloc(sizeof(t_tripulante));
+//				tripulante->id_tripulante = tripulante_iterator->id;
+//				tripulante->id_patota = tripulante_iterator->idPatota;
+//				tripulante->posicion_x = tripulante_iterator->posicionX;
+//				tripulante->posicion_y= tripulante_iterator->posicionY;
+//				agregar_paquete_tripulante(paquete_tripulante_a_enviar,tripulante);
+////---------- comprobamos que esta bien --------------------
+//				printf("TIPO DE PAQUETE: %d\n",paquete_tripulante_a_enviar->codigo_operacion);
+//				imprimir_paquete_tripulante(tripulante);
+//
+////---------- con un paquete ya creado podemos enviarlo y dejar que las funcionen hagan to do--------------------
+//				enviar_paquete(paquete_tripulante_a_enviar,socket_tripulante);
+//				free(tripulante_iterator->estado);
+//				tripulante_iterator->estado = strdup("READY");
+//				//LO AGREGO A LA COLA
+////				todo No se pq rompe al tratar de pushearlo en la cola ????????
+////				queue_push(ready, tripulante_iterator);
+//				//CORRO EL HILO DEL TRIPULANTE
+//
+//				pthread_create(&(tripulante_iterator->hilo), NULL, (void*) vivirTripulante, (void*) tripulante_iterator);
+//				tripulante_iterator = pato->tripulacion[i+1];
+//			}
+//
+//			//LIBERO MEMORIA BORRANDO EL ARRAY FEO DE TRIPULANTES
+//			//free(pato->tripulacion);
+//			free(pato->tareas);
+//			free(pato);
+			free(parametros_divididos);
+			/*
+			 * averiguar si es valido hacer
+			 * free(parametros_divididos[0])
+			 * free(parametros_divididos[1]) etc etc
+			 */
 		}
+
+
 		if (string_contains(linea,"INICIAR_PLANIFICACION"))
 		{
 			puts("jeje entro");
@@ -877,31 +1001,8 @@ int hacerConsola() {
 			cambiar_estado(tripu_prueba_mov,prueba_estado[1]);
 
 		}
+		free(linea);
 	}
-
-}
-
-void cambiar_estado(Tripulante* tripulante,char* estado){
-	free(tripulante->estado);
-	tripulante->estado = strdup(estado);
-	enviar_estado(tripulante);
-
-}
-
-void enviar_estado (Tripulante* tripulante){
-	int socket_miram = conectarse_Mi_Ram();
-	t_paquete* paquete = crear_paquete(ACTUALIZAR_ESTADO);
-	t_cambio_estado* estado_actualizado  = malloc(sizeof(t_cambio_estado));
-
-	estado_actualizado->id_tripulante= tripulante->id;
-	estado_actualizado->id_patota = tripulante->idPatota;
-	estado_actualizado->tamanio_estado = strlen(tripulante->estado)+1;
-	estado_actualizado->estado = strdup(tripulante->estado);
-
-	agregar_paquete_cambio_estado(paquete,estado_actualizado);
-	imprimir_paquete_cambio_estado(estado_actualizado);
-	enviar_paquete(paquete,socket_miram);
-	liberar_t_cambio_estado(estado_actualizado);
 
 }
 
