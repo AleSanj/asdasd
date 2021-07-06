@@ -143,6 +143,7 @@ t_paquete* recibir_paquete(int socket_cliente, int* respuesta) {
 		return aux_paquete;
 	}
 	*respuesta = OK;
+
 	send(socket_cliente, respuesta, sizeof(uint8_t), 0); // aca le enviamos un mensaje (un uno) al cliente, informandole que recibimos la info correctamente
 
 	aux_paquete->codigo_operacion = (uint8_t) aux_cod;
@@ -186,6 +187,47 @@ int enviar_paquete(t_paquete* paquete, int socket_cliente) {
 		liberar_conexion(socket_cliente);
 		eliminar_paquete(paquete);
 	return respuesta;
+}
+
+char* enviar_paquete_tarea(t_paquete* paquete,int socket){
+	int bytes = paquete->buffer->size + sizeof(uint8_t) + sizeof(uint32_t);
+	void* a_enviar = serializar_paquete(paquete, bytes);
+	uint8_t respuesta=0;
+
+	uint32_t tamanio_tarea = 0;
+	char* tarea = NULL;
+
+	if (send(socket, a_enviar, bytes, 0) > 0) {
+		puts("Paquete enviado");
+
+		if(recv(socket, &respuesta, sizeof(uint8_t), 0) <=0){
+			liberar_conexion(socket);
+			eliminar_paquete(paquete);
+			return respuesta;
+		}
+
+		if(recv(socket, &tamanio_tarea, sizeof(uint32_t), 0) <=0){
+			liberar_conexion(socket);
+			eliminar_paquete(paquete);
+			return respuesta;
+		}
+
+		tarea = malloc(tamanio_tarea);
+		if(recv(socket, tarea, tamanio_tarea, 0) <= 0){
+			free(respuesta);
+			respuesta = NULL;
+			liberar_conexion(socket);
+			eliminar_paquete(paquete);
+			return respuesta;
+		}
+
+		puts("Respuesta recibida\n");
+
+		} else {
+			puts("No se pudo enviar el paquete\n");
+		}
+		eliminar_paquete(paquete);
+	return tarea;
 }
 
 void* serializar_paquete(t_paquete* paquete, int bytes) { // Los bytes serian sizeof( int cod_op) + sizeof(int tamanio_stream) + el tamaño real del buffer

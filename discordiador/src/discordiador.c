@@ -99,9 +99,7 @@ int calcular_distancia(Tripulante* tripulante, int x, int y)
 
 bool es_tarea_IO(char* tarea)
 {
-	bool ret= string_contains(tarea, "GENERAR");
-	ret=ret||string_contains(tarea,"CONSUMIR");
-	return ret;
+	return string_contains(tarea, "GENERAR") || string_contains(tarea,"CONSUMIR");;
 }
 
 
@@ -128,7 +126,9 @@ int conectarse_Mi_Ram()
 		while(socket==(-1))
 		{
 			puts("RECONECTANDO CON MI_RAM...");
-			socket=crear_conexion(ipMiRam,puertoMiRam);
+			pthread_mutex_lock(&socketMiRam);
+			socket = crear_conexion(ipMiRam,puertoMiRam);
+			pthread_mutex_unlock(&socketMiRam);
 			sleep(3);
 		}
 
@@ -203,7 +203,8 @@ void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
 {
 	if(es_tarea_IO(t->Tarea))
 	{
-		char** list = string_split(t->Tarea,(char*)" ");
+//		GENERAR_OXIGENO 10;4;4;15
+		char** list = string_split(t->Tarea," ");
 		if(list[0]==t->Tarea)
 		{
 			char** parametros=string_split(t->Tarea,(char*)';');
@@ -213,7 +214,8 @@ void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
 		}
 		else
 		{
-			char** parametros=string_split(list[1],(char*)";");
+
+			char** parametros=string_split(list[1], ";");
 			posX=string_to_int(parametros[2]);
 			posY=string_to_int(parametros[3]);
 			t->espera=string_to_int(parametros[4]);
@@ -223,6 +225,7 @@ void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
 	}
 	else
 	{
+//		MATAR_PERSAS 0;5;5;20
 		char** parametros=string_split(t->Tarea,(char*)";");
 		posX=(int)string_to_int(parametros[1]);
 		posY=(int)string_to_int(parametros[2]);
@@ -292,7 +295,6 @@ void bloqueado_a_ready(Tripulante* bloq)
 	queue_push(ready,bloq);
 	pthread_mutex_unlock(&listos);
 	cambiar_estado(bloq,"READY");
-
 
 }
 // esta va a avanzar el tripulante paso a paso Y Enviar a miram
@@ -395,7 +397,6 @@ void hacerFifo(Tripulante* tripu) {
 		sem_wait(&hilosEnEjecucion);
 		sleep(retardoCpu);
 		moverTripulante(tripu, tarea_x, tarea_y);
-
 		//le tiroun post al semaforo que me permite frenar la ejecucion
 		sem_post(&hilosEnEjecucion);
 
@@ -455,7 +456,7 @@ void hacerRoundRobin(Tripulante* tripulant) {
 
 	if (tripulant->posicionX == tarea_x && tripulant->posicionY == tarea_y && tripulant->espera==0)
 	{
-		tripulant->Tarea = "";
+		tripulant->Tarea = string_new();
 	}else
 	{
 		//protejo las colas o listas
@@ -468,9 +469,9 @@ void hacerRoundRobin(Tripulante* tripulant) {
 		pthread_mutex_unlock(&trip_comparar);
 		pthread_mutex_unlock(&listos);
 		pthread_mutex_unlock(&ejecutando);
-		tripulant->estado = "Ready";
+		cambiar_estado(tripulant,"READY");
 	//le aviso al semaforo que libere un recurso para que mande otro tripulante
-	sem_post(&multiProcesamiento);
+		sem_post(&multiProcesamiento);
 	}
 }
 
@@ -782,7 +783,31 @@ void imprimir_estado_nave() {
 
 
 	puts("------------------");
+}
 
+char* enviar_solicitud_tarea(Tripulante* tripulante){
+	int socket_miram = conectarse_Mi_Ram();
+
+	t_paquete* paquete = crear_paquete(PEDIR_TAREA);
+	t_tripulante* estructura = malloc(sizeof(t_tripulante));
+	estructura->id_tripulante = tripulante->id;
+	estructura->id_patota = tripulante->idPatota;
+
+	agregar_paquete_tripulante(paquete,estructura);
+	char* tarea = enviar_paquete_tarea(paquete,socket_miram);
+	liberar_t_tripulante(estructura);
+	return tarea;
+}
+
+void pedir_tarea(Tripulante* tripulante){
+	char* tarea = enviar_solicitud_tarea(tripulante);
+	if (tarea == NULL){
+		puts("No se pudo recibir correctamente la tarea");
+		return;
+	}
+	free(tripulante->Tarea);
+	tripulante->Tarea = strdup(tarea);
+	free(tarea);
 
 }
 
@@ -798,6 +823,7 @@ int hacerConsola() {
 		tripu_prueba_mov->idPatota = 88;
 		tripu_prueba_mov->posicionX = 0;
 		tripu_prueba_mov->posicionY = 0;
+		tripu_prueba_mov->Tarea = string_new();
 		tripu_prueba_mov->estado = string_new();
 		//----------------------------
 
@@ -1051,6 +1077,13 @@ int hacerConsola() {
 
 		}
 
+		if (string_contains(linea,"PRUEBA_PEDIR"))
+		{
+			pedir_tarea(tripu_prueba_mov);
+			puts(tripu_prueba_mov->Tarea);
+
+
+		}
 		free(linea);
 	}
 

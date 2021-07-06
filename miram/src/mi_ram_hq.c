@@ -99,6 +99,18 @@ int main(void) {
 			imprimir_paquete_cambio_estado(tripulante_a_actualizar);
 			break;
 
+		case PEDIR_TAREA:;
+			t_tripulante* tripulante_solicitud = deserializar_tripulante(paquete_recibido);
+			imprimir_paquete_tripulante(tripulante_solicitud);
+//			char* tarea = buscar_tarea_correspondiente()
+			char* tarea = "tarea de prueba";
+			int tamanio_tarea = strlen(tarea)+1;
+			send(socketCliente, &tamanio_tarea,sizeof(uint32_t),0);
+			send(socketCliente, tarea,tamanio_tarea,0);
+
+			liberar_conexion(socketCliente);
+			break;
+
 		default:;
 			printf("No se especifico el caso para recibir el paquete tipo: %d\n",paquete_recibido->codigo_operacion);
 			break;

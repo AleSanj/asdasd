@@ -45,7 +45,7 @@ typedef enum {
 	INICIAR_PATOTA, //Es lo mismo que iniciar_paota?		// LISTO
 	TRIPULANTE,												// LISTO
 	PATOTA,			//Cuando se manda el tipo de mensaje patota ?
-	PEDIRTAREA,		//pedir y enviar tarea se podria hacer en un solo mensaje, una vez hecha la conexion se puede hacer
+	PEDIR_TAREA,		//pedir y enviar tarea se podria hacer en un solo mensaje, una vez hecha la conexion se puede hacer
 	ENVIOTAREA,		//send y recv las veces que quieran
 	ACTUALIZAR_POS,											//LISTO
 	ELIMINAR_TRIPULANTE,									//LISTO
@@ -100,6 +100,13 @@ typedef struct {
 
 }t_cambio_estado;
 
+/*
+typedef struct {
+	uint8_t id_tripulante;
+	uint8_t id_
+}t_solicitar_tarea;
+					Capaz podemos usar t_tripulante
+*/
 
 typedef struct {
 	uint8_t id_tripulante;
@@ -172,20 +179,22 @@ void imprimir_paquete_cambio_estado(t_cambio_estado* estructura);
 void liberar_t_cambio_estado(t_cambio_estado* estructura);
 
 
-//--------------------------------------------------------
-void serializar_patota( Patota* unaPatota, int socket);
-Patota* deserializarPatota(t_buffer* buffer);
-
-
-//--------------------------------------------------------
+//---------------------- SOLICITAR TAREA ----------------------------------
 void serializar_tarea_tripulante( Tripulante* tareaTrip, int socket);
-tareaTripulante* deserializar_tarea_tripulante(t_buffer* buffer);
+char* enviar_paquete_tarea(t_paquete* paquete,int socket);
+
+/*
+ * CAPAZ PODEMOS USAR UN T_TRIPULANTE O T_ELIMINAR_TRIPULANTE
+ */
 
 //--------------------------------------------------------
 void serializar_tarea(char* tarea, int socket);
 char* deserializar_tarea(t_buffer* buffer);
 
 
+//--------------------------------------------------------
+void serializar_patota( Patota* unaPatota, int socket);
+Patota* deserializarPatota(t_buffer* buffer);
 
 //--------------------------------------------------------
 void serializar_sabotaje(char* sabotaje, int socket);

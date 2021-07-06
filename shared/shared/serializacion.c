@@ -332,7 +332,7 @@ void serializar_tarea_tripulante( Tripulante* tareaTrip, int socket)
 
 
 			//CODIGO DE OPERACION 1 = UN TRIUPLANTE
-			paquete->codigo_operacion = PEDIRTAREA; // Podemos usar una constante por operación
+			paquete->codigo_operacion = PEDIR_TAREA; // Podemos usar una constante por operación
 			paquete->buffer = buffer; // Nuestro buffer de antes.
 
 			// Armamos el stream a enviar
