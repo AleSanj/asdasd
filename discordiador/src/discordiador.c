@@ -31,30 +31,39 @@
 t_config* config;
 sem_t hilosEnEjecucion;
 sem_t multiProcesamiento;
+
 pthread_t firstInit;
 pthread_mutex_t mutexIO;
-pthread_mutex_t listos;
-pthread_mutex_t ejecutando;
-pthread_mutex_t bloqueadosIo;
-pthread_mutex_t finalizados;
+
+//Semaforos para modificar las colas -------------
+pthread_mutex_t sem_cola_ready;
+pthread_mutex_t sem_cola_exec;
+pthread_mutex_t sem_cola_bloqIO;
+pthread_mutex_t sem_cola_exit;
+//------------------------------------------------
 pthread_mutex_t socketMongo;
 pthread_mutex_t socketMiRam;
+
 pthread_mutex_t trip_comparar;
 sem_t pararPlanificacion;
 sem_t pararIo;
 t_list* listaPatotas;
+
 t_queue* ready;
 t_list* execute;
 t_list* finalizado;
 t_queue* bloqueados;
 t_list* bloqueados_sabotaje;
+
 Tripulante* esta_haciendo_IO;
 Tripulante* trip_cmp;
+
 char* ipMiRam;
 char* puertoMiRam;
 char* ipMongoStore;
 char* puertoMongoStore;
 char* algoritmo;
+
 int a = 0;
 int TripulantesTotales = 0;
 int multiProcesos;
@@ -214,7 +223,7 @@ void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
 		}
 		else
 		{
-
+//			CONSUMIR_OXIGENO 10;4;4;15
 			char** parametros=string_split(list[1], ";");
 			posX=string_to_int(parametros[2]);
 			posY=string_to_int(parametros[3]);
@@ -233,6 +242,61 @@ void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
 	}
 }
 
+tarea_tripulante* convertir_tarea(char* tarea){
+	 tarea_tripulante* tarea_convertida = malloc(sizeof(tarea_tripulante));
+	 char** id_dividido;
+	 char** parametros_divididos;
+	 if (es_tarea_IO(tarea)){
+		 id_dividido = string_n_split(tarea,2 ," ");
+		 parametros_divididos = string_n_split(id_dividido[1],4,";");
+
+//		 GENERAR_OXIGENO 10;4;4;15
+		 tarea_convertida->nombre = strdup(id_dividido[0]);
+		 tarea_convertida->es_io = 1;
+		 tarea_convertida->parametro = strtol(parametros_divididos[0],NULL,10);
+		 tarea_convertida->posicion_x = strtol(parametros_divididos[1],NULL,10);
+		 tarea_convertida->posiciion_y = strtol(parametros_divididos[2],NULL,10);
+		 tarea_convertida->duracion = strtol(parametros_divididos[3],NULL,10);
+
+		 free(id_dividido[0]);
+		 free(id_dividido[1]);
+		 free(id_dividido);
+
+		 free(parametros_divididos[0]);
+		 free(parametros_divididos[1]);
+		 free(parametros_divididos[2]);
+		 free(parametros_divididos[3]);
+		 free(parametros_divididos);
+
+	 } else {
+		 parametros_divididos= string_n_split(tarea,4,";");
+ //		 GENERAR_OXIGENO;4;4;15
+		 tarea_convertida->nombre = strdup(id_dividido[0]);
+		 tarea_convertida->es_io = 0;
+		 tarea_convertida->parametro = 0;
+		 tarea_convertida->posicion_x = strtol(parametros_divididos[1],NULL,10);
+		 tarea_convertida->posiciion_y = strtol(parametros_divididos[2],NULL,10);
+		 tarea_convertida->duracion = strtol(parametros_divididos[3],NULL,10);
+
+		 free(parametros_divididos[0]);
+		 free(parametros_divididos[1]);
+		 free(parametros_divididos[2]);
+		 free(parametros_divididos[3]);
+		 free(parametros_divididos);
+	 }
+
+	 return tarea_convertida;
+}
+
+
+void eliminar_Tripulante(Tripulante* tripulante){
+	free(tripulante->Tarea);
+	free(tripulante->estado);
+	free(tripulante);
+}
+
+
+
 void eliminarTripulante(Tripulante* tripulante)
 {
 	int socket_miram=conectarse_Mi_Ram();
@@ -250,7 +314,7 @@ void eliminarTripulante(Tripulante* tripulante)
 
 	liberar_t_eliminar_tripulante(estructura);
 	free(tripulante->Tarea);
-	free(tripulante->estado);
+//	free(tripulante->estado; 		//Creo q es mejor deajrle el estado para printearlo en la lista de colas
 
 	pthread_exit(&(tripulante->hilo_vida));
 }
@@ -261,15 +325,15 @@ void* iniciar_Planificacion()
 		sem_wait(&pararPlanificacion);
 		sem_wait(&multiProcesamiento);
 		//ESTE MUTEX ES PARA PROTEGER LA COLA DE READY
-		pthread_mutex_lock(&listos);
+		pthread_mutex_lock(&sem_cola_ready);
 		//este para proteger la lista de ejecutados
-		pthread_mutex_lock(&ejecutando);
+		pthread_mutex_lock(&sem_cola_exec);
 		//AGREGO A LISTA DE EJECUCION
 		Tripulante* tripulante= (Tripulante*)queue_pop(ready);
 		cambiar_estado(tripulante,"EXEC");
 		list_add(execute, queue_pop(ready));
-		pthread_mutex_unlock(&listos);
-		pthread_mutex_unlock(&ejecutando);
+		pthread_mutex_unlock(&sem_cola_ready);
+		pthread_mutex_unlock(&sem_cola_exec);
 		sem_post(&pararPlanificacion);
 
 	}
@@ -277,23 +341,23 @@ void* iniciar_Planificacion()
 
 void ejecutando_a_bloqueado(Tripulante* trp )
 {
-	pthread_mutex_lock(&bloqueadosIo);
-		pthread_mutex_lock(&ejecutando);
+	pthread_mutex_lock(&sem_cola_bloqIO);
+		pthread_mutex_lock(&sem_cola_exec);
 		//ACA PUSHEO AL TRIPULANTE A LA COLA DE BLOQUEADOS IO
 		pthread_mutex_lock(&trip_comparar);
 		trip_cmp=trp;
 		queue_push(bloqueados,list_remove_by_condition(execute,esElMismoTripulante));
 		pthread_mutex_unlock(&trip_comparar);
-		pthread_mutex_unlock(&bloqueadosIo);
-		pthread_mutex_unlock(&ejecutando);
+		pthread_mutex_unlock(&sem_cola_bloqIO);
+		pthread_mutex_unlock(&sem_cola_exec);
 		cambiar_estado(trp,"BLOQUEADO IO");
 }
 
 void bloqueado_a_ready(Tripulante* bloq)
 {
-	pthread_mutex_lock(&listos);
+	pthread_mutex_lock(&sem_cola_ready);
 	queue_push(ready,bloq);
-	pthread_mutex_unlock(&listos);
+	pthread_mutex_unlock(&sem_cola_ready);
 	cambiar_estado(bloq,"READY");
 
 }
@@ -379,10 +443,10 @@ void hacerTareaIO(Tripulante* io) {
 	//libero el recurso de multiprocesamiento porque me voy a io
 	sem_post(&multiProcesamiento);
 	pthread_mutex_lock(&mutexIO);
-	pthread_mutex_lock(&bloqueadosIo);
+	pthread_mutex_lock(&sem_cola_bloqIO);
 	//LO ENVIOPARA QUE HAGA SUS COSAS CON MONGOSTORE
 	enviarMongoStore((void*) queue_pop(bloqueados));
-	pthread_mutex_unlock(&bloqueadosIo);
+	pthread_mutex_unlock(&sem_cola_bloqIO);
 	pthread_mutex_unlock(&mutexIO);
 
 }
@@ -460,15 +524,15 @@ void hacerRoundRobin(Tripulante* tripulant) {
 	}else
 	{
 		//protejo las colas o listas
-		pthread_mutex_lock(&listos);
-		pthread_mutex_lock(&ejecutando);
-			//termino su quantum lo agrego a ready
+		pthread_mutex_lock(&sem_cola_ready);
+		pthread_mutex_lock(&sem_cola_exec);
+		//termino su quantum lo agrego a ready
 		pthread_mutex_lock(&trip_comparar);
 		trip_cmp=tripulant;
 		queue_push(ready,list_remove_by_condition(execute,esElMismoTripulante));
 		pthread_mutex_unlock(&trip_comparar);
-		pthread_mutex_unlock(&listos);
-		pthread_mutex_unlock(&ejecutando);
+		pthread_mutex_unlock(&sem_cola_ready);
+		pthread_mutex_unlock(&sem_cola_exec);
 		cambiar_estado(tripulant,"READY");
 	//le aviso al semaforo que libere un recurso para que mande otro tripulante
 		sem_post(&multiProcesamiento);
@@ -487,82 +551,36 @@ void hacerTarea(Tripulante* trip)
 
 }
 // LARGA VIDA TRIPULANTE ESPEREMOS CADA TRIPULANTE VIVA UNA VIDA FELIZ Y PLENA
-void* vivirTripulante(Tripulante* tripulante)
-{
+void* vivirTripulante(Tripulante* tripulante) {
 	printf("%d Inicio su hilo\n",tripulante->id);
-	int socketMr;
-	int socketMongo;
-	while (tripulante->vida)
-	{
+	while (tripulante->vida) {
 
-		//BUENO ACA ESTA LA MAGIC
-		//SI PLANIFICAR LO AGREGO A LA LISTA DE EJECUTAR VA A HACER UNA TAREA
+		if (tripulante->Tarea == NULL)
+			pedir_tarea(tripulante);
 
-		while (string_contains(tripulante->estado,"Execute"))
-		{
-			if (!string_contains(tripulante->estado,"Ready"))
-			{
-				//LE CAMBIO EL ESTADO A EJECUTANDO MUITO IMORTANTE
-
-			}
-			printf("%d Se quedo esperando que lo pasen a exec\n",tripulante->id);
-			sem_wait(&hilosEnEjecucion);
-
-		if (string_is_empty(tripulante->Tarea))
-		{
-				//ACA LE PIDE LA TAREA
-				socketMr=conectarse_Mi_Ram();
-				serializar_tarea_tripulante(tripulante, socketMr);
-
-				//AHORA RECIBIMOS TAREA
-				t_paquete* paquete = malloc(sizeof(t_paquete));
-				paquete->buffer = malloc(sizeof(t_buffer));
-
-				// Primero recibimos el codigo de operacion
-				recv(socketMr, &(paquete->codigo_operacion), sizeof(uint8_t),
-						0);
-
-				// Después ya podemos recibir el buffer. Primero su tamaño seguido del contenido
-				recv(socketMr, &(paquete->buffer->size), sizeof(uint32_t),
-						0);
-				paquete->buffer->stream = malloc(paquete->buffer->size);
-				if (paquete->codigo_operacion == 5)
-				{
-					//ACA LE AGREGO LA TAREA AL TRIPULANTE CARITA FACHERA FACHERITA (:
-
-					char* recibido = deserializar_tarea(paquete->buffer);
-
-					tripulante->Tarea = recibido;
-					free(recibido);
-
-				}
-				liberar_conexion(socketMr);
-				// Liberamos memoria
-				free(paquete->buffer->stream);
-				free(paquete->buffer);
-				free(paquete);
-			}
-			sem_post(&hilosEnEjecucion);
-			//ES HORA DE QUE EL VAGO DEL TRIPULANTE SE PONGA A LABURAR
-			if(tripulante->Tarea!=NULL)
-			{
-			hacerTarea(tripulante);
-			}
-			else
-			{
-				pthread_mutex_lock(&ejecutando);
-				pthread_mutex_lock(&finalizados);
-				list_add(finalizado,list_remove_by_condition(execute,(void*)esElMismoTripulante));
-				pthread_mutex_unlock(&ejecutando);
-				pthread_mutex_unlock(&finalizados);
-				tripulante->vida=false;
-				sem_post(&multiProcesamiento);
-
-			}
+		if (!(tripulante->Tarea->nombre,"FAULT")){
+			tripulante->vida = false;
+			continue;
 		}
 
+		tripulante->espera = tripulante->Tarea->duracion;
+
+		if (!string_contains(tripulante->estado,"EXEC")){
+			printf("%d Se quedo esperando que lo pasen a exec\n",tripulante->id);
+			sem_wait(tripulante->sem_pasaje_a_exec);
+		}
+			//ES HORA DE QUE EL VAGO DEL TRIPULANTE SE PONGA A LABURAR
+			hacerTarea(tripulante);
 	}
 
+	pthread_mutex_lock(&sem_cola_exec);
+	pthread_mutex_lock(&sem_cola_exit);
+	list_add(finalizado,list_remove_by_condition(execute,(void*)esElMismoTripulante));
+	pthread_mutex_unlock(&sem_cola_exec);
+	pthread_mutex_unlock(&sem_cola_exit);
+
+	sem_post(&multiProcesamiento);
+	cambiar_estado(tripulante,"EXIT");
 	eliminarTripulante(tripulante);
 
 	//ESTE RETURN NULL ES PARA CASTEARLA EN EL CREATE UNA PEQUEÑA BOLUDEZ
@@ -576,7 +594,7 @@ void* atender_sabotaje(char* instruccion_sabotaje)
 	int posy;
 	Tripulante* mas_cerca;
 	//busco el tripulante mas cerca
-	pthread_mutex_lock(&ejecutando);
+	pthread_mutex_lock(&sem_cola_exec);
 	for(int i=0;i<list_size(execute);i++)
 	{
 		Tripulante* iterado=(Tripulante*)list_get(execute,i);
@@ -586,17 +604,17 @@ void* atender_sabotaje(char* instruccion_sabotaje)
 		{
 			Tripulante* mas_cerca=iterado;
 		}
-		if(calcular_distancia(iterado, posx, posy)<calcular_distancia(mas_cerca, posx, posy))
+		if(calcular_distancia(iterado, posx, posy) < calcular_distancia(mas_cerca, posx, posy))
 		{
 			mas_cerca=iterado;
 		}
 
 
 	}
-	pthread_mutex_unlock(&ejecutando);
+	pthread_mutex_unlock(&sem_cola_exec);
 	int in=0;
 			Tripulante * auxiliar;
-			pthread_mutex_lock(&listos);
+			pthread_mutex_lock(&sem_cola_ready);
 			while(in<queue_size(ready))
 			{
 				Tripulante* trip_agregar=queue_pop(ready);
@@ -612,9 +630,9 @@ void* atender_sabotaje(char* instruccion_sabotaje)
 				queue_push(ready,trip_agregar);
 				in++;
 			}
-			pthread_mutex_unlock(&listos);
+			pthread_mutex_unlock(&sem_cola_ready);
 			in=0;
-			pthread_mutex_lock(&bloqueadosIo);
+			pthread_mutex_lock(&sem_cola_bloqIO);
 			while(in<queue_size(bloqueados))
 				{
 				   Tripulante* trip_agregar=queue_pop(bloqueados);
@@ -622,7 +640,7 @@ void* atender_sabotaje(char* instruccion_sabotaje)
 					queue_push(bloqueados,trip_agregar);
 					in++;
 				}
-			pthread_mutex_unlock(&bloqueadosIo);
+			pthread_mutex_unlock(&sem_cola_bloqIO);
 			esta_haciendo_IO->estado="Bloqueado Sabotaje";
 		if(calcular_distancia(mas_cerca, posx, posy)<calcular_distancia(auxiliar,posx,posy))
 		{
@@ -636,18 +654,18 @@ void* atender_sabotaje(char* instruccion_sabotaje)
 			sleep(retardoCpu);
 			moverTripulante(auxiliar,posx,posy);
 		}
-		pthread_mutex_lock(&ejecutando);
+		pthread_mutex_lock(&sem_cola_exec);
 			for(int i=0;i<list_size(execute);i++)
 			{
 				Tripulante* iterado=(Tripulante*)list_get(execute,i);
 
 				iterado->estado="Ejecutando";
 			}
-		pthread_mutex_unlock(&ejecutando);
+		pthread_mutex_unlock(&sem_cola_exec);
 
-		pthread_mutex_unlock(&ejecutando);
+		pthread_mutex_unlock(&sem_cola_exec);
 		 in=0;
-				pthread_mutex_lock(&listos);
+				pthread_mutex_lock(&sem_cola_ready);
 				while(in<queue_size(ready))
 				{
 					Tripulante* trip_agregar=queue_pop(ready);
@@ -655,11 +673,11 @@ void* atender_sabotaje(char* instruccion_sabotaje)
 					queue_push(ready,trip_agregar);
 					in++;
 				}
-				pthread_mutex_unlock(&listos);
+				pthread_mutex_unlock(&sem_cola_ready);
 
 
 				in=0;
-				pthread_mutex_lock(&bloqueadosIo);
+				pthread_mutex_lock(&sem_cola_bloqIO);
 				while(in<queue_size(bloqueados))
 					{
 					   Tripulante* trip_agregar=queue_pop(bloqueados);
@@ -667,7 +685,7 @@ void* atender_sabotaje(char* instruccion_sabotaje)
 						queue_push(bloqueados,trip_agregar);
 						in++;
 					}
-				pthread_mutex_unlock(&bloqueadosIo);
+				pthread_mutex_unlock(&sem_cola_bloqIO);
 				esta_haciendo_IO->estado="Bloqueado IO";
 
 
@@ -697,13 +715,6 @@ void enviar_iniciar_patota(Patota* pato,int cantidad_tripulantes){
 
 }
 
-void cambiar_estado(Tripulante* tripulante,char* estado){
-	free(tripulante->estado);
-	tripulante->estado = strdup(estado);
-	enviar_estado(tripulante);
-
-}
-
 void enviar_estado (Tripulante* tripulante){
 	int socket_miram = conectarse_Mi_Ram();
 	t_paquete* paquete = crear_paquete(ACTUALIZAR_ESTADO);
@@ -719,11 +730,18 @@ void enviar_estado (Tripulante* tripulante){
 	liberar_t_cambio_estado(estado_actualizado);
 
 }
+void cambiar_estado(Tripulante* tripulante,char* estado){
+	free(tripulante->estado);
+	tripulante->estado = strdup(estado);
+	enviar_estado(tripulante);
+
+}
+
 
 uint8_t obtener_pos(t_list* lista_posiciones_iniciales){
 	uint8_t pos;
 	if(!list_is_empty(lista_posiciones_iniciales)){
-		pos = (uint8_t)list_remove(lista_posiciones_iniciales,0);
+		pos = (int) list_remove(lista_posiciones_iniciales,0);
 	}
 	else {
 		pos =0;
@@ -767,20 +785,29 @@ void imprimir_estado_nave() {
 	t_list* lista_bloq = bloqueados->elements;
 
 	puts("------------------");
-	printf("Estado de la nave: %s\n",temporal_get_string_time("%d/%m/%y %H:%M:%S"));;
+	char* tiempo = (char*) temporal_get_string_time("%d/%m/%y %H:%M:%S");
+	printf("Estado de la nave: %s\n",tiempo);
+	free(tiempo);
 
 	puts("COLA READY:");
+	pthread_mutex_lock(&sem_cola_ready);
 	recorrer_lista(lista_ready);
+	pthread_mutex_unlock(&sem_cola_ready);
 
 	puts("COLA EXEC:");
+	pthread_mutex_lock(&sem_cola_exec);
 	recorrer_lista(execute);
+	pthread_mutex_unlock(&sem_cola_exec);
 
 	puts("COLA BLOQUEADOS:");
+	pthread_mutex_lock(&sem_cola_ready);
 	recorrer_lista(lista_bloq);
+	pthread_mutex_unlock(&sem_cola_bloqIO);
 
 	puts("COLA EXIT:");
+	pthread_mutex_lock(&sem_cola_exit);
 	recorrer_lista(finalizado);
-
+	pthread_mutex_unlock(&sem_cola_exit);
 
 	puts("------------------");
 }
@@ -805,8 +832,11 @@ void pedir_tarea(Tripulante* tripulante){
 		puts("No se pudo recibir correctamente la tarea");
 		return;
 	}
+	tarea_tripulante* tarea_convertida = convertir_tarea(tarea);
+	if(tripulante->Tarea != NULL)
+		free(tripulante->Tarea->nombre);
 	free(tripulante->Tarea);
-	tripulante->Tarea = strdup(tarea);
+	tripulante->Tarea = tarea_convertida;
 	free(tarea);
 
 }
@@ -847,7 +877,7 @@ int hacerConsola() {
 			if(tareas == NULL)
 				continue;
 
-			t_list* posiciones_iniciales=list_create();
+			t_list* posiciones_iniciales = list_create();
 			//todo//Los unicos paraametros que se usan en obtener parametros son linea y list_posicion
 			completar_posiciones_iniciales(parametros_divididos[2],posiciones_iniciales);
 
@@ -863,20 +893,12 @@ int hacerConsola() {
 				nuevo_tripulante = crear_tripulante(t_totales, p_totales, posicionX, posicionY);
 				enviar_tripulante(nuevo_tripulante);
 				queue_push(ready, (void*) nuevo_tripulante);
-				//inicializamos su hilo
+				//inicializamos su hilo y su semaforo
+				sem_init(&(tripu_prueba_mov->sem_pasaje_a_exec),NULL,0);
 //				pthread_create(&(nuevo_tripulante->hilo_vida), NULL, (void*) vivirTripulante, (void*) nuevo_tripulante);
 				t_totales++;
 			}
 			p_totales++;
-
-//			//////	SEMAFORO PARA TESTEAR //////
-//			//todo
-//			sem_t prueba;
-//			sem_init(&prueba, 0, 0);
-//			puts("ME QUEDO EN EL SEMAFORO DE PRUEBAS");
-//			sem_wait(&prueba);
-//			//////////////////////////////
-
 
 //			Tripulante* tripulante_iterator = pato->tripulacion[0];
 //			for (int i = 0; i<cantidad_tripulantes; i++) {
@@ -918,6 +940,8 @@ int hacerConsola() {
 			 * free(parametros_divididos[0])
 			 * free(parametros_divididos[1]) etc etc
 			 */
+			list_clean(posiciones_iniciales);
+			free(posiciones_iniciales);
 		}
 
 
@@ -949,9 +973,9 @@ int hacerConsola() {
 				sem_wait(&pararPlanificacion);
 				sem_wait(&multiProcesamiento);
 				//ESTE MUTEX ES PARA PROTEGER LA COLA DE READY
-				pthread_mutex_lock(&listos);
+				pthread_mutex_lock(&sem_cola_ready);
 				//este para proteger la lista de ejecutados
-				pthread_mutex_lock(&ejecutando);
+				pthread_mutex_lock(&sem_cola_exec);
 				//AGREGO A LISTA DE EJECUCION
 				Tripulante* tripulante= (Tripulante*)queue_pop(ready);
 				tripulante->estado = "Execute";
@@ -959,8 +983,8 @@ int hacerConsola() {
 				serializar_cambio_estado(tripulante, socketM);
 				liberar_conexion(socketM);
 				list_add(execute, queue_pop(ready));
-				pthread_mutex_unlock(&listos);
-				pthread_mutex_unlock(&ejecutando);
+				pthread_mutex_unlock(&sem_cola_ready);
+				pthread_mutex_unlock(&sem_cola_exec);
 				sem_post(&pararPlanificacion);
 
 			}
@@ -972,24 +996,24 @@ int hacerConsola() {
 
 			t_list* get_all_tripulantes=list_create();
 			int in=0;
-			pthread_mutex_lock(&finalizados);
+			pthread_mutex_lock(&sem_cola_exit);
 			while(in<list_size(finalizado))
 			{
 				list_add(get_all_tripulantes,list_get(finalizado,in));
 				in++;
 			}
-			pthread_mutex_unlock(&finalizados);
+			pthread_mutex_unlock(&sem_cola_exit);
 			in=0;
-			pthread_mutex_lock(&ejecutando);
+			pthread_mutex_lock(&sem_cola_exec);
 			while(in<list_size(execute))
 			{
 				list_add(get_all_tripulantes,list_get(execute,in));
 				in++;
 			}
-			pthread_mutex_unlock(&ejecutando);
+			pthread_mutex_unlock(&sem_cola_exec);
 
 			in=0;
-			pthread_mutex_lock(&listos);
+			pthread_mutex_lock(&sem_cola_ready);
 			while(in<queue_size(ready))
 			{
 				Tripulante* trip_agregar=queue_pop(ready);
@@ -997,10 +1021,10 @@ int hacerConsola() {
 				queue_push(ready,trip_agregar);
 				in++;
 			}
-			pthread_mutex_unlock(&listos);
+			pthread_mutex_unlock(&sem_cola_ready);
 
 			in=0;
-			pthread_mutex_lock(&bloqueadosIo);
+			pthread_mutex_lock(&sem_cola_bloqIO);
 			while(in<queue_size(bloqueados))
 			{
 				Tripulante* trip_agregar=queue_pop(bloqueados);
@@ -1008,7 +1032,7 @@ int hacerConsola() {
 				queue_push(bloqueados,trip_agregar);
 				in++;
 			}
-			pthread_mutex_unlock(&bloqueadosIo);
+			pthread_mutex_unlock(&sem_cola_bloqIO);
 			list_add(get_all_tripulantes,esta_haciendo_IO);
 			list_sort(get_all_tripulantes, (void*)cmpTripulantes);
 
@@ -1100,23 +1124,35 @@ int main() {
 	ipMongoStore = config_get_string_value(config, "IP_I_MONGO_STORE");
 	quantum = config_get_int_value(config, "QUANTUM");
 	//Patota* pat= iniciarPatota(1,1,execute,"TAREAD:TXT",t_totales);
+
 	//INICIALIAZAMOS LOS SEMAFOROS
 	sem_init(&multiProcesamiento, 0, multiProcesos);
 	sem_init(&hilosEnEjecucion, 0, multiProcesos);
 	sem_init(&pararIo, 0, 1);
 	sem_init(&pararPlanificacion,0,0);
-	pthread_mutex_init(&listos, NULL);
-	pthread_mutex_init(&ejecutando, NULL);
-	pthread_mutex_init(&bloqueadosIo, NULL);
+
+
+
+	ready = queue_create();
+	pthread_mutex_init(&sem_cola_ready, NULL);
+
+	execute = list_create();
+	pthread_mutex_init(&sem_cola_exec, NULL);
+
+	bloqueados = queue_create();
+	pthread_mutex_init(&sem_cola_bloqIO, NULL);
+
+	finalizado = list_create();
+	pthread_mutex_init(&sem_cola_exit, NULL);
+
+
+
 	pthread_mutex_init(&socketMiRam, NULL);
 	pthread_mutex_init(&socketMongo, NULL);
 
 	//INICIALIZAMOS LAS PILAS Y COLAS RARAS QUE CREAMOS
 	listaPatotas = list_create();
-	ready=queue_create();
-	execute = list_create();
-	finalizado = list_create();
-	bloqueados = queue_create();
+
 	bloqueados_sabotaje = list_create();
 
 	printf("hola mundo\n");

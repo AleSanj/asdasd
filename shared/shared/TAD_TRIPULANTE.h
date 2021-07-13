@@ -17,24 +17,32 @@
 #include <commons/string.h>
 #include <stdint.h>
 
+typedef struct {
+	char* nombre;
+	bool es_io;
+	uint8_t parametro;
+	uint8_t posicion_x;
+	uint8_t posiciion_y;
+	uint8_t duracion;
+
+} tarea_tripulante;
 typedef struct
 {
 	uint8_t idTripulante;
 	uint8_t idPatota;
 } tareaTripulante;
 
-typedef struct
-{
+typedef struct {
 	uint8_t id;
 	uint8_t idPatota;
 	char* estado;
 	_Bool vida;
-	char* Tarea;
+	tarea_tripulante* Tarea;
 	uint8_t posicionX;
 	uint8_t posicionY;
 	int espera;
 	pthread_t hilo_vida;
-	pthread_t hilo_ejecucion;
+	pthread_t sem_pasaje_a_exec;
 } Tripulante;
 
 Tripulante* tripulanteCreate(uint8_t id, uint8_t idPa, uint8_t posicionX,uint8_t posicionY);

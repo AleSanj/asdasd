@@ -60,11 +60,6 @@ Tripulante* crear_tripulante(uint8_t id_tripulante, uint8_t id_patota,uint8_t po
  	printf ("Patota: %i Tripulante: %i Estado: %s ",tripulante->idPatota,tripulante->id,tripulante->estado);
  }
 
- void eliminar_Tripulante(Tripulante* tripulante){
- 	free(tripulante->Tarea);
- 	free(tripulante->estado);
- 	free(tripulante);
- }
 
 
 #endif
