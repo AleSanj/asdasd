@@ -36,6 +36,7 @@ pthread_t firstInit;
 pthread_mutex_t mutexIO;
 
 //Semaforos para modificar las colas -------------
+pthread_mutex_t sem_cola_new;
 pthread_mutex_t sem_cola_ready;
 pthread_mutex_t sem_cola_exec;
 pthread_mutex_t sem_cola_bloqIO;
@@ -45,10 +46,12 @@ pthread_mutex_t socketMongo;
 pthread_mutex_t socketMiRam;
 
 pthread_mutex_t trip_comparar;
-sem_t pararPlanificacion;
+sem_t pararPlanificacion[2];
+sem_t sem_tripulante_en_ready;
 sem_t pararIo;
 t_list* listaPatotas;
 
+t_queue* new;
 t_queue* ready;
 t_list* execute;
 t_list* finalizado;
@@ -120,7 +123,10 @@ int conectarse_mongo()
 	while(socket==(-1))
 	{
 		puts("RECONECTANDO CON MONGO_STORE");
-		socket=crear_conexion(ipMongoStore,puertoMongoStore);
+		pthread_mutex_lock(&socketMongo);
+		int socket=crear_conexion(ipMongoStore,puertoMongoStore);
+		pthread_mutex_unlock(&socketMongo);
+		sleep(3);
 	}
 
 	return socket;
@@ -322,8 +328,11 @@ void* iniciar_Planificacion()
 {
 	pthread_detach(firstInit);
 	while (correr_programa){
-		sem_wait(&pararPlanificacion);
+		sem_wait(&(pararPlanificacion[0]));
+		sem_wait(&sem_tripulante_en_ready);
+		puts("HAY UN ELEMNTO PARA MOVER EN READY");
 		sem_wait(&multiProcesamiento);
+
 		//ESTE MUTEX ES PARA PROTEGER LA COLA DE READY
 		pthread_mutex_lock(&sem_cola_ready);
 		//este para proteger la lista de ejecutados
@@ -331,13 +340,31 @@ void* iniciar_Planificacion()
 		//AGREGO A LISTA DE EJECUCION
 		Tripulante* tripulante= (Tripulante*)queue_pop(ready);
 		cambiar_estado(tripulante,"EXEC");
-		list_add(execute, queue_pop(ready));
+//		Ativar semaforo tripulatne
+		printf("MOVI A %d a EXEC",tripulante->id);
+		list_add(execute, tripulante);
 		pthread_mutex_unlock(&sem_cola_ready);
 		pthread_mutex_unlock(&sem_cola_exec);
-		sem_post(&pararPlanificacion);
+		sem_post(&(pararPlanificacion[0]));
 
 	}
 }
+
+//void new_a_ready(){
+//	while (1){
+//		sem_wait(&(pararPlanificacion[1]));
+//		Tripulante* tripulante= (Tripulante*) queue_pop(new);
+//		cambiar_estado(tripulante,"READY");
+//
+//		pthread_mutex_lock(&sem_cola_ready);
+//		queue_push(ready,tripulante);
+//		pthread_mutex_unlock(&sem_cola_ready);
+//
+//		sem_post(&sem_tripulante_en_ready);
+//		sem_post(&(pararPlanificacion[1]));
+//
+//	}
+//}
 
 void ejecutando_a_bloqueado(Tripulante* trp )
 {
@@ -361,6 +388,10 @@ void bloqueado_a_ready(Tripulante* bloq)
 	cambiar_estado(bloq,"READY");
 
 }
+
+
+
+
 // esta va a avanzar el tripulante paso a paso Y Enviar a miram
 void* moverTripulante(Tripulante* tripu, int tarea_x,int tarea_y)
 {
@@ -553,15 +584,36 @@ void hacerTarea(Tripulante* trip)
 // LARGA VIDA TRIPULANTE ESPEREMOS CADA TRIPULANTE VIVA UNA VIDA FELIZ Y PLENA
 void* vivirTripulante(Tripulante* tripulante) {
 	printf("%d Inicio su hilo\n",tripulante->id);
+
 	while (tripulante->vida) {
 
 		if (tripulante->Tarea == NULL)
 			pedir_tarea(tripulante);
 
-		if (!(tripulante->Tarea->nombre,"FAULT")){
+		if (string_contains(tripulante->Tarea->nombre,"FAULT")){
 			tripulante->vida = false;
 			continue;
 		}
+//		Si MIRAM ya los empieza en ready ya no seria necesario mandarselo con la funcino cambiar_estado()
+		cambiar_estado(tripulante,"READY");
+		pthread_mutex_lock(&sem_cola_new);
+		pthread_mutex_lock(&sem_cola_ready);
+
+		list_add(finalizado,list_remove_by_condition(execute,(void*)esElMismoTripulante));
+
+		pthread_mutex_lock(&sem_cola_new);
+		pthread_mutex_lock(&sem_cola_ready);
+
+		sem_post(&sem_tripulante_en_ready);
+
+		//////	SEMAFORO PARA TESTEAR //////
+		//todo
+		sem_t prueba;
+		sem_init(&prueba, 0, 0);
+		puts("ME QUEDO EN EL SEMAFORO DE PRUEBAS");
+		sem_wait(&prueba);
+		//////////////////////////////
+
 
 		tripulante->espera = tripulante->Tarea->duracion;
 
@@ -783,11 +835,17 @@ void recorrer_lista(t_list* lista){
 void imprimir_estado_nave() {
 	t_list* lista_ready = ready->elements;
 	t_list* lista_bloq = bloqueados->elements;
+	t_list* lista_new = new->elements;
 
 	puts("------------------");
 	char* tiempo = (char*) temporal_get_string_time("%d/%m/%y %H:%M:%S");
 	printf("Estado de la nave: %s\n",tiempo);
 	free(tiempo);
+
+	puts("COLA NEW");
+	pthread_mutex_lock(&sem_cola_new);
+	recorrer_lista(lista_new);
+	pthread_mutex_unlock(&sem_cola_new);
 
 	puts("COLA READY:");
 	pthread_mutex_lock(&sem_cola_ready);
@@ -800,7 +858,7 @@ void imprimir_estado_nave() {
 	pthread_mutex_unlock(&sem_cola_exec);
 
 	puts("COLA BLOQUEADOS:");
-	pthread_mutex_lock(&sem_cola_ready);
+	pthread_mutex_lock(&sem_cola_bloqIO);
 	recorrer_lista(lista_bloq);
 	pthread_mutex_unlock(&sem_cola_bloqIO);
 
@@ -881,6 +939,8 @@ int hacerConsola() {
 			//todo//Los unicos paraametros que se usan en obtener parametros son linea y list_posicion
 			completar_posiciones_iniciales(parametros_divididos[2],posiciones_iniciales);
 
+
+
 			Patota* pato = iniciarPatota(p_totales, tareas);
 			enviar_iniciar_patota(pato,cantidad_tripulantes);
 
@@ -891,11 +951,12 @@ int hacerConsola() {
 				uint8_t posicionY = obtener_pos(posiciones_iniciales);
 
 				nuevo_tripulante = crear_tripulante(t_totales, p_totales, posicionX, posicionY);
+				queue_push(new,nuevo_tripulante);
 				enviar_tripulante(nuevo_tripulante);
-				queue_push(ready, (void*) nuevo_tripulante);
+
 				//inicializamos su hilo y su semaforo
 				sem_init(&(tripu_prueba_mov->sem_pasaje_a_exec),NULL,0);
-//				pthread_create(&(nuevo_tripulante->hilo_vida), NULL, (void*) vivirTripulante, (void*) nuevo_tripulante);
+				pthread_create(&(nuevo_tripulante->hilo_vida), NULL, (void*) vivirTripulante, (void*) nuevo_tripulante);
 				t_totales++;
 			}
 			p_totales++;
@@ -965,7 +1026,8 @@ int hacerConsola() {
 			//ESTE SEM NOS VA A PERMITIR FRENAR LOS PROCESOS IO CUANDO NECESITEMOS
 			sem_post(&pararIo);
 			puts("viene muy bien");
-			sem_post(&pararPlanificacion);
+			sem_post(&(pararPlanificacion[1]));
+			sem_post(&(pararPlanificacion[0]));
 			puts("demasiado");
 			//SEM CONTADOR QUE NOS PERMITE PONER EN EJECECUCION SEGUN CUANTO MULTIPROCESAMIENTO TENGAMOS
 		/*	while (correr_programa)
@@ -1052,7 +1114,8 @@ int hacerConsola() {
 				sem_wait(&hilosEnEjecucion);
 				a++;
 			}
-			sem_wait(&pararPlanificacion);
+			sem_wait(&(pararPlanificacion[0]));
+			sem_wait(&(pararPlanificacion[1]));
 			sem_wait(&pararIo);
 			puts("Entra piolax ameo");
 		}
@@ -1092,10 +1155,10 @@ int hacerConsola() {
 
 		if (string_contains(linea,"PRUEBA_LISTAR"))
 		{
-			queue_push(ready,(void*) tripu_prueba_mov);
-			list_add(execute,tripu_prueba_mov);
-			queue_push(bloqueados,(void*) tripu_prueba_mov);
-			list_add(finalizado,tripu_prueba_mov);
+//			queue_push(ready,(void*) tripu_prueba_mov);
+//			list_add(execute,tripu_prueba_mov);
+//			queue_push(bloqueados,(void*) tripu_prueba_mov);
+//			list_add(finalizado,tripu_prueba_mov);
 
 			imprimir_estado_nave();
 
@@ -1129,9 +1192,12 @@ int main() {
 	sem_init(&multiProcesamiento, 0, multiProcesos);
 	sem_init(&hilosEnEjecucion, 0, multiProcesos);
 	sem_init(&pararIo, 0, 1);
-	sem_init(&pararPlanificacion,0,0);
+	sem_init(&(pararPlanificacion[0]),0,0);
+	sem_init(&sem_tripulante_en_ready,0,0);
 
 
+	new = queue_create();
+	pthread_mutex_init(&sem_cola_new, NULL);
 
 	ready = queue_create();
 	pthread_mutex_init(&sem_cola_ready, NULL);

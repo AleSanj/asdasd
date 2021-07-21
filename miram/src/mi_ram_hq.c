@@ -103,7 +103,7 @@ int main(void) {
 			t_tripulante* tripulante_solicitud = deserializar_tripulante(paquete_recibido);
 			imprimir_paquete_tripulante(tripulante_solicitud);
 //			char* tarea = buscar_tarea_correspondiente()
-			char* tarea = "tarea de prueba";
+			char* tarea = "DESCARGAR_ITINERARIO 3;1;1;1";
 			int tamanio_tarea = strlen(tarea)+1;
 			send(socketCliente, &tamanio_tarea,sizeof(uint32_t),0);
 			send(socketCliente, tarea,tamanio_tarea,0);
