@@ -1,0 +1,67 @@
+/*
+ * mi_ram_hq.h
+ *
+ *  Created on: 29 may. 2021
+ *      Author: utnso
+ */
+
+#ifndef MI_RAM_HQ_H_
+#define MI_RAM_HQ_H_
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <nivel-gui/nivel-gui.h>
+#include <nivel-gui/tad_nivel.h>
+#include <curses.h>
+#include <sys/socket.h>
+#include <shared/TAD_TRIPULANTE.h>
+#include <shared/TAD_PATOTA.h>
+#include <commons/collections/list.h>
+#include <pthread.h>
+#include <shared/conexion.h>
+#include <commons/config.h>
+
+#define PUERTOPREDETERMINADO 6667
+
+#define TRIPULANTE 1
+#define PATOTA 2
+#define INICIAR_PATOTA 3
+#define PEDIRTAREA 4
+#define ENVIOTAREA 5
+#define ACTUALIZAR_POS 6
+#define INICIOPATOTA 7
+#define ELIMINAR_TRIPULANTE 8
+#define ACTUALIZAR_ESTADO 9
+#define SABOTAJE 10
+
+
+pthread_mutex_t mutex_lista_restaurantes;
+
+
+typedef struct
+{
+   uint32_t pid;
+   uint32_t* tareas ;
+}PCB;
+
+typedef struct
+{
+   uint32_t tid;
+   char* estado;
+   uint32_t posx;
+   uint32_t posy;
+   uint32_t* prox_tarea;
+   uint32_t* puntero_pcb;
+}TCB;
+
+void dibujarTripulante(Tripulante*);
+int crear_mapa();
+//void administrar_cliente(id_and_pos,NIVEL);
+TCB* crearTCB(Tripulante*, uint32_t*);
+void administrar_cliente(int);
+char intAChar(int);
+
+
+
+#endif /* MI_RAM_HQ_H_ */

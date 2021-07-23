@@ -1,0 +1,3 @@
+obj/TAD_TRIPULANTE.d: shared/TAD_TRIPULANTE.c shared/TAD_TRIPULANTE.h
+
+shared/TAD_TRIPULANTE.h:

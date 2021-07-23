@@ -1,0 +1,6 @@
+22:31:56 **** Incremental Build of configuration Default for project mongoStore ****
+make all 
+make: Nothing to be done for 'all'.
+
+22:31:57 Build Finished (took 899ms)
+

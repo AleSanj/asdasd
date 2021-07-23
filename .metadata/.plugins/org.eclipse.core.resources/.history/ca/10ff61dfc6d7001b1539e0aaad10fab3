@@ -1,0 +1,34 @@
+/*
+ * serializacion.h
+ *
+ *  Created on: 6 may. 2021
+ *      Author: utnso
+ */
+
+#ifndef SRC_SERIALIZACION_H_
+#define SRC_SERIALIZACION_H_
+#include "TAD_PATOTA.h"
+#include "TAD_TRIPULANTE.h"
+
+void serializar_tripulante(Tripulante* unTripulante, int socket);
+Tripulante* deserializar_tripulante(t_buffer* buffer);
+void serializar_patota( Patota* unaPatota, int socket);
+Patota* deserializarPatota(t_buffer* buffer);
+void serializar_iniciar_patota( iniciar_patota* tareaPatota, int socket);
+iniciar_patota* deserializar_iniciar_patota(t_buffer* buffer);
+void serializar_tarea_tripulante( Tripulante* tareaTrip, int socket);
+tareaTripulante* deserializar_tarea_tripulante(t_buffer* buffer);
+void serializar_tarea(char* tarea, int socket);
+char* deserializar_tarea(t_buffer* buffer);
+void serializar_id_and_pos(Tripulante* pos, int socket);
+id_and_pos* deserializar_id_and_pos(t_buffer* buffer);
+void serializar_cambio_estado(Tripulante* estado, int socket);
+cambio_estado* deserializar_cambio_estado(t_buffer* buffer);
+void serializar_eliminar_tripulante(int idTripulante, int socket);
+int deserializar_eliminar_tripulante(t_buffer* buffer);
+void serializar_sabotaje(char* sabotaje, int socket);
+char* deserializar_sabotaje(t_buffer* buffer);
+
+
+
+#endif /* SRC_SERIALIZACION_H_ */

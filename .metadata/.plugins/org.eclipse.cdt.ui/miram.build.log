@@ -1,0 +1,43 @@
+22:31:54 **** Incremental Build of configuration Default for project miram ****
+make all 
+gcc -I"../shared" -Wall -DDEBUG -g -c -fmessage-length=0 -MMD -MP -MF"obj/mi_ram_hq.d" -MT"obj/mi_ram_hq.d" -o "obj/mi_ram_hq.o" "src/mi_ram_hq.c"
+In file included from src/mi_ram_hq.h:16:0,
+                 from src/mi_ram_hq.c:11:
+../shared/shared/conexion.h:20:0: warning: "OK" redefined
+ #define OK 1
+ ^
+In file included from src/mi_ram_hq.h:13:0,
+                 from src/mi_ram_hq.c:11:
+/usr/include/curses.h:348:0: note: this is the location of the previous definition
+ #define OK      (0)
+ ^
+src/mi_ram_hq.c: In function ‘main’:
+src/mi_ram_hq.c:43:10: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+  memoria = malloc(tamMemoria);
+          ^
+src/mi_ram_hq.c:31:7: warning: unused variable ‘terminar’ [-Wunused-variable]
+  bool terminar;
+       ^
+src/mi_ram_hq.c: In function ‘crear_mapa’:
+src/mi_ram_hq.c:155:10: warning: return makes integer from pointer without a cast [-Wint-conversion]
+   return nivel;
+          ^
+src/mi_ram_hq.c:146:7: warning: unused variable ‘err’ [-Wunused-variable]
+   int err;
+       ^
+src/mi_ram_hq.c: In function ‘iniciar_tripulante’:
+src/mi_ram_hq.c:255:7: warning: unused variable ‘tcb’ [-Wunused-variable]
+  TCB* tcb = crearTCB(tripulante,pcb);
+       ^
+src/mi_ram_hq.c: In function ‘procesar_archivo’:
+src/mi_ram_hq.c:174:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+src/mi_ram_hq.c: In function ‘crearTCB’:
+src/mi_ram_hq.c:261:13: warning: ‘tcb’ is used uninitialized in this function [-Wuninitialized]
+  tcb -> tid = tripulante -> id;
+             ^
+gcc -Wall -DDEBUG -g -o "bin/miram"  obj/mi_ram_hq.o -L"../shared/bin" -lreadline -lcommons -lshared -lpthread -lnivel-gui -lncurses
+
+22:31:56 Build Finished (took 1s.935ms)
+

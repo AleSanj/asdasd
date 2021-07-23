@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="remove_by" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="remove_by"/>
+			<item value="sem_tripulante_en_ready"/>
+			<item value="HAY un "/>
+			<item value="vivir"/>
+			<item value="plani"/>
+			<item value="detach"/>
+			<item value="iniciar_patota"/>
+			<item value="RECONECTAND"/>
+			<item value="reconectand"/>
+			<item value="TESTEAR"/>
+			<item value="prueba"/>
+			<item value="conectarse_mongo"/>
+			<item value="reconecta"/>
+			<item value="convertir_tarea"/>
+			<item value="VIVIR"/>
+		</list>
+		<list key="replacehistory">
+			<item value="completar_posiciones_iniciales"/>
+			<item value="cantidad_tripulantes"/>
+			<item value="tripu"/>
+			<item value="socket_miram"/>
+			<item value="paquete_iniciar_patota_a_enviar"/>
+			<item value="paquete_recibido"/>
+			<item value="offset"/>
+			<item value="paquete-&gt;buffer-&gt;stream + offset"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="340" key="DIALOG_WIDTH"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+		<item value="436" key="DIALOG_HEIGHT"/>
+		<item value="1356" key="DIALOG_X_ORIGIN"/>
+		<item value="194" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

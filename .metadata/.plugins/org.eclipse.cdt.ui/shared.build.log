@@ -1,0 +1,6 @@
+16:43:27 **** Incremental Build of configuration Default for project shared ****
+make all 
+ar rcs -o "bin/libshared.a"  obj/conexion.o  obj/serializacion.o  obj/TAD_TRIPULANTE.o  obj/TAD_PATOTA.o
+
+16:43:27 Build Finished (took 815ms)
+
