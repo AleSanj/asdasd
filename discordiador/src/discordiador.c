@@ -1067,7 +1067,7 @@ int hacerConsola() {
 				pthread_mutex_unlock(&trip_comparar);
 
 				//inicializamos su hilo y su semaforo
-				sem_init(&(tripu_prueba_mov->sem_pasaje_a_exec),NULL,0);
+//				sem_init(&(tripu_prueba_mov->sem_pasaje_a_exec),NULL,0);
 				pthread_create(&(nuevo_tripulante->hilo_vida), NULL, (void*) vivirTripulante, (void*) nuevo_tripulante);
 				t_totales++;
 			}
@@ -1257,7 +1257,7 @@ int hacerConsola() {
 		if (string_contains(linea, "PRUEBA_ESTADO"))
 		{
 			char** prueba_estado =string_split(linea, " ");
-			cambiar_estado(tripu_prueba_mov,prueba_estado[1]);
+//			cambiar_estado(tripu_prueba_mov,prueba_estado[1]);
 
 		}
 
@@ -1274,8 +1274,8 @@ int hacerConsola() {
 
 		if (string_contains(linea,"PRUEBA_PEDIR"))
 		{
-			pedir_tarea(tripu_prueba_mov);
-			puts(tripu_prueba_mov->Tarea);
+//			pedir_tarea(tripu_prueba_mov);
+//			puts(tripu_prueba_mov->Tarea);
 
 
 		}
@@ -1285,7 +1285,6 @@ int hacerConsola() {
 }
 
 int main() {
-<<<<<<< HEAD
 //	PATH MARTIN
 //	config = config_create("/home/utnso/Escritorio/tp-2021-1c-Cebollitas-subcampeon/discordiador/discordiador.config");
 
