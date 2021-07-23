@@ -41,6 +41,7 @@ typedef struct {
 	uint8_t posicionX;
 	uint8_t posicionY;
 	int espera;
+	int kuantum;
 	pthread_t hilo_vida;
 	pthread_t sem_pasaje_a_exec;
 } Tripulante;
@@ -52,7 +53,7 @@ typedef struct {
 	uint32_t posY;
 	uint32_t proxTarea;
 	uint32_t dirLogicaPcb;
-} tcb;
+}tcb;
 
 Tripulante* tripulanteCreate(uint8_t id, uint8_t idPa, uint8_t posicionX,uint8_t posicionY);
 

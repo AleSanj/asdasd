@@ -171,8 +171,6 @@ void liberar_t_tripulante(t_tripulante* estructura){
 }
 //==============================ELIMINAR_TRIPUALNTE========================================
 
-
-
 //============================== CAMBIO_ESTADO ========================================
 
 void agregar_paquete_cambio_estado(t_paquete* paquete, t_cambio_estado* estructura){
@@ -186,7 +184,6 @@ void agregar_paquete_cambio_estado(t_paquete* paquete, t_cambio_estado* estructu
 	memcpy(paquete->buffer->stream + offset, &(estructura->id_patota), sizeof(uint8_t));
 	offset += sizeof(uint8_t);
 	memcpy(paquete->buffer->stream+offset, &(estructura->estado), sizeof(char));
-
 
 }
 
@@ -213,6 +210,11 @@ void imprimir_paquete_cambio_estado(t_cambio_estado* estructura){
 void liberar_t_cambio_estado(t_cambio_estado* estructura){
 	free(estructura);
 }
+
+
+
+
+//============================== CAMBIO_ESTADO ========================================
 
 void serializar_tarea_tripulante( Tripulante* tareaTrip, int socket)
 {
@@ -415,56 +417,3 @@ char* deserializar_sabotaje(t_buffer* buffer)
 	return sabotaje;
 
 }
-/*
-
-void* serializar_generar_recurso(Tripulante* trip, int socket)
-{
-
-}
-
-void* serializar_consumir_recurso(Tripulante* trip, int socket)
-{
-
-}
-void* actualizar_bitacora(Tripulante*trip, int socket)
-{
-
-}
-*/
-
-
-/*
-inicio_patota deserializar_inicio_patota(t_buffer* buffer){
-
-}*/
-// FUNCION PARA EL MAIN PARA RECIBIR UN PAQUETE adaptarla cuando se necesite!!!
-/*
- * t_paquete* paquete = malloc(sizeof(t_paquete));
-paquete->buffer = malloc(sizeof(t_buffer));
-
-// Primero recibimos el codigo de operacion
-recv(unSocket, &(paquete->codigo_operacion), sizeof(uint8_t), 0);
-
-// Después ya podemos recibir el buffer. Primero su tamaño seguido del contenido
-recv(unSocket, &(paquete->buffer->size), sizeof(uint32_t), 0);
-paquete->buffer->stream = malloc(paquete->buffer->size);
-recv(unSocket, paquete->buffer->stream, paquete->buffer->size, 0);
-
-// Ahora en función del código recibido procedemos a deserializar el resto
-switch(paquete->codigo_operacion) {
-    case PERSONA:
-        t_persona* persona = deserializar_persona(paquete->buffer);
-        ...
-        // Hacemos lo que necesitemos con esta info
-        // Y eventualmente liberamos memoria
-        free(persona);
-        ...
-        break;
-    ... // Evaluamos los demás casos según corresponda
-}
-
-// Liberamos memoria
-free(paquete->buffer->stream);
-free(paquete->buffer);
-free(paquete);
-*/

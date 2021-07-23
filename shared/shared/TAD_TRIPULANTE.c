@@ -49,6 +49,7 @@ Tripulante* crear_tripulante(uint8_t id_tripulante, uint8_t id_patota,uint8_t po
 	tripulante->posicionX = posicionX;
 	tripulante->posicionY = posicionY;
 	tripulante->espera = 0;
+	tripulante->kuantum=0;
 
 	return tripulante;
 }

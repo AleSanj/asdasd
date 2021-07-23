@@ -96,6 +96,7 @@ typedef struct {
 	uint8_t id_tripulante;
 	uint8_t id_patota;
 	char estado;
+
 }t_cambio_estado;
 
 /*
@@ -154,7 +155,6 @@ void liberar_t_tripulante(t_tripulante* estructura);
 // usamos el mismo mensaje T_TRIPULANTE
 void serializar_eliminar_tripulante(int idTripulante, int socket);			//todo//todavia no lo borre, preguntar por las dudas
 //int deserializar_eliminar_tripulante(t_buffer* buffer);
-
 
 //--------------- MOVIMIENTO_TRIPULANTE ----------------------------------------
 // Se puede utilizar el mismo mensaje T_TRIPULANTE, pero cambiando el codigo de operacion

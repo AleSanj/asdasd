@@ -72,9 +72,10 @@ int TripulantesTotales = 0;
 int multiProcesos;
 int quantum;
 int retardoCpu;
+int tiempo_sabotaje;
 _Bool primerInicio=true;
-uint8_t t_totales=0;
-uint8_t p_totales=0;
+uint8_t t_totales=1;
+uint8_t p_totales=1;
 _Bool correr_programa=true;
 
 /*AVISOS PARROQUIALES
@@ -117,16 +118,18 @@ bool es_tarea_IO(char* tarea)
 
 int conectarse_mongo()
 {
+
+	int socket;
 	pthread_mutex_lock(&socketMongo);
-	int socket=crear_conexion(ipMongoStore,puertoMongoStore);
+	socket=crear_conexion(ipMongoStore,puertoMongoStore);
 	pthread_mutex_unlock(&socketMongo);
 	while(socket==(-1))
 	{
 		puts("RECONECTANDO CON MONGO_STORE");
 		pthread_mutex_lock(&socketMongo);
-		int socket=crear_conexion(ipMongoStore,puertoMongoStore);
+		socket=crear_conexion(ipMongoStore,puertoMongoStore);
 		pthread_mutex_unlock(&socketMongo);
-		sleep(3);
+		sleep(10);
 	}
 
 	return socket;
@@ -186,7 +189,12 @@ char* leer_tareas(char* path, int* cantidad_tareas){
 	FILE* archivo;
 //	path martin
 //	char* raiz = strdup("/home/utnso/Escritorio/tp-2021-1c-Cebollitas-subcampeon/discordiador/src/tareas/");
-	char* raiz = strdup("/home/utnso/Escritorio/Amongos/discordiador/src/Tareas/");
+
+//	path ale
+	char* raiz = strdup("/home/utnso/Escritorio/Amongos/discordiador/src/tareas/");
+
+//	path juan
+//	char* raiz = strdup("/home/utnso/Escritorio/Conexiones/discordiador/src/tareas/");
 
 	string_append(&raiz,path);
 	archivo = fopen(raiz,"r");
@@ -251,8 +259,6 @@ void obtener_parametros_tarea(Tripulante* t, int posX, int posY)
 }
 
 tarea_tripulante* convertir_tarea(char* tarea){
-
-
 	 tarea_tripulante* tarea_convertida = malloc(sizeof(tarea_tripulante));
 	 char** id_dividido;
 	 char** parametros_divididos;
@@ -279,7 +285,7 @@ tarea_tripulante* convertir_tarea(char* tarea){
 		 free(parametros_divididos);
 
 	 } else {
-		 parametros_divididos= string_split(tarea,";");
+		 parametros_divididos= string_n_split(tarea,4,";");
  //		 DESCARGAR_ITINERARIO;4;4;15
 		 tarea_convertida->nombre = strdup(parametros_divididos[0]);
 		 tarea_convertida->es_io = 0;
@@ -363,7 +369,6 @@ void eliminarTripulante(Tripulante* tripulante)
 	mover_a_finalizado(tripulante);
 	cambiar_estado(tripulante,"Exit");
 	sem_post(&multiProcesamiento);
-
 	pthread_exit(&(tripulante->hilo_vida));
 }
 void* iniciar_Planificacion()
@@ -419,12 +424,12 @@ void bloqueado_a_ready(Tripulante* bloq)
 
 
 // esta va a avanzar el tripulante paso a paso Y Enviar a miram
-void* moverTripulante(Tripulante* tripu, int tarea_x,int tarea_y)
+void* moverTripulante(Tripulante* tripu)
 {
 	void* ret = "0";
 	int socket_miram = conectarse_Mi_Ram();
 
-	if (tarea_x > tripu->posicionX) {
+	if (tripu->Tarea->posicion_x > tripu->posicionX) {
 		tripu->posicionX++;
 		enviar_posicion(tripu,socket_miram);
 
@@ -432,28 +437,29 @@ void* moverTripulante(Tripulante* tripu, int tarea_x,int tarea_y)
 
 	}
 
-	if (tarea_x < tripu->posicionX) {
+	if (tripu->Tarea->posicion_x < tripu->posicionX) {
 		tripu->posicionX--;
 		enviar_posicion(tripu,socket_miram);
 
 		return ret;
 	}
 
-
-	if (tarea_y < tripu->posicionY) {
+	if (tripu->Tarea->posiciion_y < tripu->posicionY) {
 		tripu->posicionY--;
 		enviar_posicion(tripu,socket_miram);
 
 		return ret;
 	}
 
-	if (tarea_y > tripu->posicionY) {
+	if (tripu->Tarea->posiciion_y > tripu->posicionY) {
 		tripu->posicionY++;
 		enviar_posicion(tripu,socket_miram);
 
 		return ret;
 	}
+
 	liberar_conexion(socket_miram);
+
 	return NULL;
 }
 
@@ -477,11 +483,13 @@ void enviar_posicion(Tripulante* tripulante,int socket_miram){
 void enviarMongoStore(Tripulante* enviar) {
 
 	//envia tarea al MONGO STORE
+	// char* ="22:09 inicio consumir_oxigeno    "
+	//char[0], [O,B,C]ocigeno|comida|basura, parametro->tarea
 	esta_haciendo_IO=enviar;
 	int socketMongo= conectarse_mongo();
-	serializar_tarea(enviar->Tarea, socketMongo);
+	//serializar_tarea(enviar->Tarea, socketMongo);
 	liberar_conexion(socketMongo);
-	while(enviar->espera!=0)
+	while((enviar->espera!=0)&& enviar->vida)
 	{
 		//semaforo para parar ejecucion
 		sem_wait(&pararIo);
@@ -490,6 +498,7 @@ void enviarMongoStore(Tripulante* enviar) {
 		sem_post(&pararIo);
 	}
 	//lo paso a cola ready
+	// char* ="22:09 Fin consumir_oxigeno"
 	bloqueado_a_ready(enviar);
 
 
@@ -510,63 +519,66 @@ void hacerTareaIO(Tripulante* io) {
 void hacerFifo(Tripulante* tripu) {
 	//tu tarea es es transformar la taera de sstring en dos int posicion y un int de espera
 	// mover al 15|65 20
-	int tarea_x;
-	int tarea_y;
-	obtener_parametros_tarea(tripu,&tarea_x,&tarea_y);
-	while (tripu->posicionX != tarea_x || tripu->posicionY != tarea_y) {
+	//obtener_parametros_tarea(tripu,&tarea_x,&tarea_y);
+	while ((tripu->posicionX != tripu->Tarea->posicion_x || tripu->posicionY != tripu->Tarea->posiciion_y) && tripu->vida) {
 		//este es el semaforo para pausar laejecucion
 		sem_wait(&hilosEnEjecucion);
 		sleep(retardoCpu);
-		moverTripulante(tripu, tarea_x, tarea_y);
+		moverTripulante(tripu);
 		//le tiroun post al semaforo que me permite frenar la ejecucion
 		sem_post(&hilosEnEjecucion);
 
 	}
 
-	if (es_tarea_IO(tripu->Tarea))
+	if ((tripu->Tarea->es_io) && tripu->vida)
 	{
 		hacerTareaIO(tripu);
 	}
 	else {
 		//una vez que llego donde tenia que llegar espera lo que tenia que esperar
-		while(tripu->espera !=0)
+
+		while((tripu->espera !=0) && tripu->vida)
 		{
 			sem_wait(&hilosEnEjecucion);
 			sleep(retardoCpu);
 			sem_post(&hilosEnEjecucion);
 			tripu->espera --;
 		}
-
-		tripu->Tarea = "";
+		tripu->Tarea =NULL;
+		sem_post(&tripu->sem_pasaje_a_exec);
 	}
 
 }
 void hacerRoundRobin(Tripulante* tripulant) {
-	int tarea_x;
-	int tarea_y;
-	int contadorQuantum = 0;
-	obtener_parametros_tarea(tripulant, &tarea_x,&tarea_y);
+	int contadorQuantum=0;
+	if (tripulant->kuantum!=0)
+	{
+		contadorQuantum=tripulant->kuantum;
+	}
+	//obtener_parametros_tarea(tripulant, &tarea_x,&tarea_y);
 
 	while (contadorQuantum < quantum)
 	{
-		if (tripulant->posicionX == tarea_x && tripulant->posicionY == tarea_y)
+		if ((tripulant->posicionX == tripulant->Tarea->posicion_x && tripulant->posicionY == tripulant->Tarea->posiciion_y)&& tripulant->vida)
 		{
 			break;
 		}
 		//este es el semaforo para pausar laejecucion
 		sem_wait(&hilosEnEjecucion);
 		sleep(retardoCpu);
-		moverTripulante(tripulant, tarea_x, tarea_y);
+		moverTripulante(tripulant);
 		contadorQuantum++;
 		sem_post(&hilosEnEjecucion);
 		//le tiroun post al semaforo que me permite frenar la ejecucion
 
 	}
-	if(contadorQuantum<quantum && es_tarea_IO(tripulant->Tarea))
+	if(contadorQuantum<quantum && (tripulant->Tarea->es_io) && tripulant->vida)
 	{
+		tripulant->kuantum=0;
 		hacerTareaIO(tripulant);
 	}
-	while (contadorQuantum < quantum) {
+	while ((contadorQuantum < quantum)&& tripulant->vida)
+	{
 		sem_wait(&hilosEnEjecucion);
 		sleep(retardoCpu);
 		tripulant->espera--;
@@ -575,11 +587,14 @@ void hacerRoundRobin(Tripulante* tripulant) {
 	}
 
 
-	if (tripulant->posicionX == tarea_x && tripulant->posicionY == tarea_y && tripulant->espera==0)
+	if (tripulant->posicionX == tripulant->Tarea->posicion_x && tripulant->posicionY == tripulant->Tarea->posiciion_y && tripulant->espera==0 &&tripulant->vida)
 	{
-		tripulant->Tarea = string_new();
+		tripulant->kuantum=contadorQuantum;
+		tripulant->Tarea = NULL;
+		sem_post(&tripulant->sem_pasaje_a_exec);
 	}else
 	{
+		tripulant->kuantum=0;
 		//protejo las colas o listas
 		pthread_mutex_lock(&sem_cola_ready);
 		pthread_mutex_lock(&sem_cola_exec);
@@ -612,20 +627,20 @@ void* vivirTripulante(Tripulante* tripulante) {
 	printf("%d Inicio su hilo\n",tripulante->id);
 
 	while (tripulante->vida) {
+		sem_wait(&(tripulante->sem_pasaje_a_exec));
 
-
-		if (tripulante->Tarea == NULL)
+		if (tripulante->Tarea == NULL){
 			pedir_tarea(tripulante);
-		printf("TAREA %s",tripulante->Tarea->nombre);
+		}
+
 		if (string_contains(tripulante->Tarea->nombre,"FAULT")){
 			tripulante->vida = false;
 			continue;
 		}
 //		Si MIRAM ya los empieza en ready ya no seria necesario mandarselo con la funcino cambiar_estado()
-		cambiar_estado(tripulante,"READY");
+//		cambiar_estado(tripulante,"Exec");
 
 
-//		sem_post(&sem_tripulante_en_ready);
 
 		//////	SEMAFORO PARA TESTEAR //////
 		//todo
@@ -633,18 +648,25 @@ void* vivirTripulante(Tripulante* tripulante) {
 		sem_init(&prueba, 0, 0);
 		puts("ME QUEDO EN EL SEMAFORO DE PRUEBAS");
 		sem_wait(&prueba);
-		//////////////////////////////
-
-
 		tripulante->espera = tripulante->Tarea->duracion;
 
-		if (!string_contains(tripulante->estado,"EXEC")){
-			printf("%d Se quedo esperando que lo pasen a exec\n",tripulante->id);
-			sem_wait(tripulante->sem_pasaje_a_exec);
-		}
+
+//		if (!string_contains(tripulante->estado,"EXEC")){
+//			printf("%d Se quedo esperando que lo pasen a exec\n",tripulante->id);
+
+
 			//ES HORA DE QUE EL VAGO DEL TRIPULANTE SE PONGA A LABURAR
 			hacerTarea(tripulante);
 	}
+
+//	pthread_mutex_lock(&sem_cola_exec);
+//	pthread_mutex_lock(&sem_cola_exit);
+//	list_add(finalizado,list_remove_by_condition(execute,(void*)esElMismoTripulante));
+//	pthread_mutex_unlock(&sem_cola_exec);
+//	pthread_mutex_unlock(&sem_cola_exit);
+//  Me parece que estos movimientos ya estan hechos en eliminarTRIPulante
+	sem_post(&multiProcesamiento);
+	cambiar_estado(tripulante,"EXIT");
 	eliminarTripulante(tripulante);
 
 	//ESTE RETURN NULL ES PARA CASTEARLA EN EL CREATE UNA PEQUEÑA BOLUDEZ
@@ -706,52 +728,75 @@ void* atender_sabotaje(char* instruccion_sabotaje)
 				}
 			pthread_mutex_unlock(&sem_cola_bloqIO);
 			esta_haciendo_IO->estado="Bloqueado Sabotaje";
+			int tiempo_sabota=tiempo_sabotaje;
 		if(calcular_distancia(mas_cerca, posx, posy)<calcular_distancia(auxiliar,posx,posy))
 		{
 			while(mas_cerca->posicionX!=posx||mas_cerca->posicionY!=posy)
+			{
 			sleep(retardoCpu);
-			moverTripulante(mas_cerca,posx,posy);
+			moverTripulante(mas_cerca);
+			}
+			while(tiempo_sabota!=0)
+			{
+				sleep(retardoCpu);
+				tiempo_sabotaje--;
+			}
 		}
 		else
 		{
 			while(auxiliar->posicionX!=posx||auxiliar->posicionY!=posy)
+
+			{
 			sleep(retardoCpu);
-			moverTripulante(auxiliar,posx,posy);
+			moverTripulante(auxiliar);
+			}
+			while(tiempo_sabota!=0)
+			{
+				sleep(retardoCpu);
+				tiempo_sabotaje--;
+			}
 		}
 		pthread_mutex_lock(&sem_cola_exec);
 			for(int i=0;i<list_size(execute);i++)
 			{
 				Tripulante* iterado=(Tripulante*)list_get(execute,i);
 
-				iterado->estado="Ejecutando";
+
+				iterado->estado="Exec";
 			}
 		pthread_mutex_unlock(&sem_cola_exec);
+		int a = 0;
+		//DEFINO UN SEM CONTADOR QUE NOS VA A SERVIR PARA PAUSAR LA PLANIFICACION DONDE QUERAMOS DESPUES
+		while (a < multiProcesos) {
+			sem_post(&hilosEnEjecucion);
+			a++;
+		}
 
-		pthread_mutex_unlock(&sem_cola_exec);
 		 in=0;
 				pthread_mutex_lock(&sem_cola_ready);
 				while(in<queue_size(ready))
 				{
 					Tripulante* trip_agregar=queue_pop(ready);
-					trip_agregar->estado="Ready";
+					trip_agregar->estado="READY";
 					queue_push(ready,trip_agregar);
 					in++;
 				}
 				pthread_mutex_unlock(&sem_cola_ready);
-
+				sem_post(&pararPlanificacion[0]);
 
 				in=0;
 				pthread_mutex_lock(&sem_cola_bloqIO);
 				while(in<queue_size(bloqueados))
 					{
 					   Tripulante* trip_agregar=queue_pop(bloqueados);
-					   trip_agregar->estado="Bloqueado IO";
+					   trip_agregar->estado="BLOQUEADO IO";
 						queue_push(bloqueados,trip_agregar);
 						in++;
 					}
 				pthread_mutex_unlock(&sem_cola_bloqIO);
 				esta_haciendo_IO->estado="Bloqueado IO";
 
+				sem_post(&pararIo);
 
 	return NULL;
 }
@@ -787,6 +832,7 @@ void enviar_estado (Tripulante* tripulante){
 	estado_actualizado->id_tripulante= tripulante->id;
 	estado_actualizado->id_patota = tripulante->idPatota;
 	estado_actualizado->estado = (char) tripulante->estado[0];
+
 
 	agregar_paquete_cambio_estado(paquete,estado_actualizado);
 	enviar_paquete(paquete,socket_miram);
@@ -855,8 +901,6 @@ void recorrer_lista_patota(t_list* lista){
 	}
 	puts("");
 }
-
-
 void imprimir_estado_nave() {
 	t_list* lista_ready = ready->elements;
 	t_list* lista_bloq = bloqueados->elements;
@@ -953,9 +997,6 @@ Tripulante* buscar_tripulante(int tripulante_buscado){
 	return encontrado;
 }
 
-
-
-
 int hacerConsola() {
 	//SIEMPRE HAY QUE SER CORTEZ Y SALUDAR
 	puts("Bienvenido a A-MongOS de Cebollita Subcampeon \n");
@@ -968,6 +1009,7 @@ int hacerConsola() {
 		tripu_prueba_mov->posicionY = 0;
 		tripu_prueba_mov->Tarea = string_new();
 		tripu_prueba_mov->estado = string_new();*/
+
 		//----------------------------
 
 	while (1) {
@@ -977,7 +1019,7 @@ int hacerConsola() {
 //		[0] CODIGO - [1] PARAMETROS - [2] NULL
 		string_to_upper(codigo_dividido[0]);
 
-		if (string_contains(linea, "INICIAR_PATOTA")) {
+		if (string_contains(codigo_dividido[0], "INICIAR_PATOTA")) {
 			char** parametros_divididos = string_n_split(codigo_dividido[1],3," ");
 
 //			[0] CANTIDAD_TRIPULANTES - [1] PATH_ARCHIVO - [2] POSICIONES - [3] NULL
@@ -993,8 +1035,6 @@ int hacerConsola() {
 			//todo//Los unicos paraametros que se usan en obtener parametros son linea y list_posicion
 			completar_posiciones_iniciales(parametros_divididos[2],posiciones_iniciales);
 
-
-
 			Patota* pato = iniciarPatota(p_totales, tareas,t_totales,cantidad_tripulantes);
 			enviar_iniciar_patota(pato,cantidad_tripulantes);
 //			luego de enviar las tareas leidas a miram ya no nos interesa tenerlas en el discordiador
@@ -1007,11 +1047,27 @@ int hacerConsola() {
 				uint8_t posicionY = obtener_pos(posiciones_iniciales);
 
 				nuevo_tripulante = crear_tripulante(t_totales, p_totales, posicionX, posicionY);
+
+				pthread_mutex_lock(&sem_cola_new);
 				queue_push(new,nuevo_tripulante);
+				pthread_mutex_unlock(&sem_cola_new);
+
 				enviar_tripulante(nuevo_tripulante);
 
+				pthread_mutex_lock(&sem_cola_ready);
+//				pthread_mutex_lock(&trip_comparar);
+				trip_cmp=nuevo_tripulante;
+				pthread_mutex_lock(&sem_cola_new);
+//				list_add(ready,(Tripulante*)list_remove_by_condition(new->elements,esElMismoTripulante));
+				list_add(ready,queue_pop(new));
+				sem_post(&sem_tripulante_en_ready);
+				pthread_mutex_unlock(&sem_cola_ready);
+				pthread_mutex_unlock(&sem_cola_new);
+
+				pthread_mutex_unlock(&trip_comparar);
+
 				//inicializamos su hilo y su semaforo
-				//sem_init(&(tripu_prueba_mov->sem_pasaje_a_exec),NULL,0);
+				sem_init(&(tripu_prueba_mov->sem_pasaje_a_exec),NULL,0);
 				pthread_create(&(nuevo_tripulante->hilo_vida), NULL, (void*) vivirTripulante, (void*) nuevo_tripulante);
 				t_totales++;
 			}
@@ -1059,7 +1115,6 @@ int hacerConsola() {
 			 */
 			list_clean(posiciones_iniciales);
 			free(posiciones_iniciales);
-			puts("termine al if de iniciar patota");
 		}
 
 
@@ -1074,7 +1129,7 @@ int hacerConsola() {
 				primerInicio=false;
 			}
 			puts("jejepaso");
-			a = 0;
+			int a = 0;
 			//DEFINO UN SEM CONTADOR QUE NOS VA A SERVIR PARA PAUSAR LA PLANIFICACION DONDE QUERAMOS DESPUES
 			while (a < multiProcesos) {
 				sem_post(&hilosEnEjecucion);
@@ -1166,7 +1221,7 @@ int hacerConsola() {
 		if (string_contains(linea,"PAUSAR_PLANIFICACION")) {
 			///ver como lo hacemos
 			// YA LO HICE LOL BASUCAMENTE LES TIRAS UN WAIT HASTA QUE LLEGUEN A 0 PARA QUE NO PUEDAN EJECUTAR
-			a = 0;
+			int a = 0;
 			while (a < multiProcesos) {
 				sem_wait(&hilosEnEjecucion);
 				a++;
@@ -1191,6 +1246,7 @@ int hacerConsola() {
 			free(obtener_id_trip[1]);
 			free(obtener_id_trip);
 		}
+
 		if (string_contains(linea, "PRUEBA_MOVER"))
 		{
 //			moverTripulante(tripu_prueba_mov,3,3);
@@ -1201,7 +1257,7 @@ int hacerConsola() {
 		if (string_contains(linea, "PRUEBA_ESTADO"))
 		{
 			char** prueba_estado =string_split(linea, " ");
-			//cambiar_estado(tripu_prueba_mov,prueba_estado[1]);
+			cambiar_estado(tripu_prueba_mov,prueba_estado[1]);
 
 		}
 
@@ -1218,8 +1274,8 @@ int hacerConsola() {
 
 		if (string_contains(linea,"PRUEBA_PEDIR"))
 		{
-			//pedir_tarea(tripu_prueba_mov);
-			//puts(tripu_prueba_mov->Tarea);
+			pedir_tarea(tripu_prueba_mov);
+			puts(tripu_prueba_mov->Tarea);
 
 
 		}
@@ -1229,11 +1285,15 @@ int hacerConsola() {
 }
 
 int main() {
+<<<<<<< HEAD
 //	PATH MARTIN
 //	config = config_create("/home/utnso/Escritorio/tp-2021-1c-Cebollitas-subcampeon/discordiador/discordiador.config");
 
 //	PATH ALE
 	config = config_create("/home/utnso/Escritorio/orgfinal/discordiador/discordiador.config");
+
+//	PATH JUAN
+//	config = config_create("/home/utnso/Escritorio/Conexiones/discordiador/discordiador.config");
 
 	ipMiRam= config_get_string_value(config, "IP_MI_RAM_HQ");
 	puertoMiRam = config_get_string_value(config, "PUERTO_MI_RAM_HQ");
@@ -1243,6 +1303,8 @@ int main() {
 	puertoMongoStore = config_get_string_value(config, "PUERTO_I_MONGO_STORE");
 	ipMongoStore = config_get_string_value(config, "IP_I_MONGO_STORE");
 	quantum = config_get_int_value(config, "QUANTUM");
+	tiempo_sabotaje= config_get_int_value(config, "TIEMPO_SABOTAJE");
+
 	//Patota* pat= iniciarPatota(1,1,execute,"TAREAD:TXT",t_totales);
 
 	//INICIALIAZAMOS LOS SEMAFOROS

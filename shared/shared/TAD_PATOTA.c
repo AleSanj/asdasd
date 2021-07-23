@@ -66,6 +66,7 @@ struct pcb
 	devolverPatota->inicio = inicio;
 	devolverPatota->fin = inicio + fin - 1;
 
+
 	return devolverPatota;
 }
 

@@ -1,6 +1,39 @@
-16:43:27 **** Incremental Build of configuration Default for project shared ****
+17:39:41 **** Build of configuration Default for project shared ****
 make all 
+mkdir -p bin
+mkdir -p obj
+gcc  -Wall -DDEBUG -g -c -fmessage-length=0 -MMD -MP -MF"obj/conexion.d" -MT"obj/conexion.d" -o "obj/conexion.o" "shared/conexion.c"
+shared/conexion.c: In function ‘enviar_paquete_tarea’:
+shared/conexion.c:206:11: warning: return makes pointer from integer without a cast [-Wint-conversion]
+    return respuesta;
+           ^
+shared/conexion.c:212:11: warning: return makes pointer from integer without a cast [-Wint-conversion]
+    return respuesta;
+           ^
+shared/conexion.c:218:14: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+    respuesta = NULL;
+              ^
+shared/conexion.c:221:11: warning: return makes pointer from integer without a cast [-Wint-conversion]
+    return respuesta;
+           ^
+gcc  -Wall -DDEBUG -g -c -fmessage-length=0 -MMD -MP -MF"obj/serializacion.d" -MT"obj/serializacion.d" -o "obj/serializacion.o" "shared/serializacion.c"
+gcc  -Wall -DDEBUG -g -c -fmessage-length=0 -MMD -MP -MF"obj/TAD_TRIPULANTE.d" -MT"obj/TAD_TRIPULANTE.d" -o "obj/TAD_TRIPULANTE.o" "shared/TAD_TRIPULANTE.c"
+shared/TAD_TRIPULANTE.c: In function ‘tripulanteCreate’:
+shared/TAD_TRIPULANTE.c:38:29: warning: implicit declaration of function ‘strdup’ [-Wimplicit-function-declaration]
+  devolverTripulante->estado=strdup("New");
+                             ^
+shared/TAD_TRIPULANTE.c:38:29: warning: incompatible implicit declaration of built-in function ‘strdup’
+shared/TAD_TRIPULANTE.c: In function ‘crear_tripulante’:
+shared/TAD_TRIPULANTE.c:46:23: warning: incompatible implicit declaration of built-in function ‘strdup’
+  tripulante->estado = strdup("NEW");
+                       ^
+gcc  -Wall -DDEBUG -g -c -fmessage-length=0 -MMD -MP -MF"obj/TAD_PATOTA.d" -MT"obj/TAD_PATOTA.d" -o "obj/TAD_PATOTA.o" "shared/TAD_PATOTA.c"
+shared/TAD_PATOTA.c: In function ‘iniciarPatota’:
+shared/TAD_PATOTA.c:65:27: warning: implicit declaration of function ‘strdup’ [-Wimplicit-function-declaration]
+  devolverPatota->tareas = strdup(tareas);
+                           ^
+shared/TAD_PATOTA.c:65:27: warning: incompatible implicit declaration of built-in function ‘strdup’
 ar rcs -o "bin/libshared.a"  obj/conexion.o  obj/serializacion.o  obj/TAD_TRIPULANTE.o  obj/TAD_PATOTA.o
 
-16:43:27 Build Finished (took 815ms)
+17:39:42 Build Finished (took 1s.122ms)
 
