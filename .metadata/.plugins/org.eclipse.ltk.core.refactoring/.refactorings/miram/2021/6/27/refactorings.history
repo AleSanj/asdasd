@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Move &apos;mi_ram_hq.config&apos; to &apos;miram&apos;" description="Move &apos;mi_ram_hq.config&apos; to &apos;miram&apos;" destination="/miram" element1="src/mi_ram_hq.config" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1624890352288" updateReferences="true"/>
-</session>
