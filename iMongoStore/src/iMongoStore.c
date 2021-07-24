@@ -95,7 +95,7 @@ void restaurar_file_system()
 
 char* leer_bloque(int nuro_bloque)
 {
-	char* retorno=string_new();
+	char* retorno=malloc(tamanio_bloque+1);
 
 	memcpy(retorno,(copiaBlock+nuro_bloque*tamanio_bloque),tamanio_bloque);
 	return retorno;
@@ -103,7 +103,7 @@ char* leer_bloque(int nuro_bloque)
 
 char* leer_resto_bloque(int nuro_bloque,int resto)
 {
-	char* retorno=string_new();
+	char* retorno=malloc(resto+1);
 
 	memcpy(retorno,(copiaBlock+(nuro_bloque*tamanio_bloque)),resto);
 	return retorno;
@@ -123,7 +123,7 @@ char* obtener_bitacora(int id_trip)
 	int count_block_bita=config_get_int_value(bita,"BLOCK_COUNT");
 	char* bitacora= malloc(zise+1);
 	int offset=0;
-	char* leido=malloc(zise+1);
+
 	for(int auxilio=0; auxilio<count_block_bita ;auxilio++)
 	{
 
@@ -131,21 +131,22 @@ char* obtener_bitacora(int id_trip)
 		{
 			pthread_mutex_lock(&mutexEscrituraBloques);
 
-			leido=leer_resto_bloque(atoi(bloquecitos[auxilio]),zise%tamanio_bloque);
+			char* leido=leer_resto_bloque(atoi(bloquecitos[auxilio]),zise%tamanio_bloque);
 			pthread_mutex_unlock(&mutexEscrituraBloques);
 				leido[(zise%tamanio_bloque)+1]='\0';
 				memcpy(bitacora+offset,leido,(zise%tamanio_bloque)+1);
 				//offset+=zise%tamanio_bloque+1;
-
+				free(leido);
 		}
 		else
 		{
 			pthread_mutex_lock(&mutexEscrituraBloques);
-			 leido=leer_bloque(atoi(bloquecitos[auxilio]));
+			 char* leido=leer_bloque(atoi(bloquecitos[auxilio]));
 			 pthread_mutex_unlock(&mutexEscrituraBloques);
 				leido[tamanio_bloque+1]='\0';
 				memcpy(bitacora+offset,leido,(tamanio_bloque));
 				offset+=tamanio_bloque;
+				free(leido);
 
 		}
 
@@ -335,9 +336,23 @@ void* atender_mensaje (int socketTripulante){
 	printf("PAQUETE DE TIPO %d RECIBIDO\n",paquete_recibido->codigo_operacion);
 
 	switch(paquete_recibido->codigo_operacion) {
-
-
+	case OBTENER_BITACORA:;
+		t_pedido_mongo* bitacora = deserializar_pedido_mongo(paquete_recibido);
+		char* devolver=obtener_bitacora(bitacora->id_tripulante);
+		//send
+		free(devolver);
+		liberar_t_pedido_mongo(bitacora);
+		break;
+	case MOVIMIENTO_MONGO:;
+		t_movimiento_mongo* mov= deserializar_movimiento_mongo(paquete_recibido);
+		char* bitacorear= sprintf("Se mueve de %d|%d a %d|%d", mov->origen_x,mov->origen_y,mov->destino_x,mov->destino_y);
+		escribir_en_bitacora(mov->id_tripulante,bitacorear);
+		free(bitacorear);
+		liberar_t_movimiento_mongo(mov);
+		break;
 	}
+
+	return NULL;
 	}
 
 int string_to_int(char* palabra)
