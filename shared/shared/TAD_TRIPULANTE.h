@@ -16,20 +16,23 @@
 #include <commons/log.h>
 #include <commons/string.h>
 #include <stdint.h>
+#include <semaphore.h>
 
 typedef struct {
 	char* nombre;
-	bool es_io;
+	bool 	es_io;
 	uint8_t parametro;
 	uint8_t posicion_x;
 	uint8_t posiciion_y;
 	uint8_t duracion;
 
 } tarea_tripulante;
+
 typedef struct
 {
 	uint8_t idTripulante;
 	uint8_t idPatota;
+
 } tareaTripulante;
 
 typedef struct {
@@ -43,7 +46,7 @@ typedef struct {
 	int espera;
 	int kuantum;
 	pthread_t hilo_vida;
-	pthread_t sem_pasaje_a_exec;
+	sem_t sem_pasaje_a_exec;
 } Tripulante;
 
 typedef struct {

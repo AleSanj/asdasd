@@ -9,6 +9,7 @@
 #include <netdb.h>
 #include <unistd.h>
 
+
 #include "TAD_PATOTA.h"
 #include "TAD_TRIPULANTE.h"
 
@@ -44,12 +45,13 @@ typedef enum {
 typedef enum {
 	INICIAR_PATOTA, //Es lo mismo que iniciar_paota?		// LISTO
 	TRIPULANTE,												// LISTO
-	PATOTA,			//Cuando se manda el tipo de mensaje patota ?
-	PEDIR_TAREA,		//pedir y enviar tarea se podria hacer en un solo mensaje, una vez hecha la conexion se puede hacer
-	ENVIOTAREA,		//send y recv las veces que quieran
+	PEDIR_TAREA,											// LISTO
+//pedir y enviar tarea se podria hacer en un solo mensaje, una vez hecha la conexion se puede hacer
 	ACTUALIZAR_POS,											//LISTO
 	ELIMINAR_TRIPULANTE,									//LISTO
 	ACTUALIZAR_ESTADO,										//LISTO
+	OBTENER_BITACORA,										//LISTO
+	MOVIMIENTO_MONGO,										//
 	SABOTAJE
 }CODE_OP;
 
@@ -67,12 +69,6 @@ typedef struct
 	char* estado;
 }cambio_estado;
 
-
-
-//================================
-/*
- * Hay que determinara como se mandan los FILE*, o si debemos mandar un char*
- */
 typedef struct
 {
 	uint8_t idPatota;
@@ -99,13 +95,28 @@ typedef struct {
 
 }t_cambio_estado;
 
-/*
+typedef struct {
+
+	uint8_t id_tripulante;
+	uint32_t tamanio_mensaje;
+	char* mensaje;
+
+}t_pedido_mongo;
 typedef struct {
 	uint8_t id_tripulante;
-	uint8_t id_
-}t_solicitar_tarea;
-					Capaz podemos usar t_tripulante
-*/
+	uint8_t origen_x;
+	uint8_t origen_y;
+	uint8_t destino_x;
+	uint8_t destino_y;
+
+}t_movimiento_mongo;
+
+typedef struct {
+	uint8_t cantidad;
+	char tipo;
+	char consumible;
+
+}t_consumir_recurso;
 
 /*========================== TODOS =================================*/
 void crear_buffer(t_paquete* paquete);
@@ -179,19 +190,24 @@ char* enviar_paquete_tarea(t_paquete* paquete,int socket);
  * CAPAZ PODEMOS USAR UN T_TRIPULANTE O T_ELIMINAR_TRIPULANTE
  */
 
-//--------------------------------------------------------
-void serializar_tarea(char* tarea, int socket);
-char* deserializar_tarea(t_buffer* buffer);
+//-----------------------PEDIDO_MONGO---------------------------------
 
+void agregar_paquete_pedido_mongo(t_paquete* paquete, t_pedido_mongo* estructura);
+t_pedido_mongo* deserializar_pedido_mongo(t_paquete* paquete);
+void imprimir_pedido_mongo(t_pedido_mongo* estructura);
+void liberar_t_pedido_mongo(t_pedido_mongo* estructura);
 
-//--------------------------------------------------------
-void serializar_patota( Patota* unaPatota, int socket);
-Patota* deserializarPatota(t_buffer* buffer);
+//----------------------- MOVIMIENTO_MONGO ---------------------------------
+void agregar_paquete_movimiento_mongo(t_paquete* paquete, t_movimiento_mongo* estructura);
+t_movimiento_mongo* deserializar_movimiento_mongo(t_paquete* paquete);
+void imprimir_movimiento_mongo(t_movimiento_mongo* estructura);
+void liberar_t_movimiento_mongo(t_movimiento_mongo* estructura);
 
-//--------------------------------------------------------
-void serializar_sabotaje(char* sabotaje, int socket);
-char* deserializar_sabotaje(t_buffer* buffer);
-
+//----------------------- CONSUMIR RECURSOS ---------------------------------
+void agregar_paquete_consumir_recurso(t_paquete* paquete, t_consumir_recurso* estructura);
+t_consumir_recurso* deserializar_consumir_recurso(t_paquete* paquete);
+void imprimir_consumir_recurso(t_consumir_recurso* estructura);
+void liberar_t_consumir_recurso(t_consumir_recurso* estructura);
 
 
 

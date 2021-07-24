@@ -203,13 +203,13 @@ char* enviar_paquete_tarea(t_paquete* paquete,int socket){
 		if(recv(socket, &respuesta, sizeof(uint8_t), 0) <=0){
 			liberar_conexion(socket);
 			eliminar_paquete(paquete);
-			return respuesta;
+			return NULL;
 		}
 
 		if(recv(socket, &tamanio_tarea, sizeof(uint32_t), 0) <=0){
 			liberar_conexion(socket);
 			eliminar_paquete(paquete);
-			return respuesta;
+			return NULL;
 		}
 
 		tarea = malloc(tamanio_tarea);
@@ -218,7 +218,7 @@ char* enviar_paquete_tarea(t_paquete* paquete,int socket){
 			respuesta = NULL;
 			liberar_conexion(socket);
 			eliminar_paquete(paquete);
-			return respuesta;
+			return NULL;
 		}
 
 		puts("Respuesta recibida\n");

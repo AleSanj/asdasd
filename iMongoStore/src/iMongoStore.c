@@ -20,17 +20,6 @@
 #define USAR_RECURSOS 20
 #define ACTUALIZAR_BITACORA 21
 
-struct t_buffer {
-    uint32_t size; // Tamaño del payload
-    void* stream; // Payload
-};
-
-
-struct t_paquete {
-    uint8_t codigo_operacion;
-    t_buffer* buffer;
-};
-
 struct t_bitarray{
 	char *bitarray;
 	size_t size;
@@ -235,7 +224,12 @@ int leer_ultimo_bloque(int bloque,char recu)
 	}
 	return retorno;
 }
-#define PATH_CONFIG "/home/utnso/iMongoStore/iMongoStore/config/mongoStore.config"
+//	PATH JUAN
+//#define PATH_CONFIG "/home/utnso/iMongoStore/iMongoStore/config/mongoStore.config"
+//#define PATH_CONEXION "/home/utnso/tp-2021-1c-Cebollitas-subcampeon/libCompartida/config/conexiones.config"
+
+//	PATH ALE
+#define PATH_CONFIG "/home/utnso/Escritorio/Conexiones/iMongoStore/config/mongoStore.config"
 #define PATH_CONEXION "/home/utnso/tp-2021-1c-Cebollitas-subcampeon/libCompartida/config/conexiones.config"
 
 int main(void) {
@@ -297,7 +291,7 @@ int main(void) {
 	eliminarCaracter(5,'O');
 	int hola=leer_ultimo_bloque(0,'O');
 	//arreglar_sabotaje();
-	//generar_bitacora(7);
+	generar_bitacora(7);
 	escribir_en_bitacora(7,"HOLA EZE TODO PIOLA");
 
 	//char* mostrar=obtener_bitacora(7);
@@ -310,22 +304,41 @@ int main(void) {
 	printf("%d  \n",hola);
 	//free(mostrar);
 	puts("CUMBIA 420 PA LO NEGRO\n");
-	pthread_join(sincro,NULL);
+//	pthread_join(sincro,NULL);
 //LEVANTAMOS SERVER Y ATENDEMOS TRIPULANTES
-	/*int server_fs=crear_server("8667","127.0.0.1");
-	int socketTripulante= esperar_cliente(server_fs, 10);
+
+	int server_fs=crear_server("6667");
+
 	while(1)
 	{
-		if(socketTripulante!=-1)
-		{
+		int socketTripulante= esperar_cliente(server_fs, 10);
+		if (socketTripulante == -1)
+			continue;
+
 			pthread_t hiloTripulante;
 			pthread_create(&hiloTripulante,NULL,atender_mensaje,socketTripulante);
-		}
 
-	}*/
+
+	}
+
 	return EXIT_SUCCESS;
 }
 
+void* atender_mensaje (int socketTripulante){
+	int respuesta;
+	t_paquete* paquete_recibido = recibir_paquete(socketTripulante, &respuesta);
+	if (paquete_recibido->codigo_operacion == -1 || respuesta == ERROR) {
+		liberar_conexion(socketTripulante);
+		eliminar_paquete(paquete_recibido);
+	}
+
+	printf("PAQUETE DE TIPO %d RECIBIDO\n",paquete_recibido->codigo_operacion);
+
+	switch(paquete_recibido->codigo_operacion) {
+
+
+	}
+	}
 
 int string_to_int(char* palabra)
 {
@@ -649,7 +662,7 @@ void interrupt_handler(int signal)
 
 }
 
-void* atender_mensaje(int cliente){
+//void* atender_mensaje(int cliente){
 //	int socket_cliente = (int) cliente;
 //	t_paquete *paquete = recibir_paquete_y_desempaquetar(socket_cliente);
 //	void *stream_obtenido = paquete -> buffer -> stream;
@@ -660,7 +673,7 @@ void* atender_mensaje(int cliente){
 //	free(paquete -> buffer -> stream);
 //	free(paquete -> buffer);
 //	free(paquete);
-}
+//}
 
 
 void inicializar_carpetas(){
@@ -1361,134 +1374,3 @@ _Bool esMetadataRecurso(char* rutini)
 	return string_contains(rutini,"Oxigeno")||string_contains(rutini,"Basura")||
 			string_contains(rutini,"Comida");
 }
-
-int crear_server(char* puerto,char* ip){
-
-	struct addrinfo hints;
-	struct addrinfo *serverInfo;
-
-	memset(&hints, 0, sizeof(hints));
-	hints.ai_family = AF_UNSPEC;		// No importa si uso IPv4 o IPv6
-	hints.ai_flags = AI_PASSIVE;		// Asigna el address del localhost: 127.0.0.1
-	hints.ai_socktype = SOCK_STREAM;	// Indica que usaremos el protocolo TCP
-
-	getaddrinfo(NULL, puerto, &hints, &serverInfo);
-
-	/*for (p=servinfo; p != NULL; p = p->ai_next)
-   {
-       if ((socket_servidor = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1)
-            continue;
-
-        int activado = 1;
-        setsockopt(socket_servidor,SOL_SOCKET,SO_REUSEADDR,&activado,sizeof(activado));
-
-        if (bind(socket_servidor, p->ai_addr, p->ai_addrlen) == -1) {
-            close(socket_servidor);
-            continue;
-        }
-        break;
-    }*/
-
-	int listenningSocket;
-
-	listenningSocket = socket(serverInfo->ai_family, serverInfo->ai_socktype, serverInfo->ai_protocol);
-
-	bind(listenningSocket,serverInfo->ai_addr, serverInfo->ai_addrlen);
-	freeaddrinfo(serverInfo);
-	return listenningSocket;
-}
-//
-int esperar_cliente(int socket_server, int backlog){
-
-		listen(socket_server,backlog);
-		struct sockaddr_in addr;
-		socklen_t addrlen = sizeof(addr);
-
-		int socket_cliente = accept(socket_server, (struct sockaddr *) &addr, &addrlen);
-
-
-		printf("Cliente conectado. Esperando mensajes:\n");
-	/*
-		while (status != 0){
-		status = recv(socketCliente, (void*) package, PACKAGESIZE, 0);
-		if (status != 0) printf("%s", package);
-
-		}
-	*/
-		return socket_cliente;
-
-}
-//
-//void terminar_servidor(int socket_cliente){
-//	close(socket_cliente);
-//}
-//int crear_conexion(char* ip, char* puerto)
-//{
-//	struct addrinfo hints;
-//	struct addrinfo *server_info;
-//
-//	memset(&hints, 0, sizeof(hints));
-//	hints.ai_family = AF_UNSPEC;
-//	hints.ai_socktype = SOCK_STREAM;
-//	hints.ai_flags = AI_PASSIVE;
-//
-//	getaddrinfo(ip, puerto, &hints, &server_info);
-//
-//	int socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
-//
-//	if(connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen) == -1)
-//		printf("error");
-//
-//	freeaddrinfo(server_info);
-//
-//	return socket_cliente;
-//}
-//
-//int iniciar_servidor(char* ip, int port){
-//	int socket_servidor;
-//	char* puerto = string_itoa(port); //Crea un string a partir de un numero
-//	struct addrinfo hints, *servinfo, *p;
-//
-//	memset(&hints, 0, sizeof(hints));
-//	hints.ai_family = AF_UNSPEC;
-//	hints.ai_socktype = SOCK_STREAM;
-//	hints.ai_flags = AI_PASSIVE;
-//
-//	getaddrinfo(ip, puerto, &hints, &servinfo);
-//
-//	for (p=servinfo; p != NULL; p = p->ai_next)
-//	{
-//		if ((socket_servidor = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1)
-//			continue;
-//
-//		int activado = 1;
-//		setsockopt(socket_servidor,SOL_SOCKET,SO_REUSEADDR,&activado,sizeof(activado));
-//
-//		if (bind(socket_servidor, p->ai_addr, p->ai_addrlen) == -1) {
-//			close(socket_servidor);
-//			continue;
-//		}
-//		break;
-//	}
-//	printf("Servidor corriendo correctamente\n");
-//	listen(socket_servidor, SOMAXCONN);
-//
-//	freeaddrinfo(servinfo);
-//
-//	free(puerto);
-//
-//	//log_trace(logger, "Listo para escuchar a mi cliente");
-//
-//	return socket_servidor;
-//}
-//
-//void liberar_conexion(int socket_cliente)
-//{
-//	close(socket_cliente);
-//}
-//
-//void liberar_paquete(t_paquete *paquete, void* stream){
-//	free(paquete -> buffer -> stream);
-//	free(paquete -> buffer);
-//	free(paquete);
-//}

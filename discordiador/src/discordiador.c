@@ -100,6 +100,7 @@ void* identidad(void* t)
 //esta para saber si es el mismo tripulante
 bool esElMismoTripulante(Tripulante* ra)
 {
+
 	return (trip_cmp->id == ra->id);
 }
 
@@ -112,7 +113,7 @@ int calcular_distancia(Tripulante* tripulante, int x, int y)
 
 bool es_tarea_IO(char* tarea)
 {
-	return string_contains(tarea, "GENERAR") || string_contains(tarea,"CONSUMIR");;
+	return (string_contains(tarea, "GENERAR") || string_contains(tarea,"CONSUMIR"));
 }
 
 
@@ -307,13 +308,15 @@ tarea_tripulante* convertir_tarea(char* tarea){
 void mover_a_finalizado(Tripulante* tripulante){
 	t_list* lista_ready = ready->elements;
 	t_list* lista_block = bloqueados->elements;
-
+	pthread_mutex_lock(&trip_comparar);
+	trip_cmp = tripulante;
 	if (string_contains(tripulante->estado,"Ready")){
 		pthread_mutex_lock(&sem_cola_ready);
 		pthread_mutex_lock(&sem_cola_exit);
 		list_add(finalizado,list_remove_by_condition(lista_ready,(void*)esElMismoTripulante));
 		pthread_mutex_unlock(&sem_cola_ready);
 		pthread_mutex_unlock(&sem_cola_exit);
+		pthread_mutex_unlock(&trip_comparar);
 		return;
 	}
 
@@ -323,6 +326,7 @@ void mover_a_finalizado(Tripulante* tripulante){
 		list_add(finalizado,list_remove_by_condition(lista_block,(void*)esElMismoTripulante));
 		pthread_mutex_unlock(&sem_cola_bloqIO);
 		pthread_mutex_unlock(&sem_cola_exit);
+		pthread_mutex_unlock(&trip_comparar);
 		return;
 		}
 
@@ -332,6 +336,8 @@ void mover_a_finalizado(Tripulante* tripulante){
 		list_add(finalizado,list_remove_by_condition(execute,(void*)esElMismoTripulante));
 		pthread_mutex_unlock(&sem_cola_exec);
 		pthread_mutex_unlock(&sem_cola_exit);
+		sem_post(&multiProcesamiento);
+		pthread_mutex_unlock(&trip_comparar);
 		return;
 		}
 
@@ -367,8 +373,7 @@ void eliminarTripulante(Tripulante* tripulante)
 
 
 	mover_a_finalizado(tripulante);
-	cambiar_estado(tripulante,"Exit");
-	sem_post(&multiProcesamiento);
+	cambiar_estado(tripulante,"EXIT");
 	pthread_exit(&(tripulante->hilo_vida));
 }
 void* iniciar_Planificacion()
@@ -393,6 +398,7 @@ void* iniciar_Planificacion()
 		pthread_mutex_unlock(&sem_cola_ready);
 		pthread_mutex_unlock(&sem_cola_exec);
 		sem_post(&(pararPlanificacion[0]));
+		sem_post(&(tripulante->sem_pasaje_a_exec));
 
 	}
 }
@@ -544,6 +550,8 @@ void hacerFifo(Tripulante* tripu) {
 			sem_post(&hilosEnEjecucion);
 			tripu->espera --;
 		}
+		free(tripu->Tarea->nombre);
+		tripu->Tarea->nombre = NULL;
 		tripu->Tarea =NULL;
 		sem_post(&tripu->sem_pasaje_a_exec);
 	}
@@ -577,21 +585,29 @@ void hacerRoundRobin(Tripulante* tripulant) {
 		tripulant->kuantum=0;
 		hacerTareaIO(tripulant);
 	}
-	while ((contadorQuantum < quantum)&& tripulant->vida)
+	while ((contadorQuantum < quantum) && tripulant->vida && tripulant->espera > 0)
 	{
+
 		sem_wait(&hilosEnEjecucion);
 		sleep(retardoCpu);
+		if (tripulant->posicionX == tripulant->Tarea->posicion_x && tripulant->posicionY == tripulant->Tarea->posiciion_y){
 		tripulant->espera--;
+		} else {
+			moverTripulante(tripulant);
+		}
 		contadorQuantum++;
 		sem_post(&hilosEnEjecucion);
 	}
 
-
 	if (tripulant->posicionX == tripulant->Tarea->posicion_x && tripulant->posicionY == tripulant->Tarea->posiciion_y && tripulant->espera==0 &&tripulant->vida)
 	{
 		tripulant->kuantum=contadorQuantum;
-		tripulant->Tarea = NULL;
-		sem_post(&tripulant->sem_pasaje_a_exec);
+
+		free(tripulant->Tarea->nombre);
+		tripulant->Tarea->nombre = NULL;
+		tripulant->Tarea =NULL;
+
+		sem_post(&(tripulant->sem_pasaje_a_exec));
 	}else
 	{
 		tripulant->kuantum=0;
@@ -628,6 +644,8 @@ void* vivirTripulante(Tripulante* tripulante) {
 
 	while (tripulante->vida) {
 		sem_wait(&(tripulante->sem_pasaje_a_exec));
+		if(tripulante->vida == false)
+			break;
 
 		if (tripulante->Tarea == NULL){
 			pedir_tarea(tripulante);
@@ -650,28 +668,13 @@ void* vivirTripulante(Tripulante* tripulante) {
 		sem_wait(&prueba);
 		tripulante->espera = tripulante->Tarea->duracion;
 
-
-//		if (!string_contains(tripulante->estado,"EXEC")){
-//			printf("%d Se quedo esperando que lo pasen a exec\n",tripulante->id);
-
-
-			//ES HORA DE QUE EL VAGO DEL TRIPULANTE SE PONGA A LABURAR
 			hacerTarea(tripulante);
-	}
 
-//	pthread_mutex_lock(&sem_cola_exec);
-//	pthread_mutex_lock(&sem_cola_exit);
-//	list_add(finalizado,list_remove_by_condition(execute,(void*)esElMismoTripulante));
-//	pthread_mutex_unlock(&sem_cola_exec);
-//	pthread_mutex_unlock(&sem_cola_exit);
-//  Me parece que estos movimientos ya estan hechos en eliminarTRIPulante
-	sem_post(&multiProcesamiento);
-	cambiar_estado(tripulante,"EXIT");
 	eliminarTripulante(tripulante);
 
-	//ESTE RETURN NULL ES PARA CASTEARLA EN EL CREATE UNA PEQUEÑA BOLUDEZ
 	return NULL;
 
+	}
 }
 void* atender_sabotaje(char* instruccion_sabotaje)
 {
@@ -1000,7 +1003,7 @@ Tripulante* buscar_tripulante(int tripulante_buscado){
 int hacerConsola() {
 	//SIEMPRE HAY QUE SER CORTEZ Y SALUDAR
 	puts("Bienvenido a A-MongOS de Cebollita Subcampeon \n");
-	char* linea=string_new();
+	char* linea = string_new();
 		//----- TRIPULANTE DE PRUEBA
 		/*Tripulante* tripu_prueba_mov = malloc (sizeof(Tripulante)); // CREAMOS UN TRIPULANTE PARA PROBAR LOS MOVIMIENTOS
 		tripu_prueba_mov->id = 88;
@@ -1055,16 +1058,11 @@ int hacerConsola() {
 				enviar_tripulante(nuevo_tripulante);
 
 				pthread_mutex_lock(&sem_cola_ready);
-//				pthread_mutex_lock(&trip_comparar);
-				trip_cmp=nuevo_tripulante;
 				pthread_mutex_lock(&sem_cola_new);
-//				list_add(ready,(Tripulante*)list_remove_by_condition(new->elements,esElMismoTripulante));
 				list_add(ready,queue_pop(new));
 				sem_post(&sem_tripulante_en_ready);
 				pthread_mutex_unlock(&sem_cola_ready);
 				pthread_mutex_unlock(&sem_cola_new);
-
-				pthread_mutex_unlock(&trip_comparar);
 
 				//inicializamos su hilo y su semaforo
 //				sem_init(&(tripu_prueba_mov->sem_pasaje_a_exec),NULL,0);
@@ -1073,40 +1071,6 @@ int hacerConsola() {
 			}
 			p_totales++;
 
-//			Tripulante* tripulante_iterator = pato->tripulacion[0];
-//			for (int i = 0; i<cantidad_tripulantes; i++) {
-//			int socket_tripulante = conectarse_Mi_Ram();
-//				//SERIALIZO Y EN VIO
-////---------- Creamos un paquete vacio, que solo contiene el codigo de operacion --------------------
-//				t_paquete* paquete_tripulante_a_enviar = crear_paquete(TRIPULANTE);
-////---------- Luego creamos la estructura que queremos enviar y la completamos--------------------
-//				t_tripulante* tripulante = malloc(sizeof(t_tripulante));
-//				tripulante->id_tripulante = tripulante_iterator->id;
-//				tripulante->id_patota = tripulante_iterator->idPatota;
-//				tripulante->posicion_x = tripulante_iterator->posicionX;
-//				tripulante->posicion_y= tripulante_iterator->posicionY;
-//				agregar_paquete_tripulante(paquete_tripulante_a_enviar,tripulante);
-////---------- comprobamos que esta bien --------------------
-//				printf("TIPO DE PAQUETE: %d\n",paquete_tripulante_a_enviar->codigo_operacion);
-//				imprimir_paquete_tripulante(tripulante);
-//
-////---------- con un paquete ya creado podemos enviarlo y dejar que las funcionen hagan to do--------------------
-//				enviar_paquete(paquete_tripulante_a_enviar,socket_tripulante);
-//				free(tripulante_iterator->estado);
-//				tripulante_iterator->estado = strdup("READY");
-//				//LO AGREGO A LA COLA
-////				todo No se pq rompe al tratar de pushearlo en la cola ????????
-////				queue_push(ready, tripulante_iterator);
-//				//CORRO EL HILO DEL TRIPULANTE
-//
-//				pthread_create(&(tripulante_iterator->hilo), NULL, (void*) vivirTripulante, (void*) tripulante_iterator);
-//				tripulante_iterator = pato->tripulacion[i+1];
-//			}
-//
-//			//LIBERO MEMORIA BORRANDO EL ARRAY FEO DE TRIPULANTES
-//			//free(pato->tripulacion);
-//			free(pato->tareas);
-//			free(pato);
 			free(parametros_divididos);
 			/*
 			 * averiguar si es valido hacer
@@ -1239,8 +1203,16 @@ int hacerConsola() {
 			char** obtener_id_trip=string_split(linea, " ");
 			int id_tripulante = strtol(obtener_id_trip[1],NULL,10);
 			Tripulante* tripulante_rip = buscar_tripulante(id_tripulante);
+			printf("EL tripulante buscado es: %d de la patota: %d",tripulante_rip->id,tripulante_rip->idPatota);
 			tripulante_rip->vida = false;
-			eliminarTripulante(tripulante_rip);
+			sem_post(&(tripulante_rip->sem_pasaje_a_exec));
+			if(tripulante_rip == NULL){
+				puts("no existe ese tripulante");
+			} else{
+				if (string_contains(tripulante_rip->estado,"BLOQUEADO")){
+					eliminarTripulante(tripulante_rip);
+				}
+			}
 
 			free(obtener_id_trip[0]);
 			free(obtener_id_trip[1]);
@@ -1279,17 +1251,41 @@ int hacerConsola() {
 
 
 		}
-		free(linea);
+
+		if (string_contains(linea,"OBTENER_BITACORA")){
+			int socket_bitacora = conectarse_mongo();
+
+			char** obtener_id = string_split(linea, " ");
+			int tripulante_id = strtol(obtener_id[1],NULL,10);
+			t_paquete* paquete_bitacora= crear_paquete(OBTENER_BITACORA);
+			t_pedido_mongo* pedido_bitacora = malloc(sizeof(t_pedido_mongo));
+			pedido_bitacora->id_tripulante = tripulante_id;
+			pedido_bitacora->mensaje =string_new();
+			pedido_bitacora->tamanio_mensaje = strlen(pedido_bitacora->mensaje) + 1;
+
+			agregar_paquete_pedido_mongo(paquete_bitacora,pedido_bitacora);
+			enviar_paquete(paquete_bitacora,socket_bitacora);
+			liberar_t_pedido_mongo(pedido_bitacora);
+
+
+
+		free(obtener_id[0]);
+		free(obtener_id[1]);
+		free(obtener_id);
+		}
+
 	}
 
+	free(linea);
 }
+
 
 int main() {
 //	PATH MARTIN
 //	config = config_create("/home/utnso/Escritorio/tp-2021-1c-Cebollitas-subcampeon/discordiador/discordiador.config");
 
 //	PATH ALE
-	config = config_create("/home/utnso/Escritorio/orgfinal/discordiador/discordiador.config");
+	config = config_create("/home/utnso/Escritorio/Conexiones/discordiador/discordiador.config");
 
 //	PATH JUAN
 //	config = config_create("/home/utnso/Escritorio/Conexiones/discordiador/discordiador.config");
@@ -1302,7 +1298,7 @@ int main() {
 	puertoMongoStore = config_get_string_value(config, "PUERTO_I_MONGO_STORE");
 	ipMongoStore = config_get_string_value(config, "IP_I_MONGO_STORE");
 	quantum = config_get_int_value(config, "QUANTUM");
-	tiempo_sabotaje= config_get_int_value(config, "TIEMPO_SABOTAJE");
+//	tiempo_sabotaje= config_get_int_value(config, "TIEMPO_SABOTAJE");
 
 	//Patota* pat= iniciarPatota(1,1,execute,"TAREAD:TXT",t_totales);
 
@@ -1328,8 +1324,6 @@ int main() {
 
 	finalizado = list_create();
 	pthread_mutex_init(&sem_cola_exit, NULL);
-
-
 
 	pthread_mutex_init(&socketMiRam, NULL);
 	pthread_mutex_init(&socketMongo, NULL);
@@ -1364,7 +1358,7 @@ int main() {
 		{
 		  sabotaje=deserializar_sabotaje(paquete->buffer);
 		  int parar_todo_sabotaje = 0;
-		  while (parar_todo_sabotaje< multiProcesos)
+		  while (parar_todo_sabotaje < multiProcesos)
 		  {
 		  sem_wait(&hilosEnEjecucion);
 		  parar_todo_sabotaje++;
@@ -1378,14 +1372,13 @@ int main() {
 		free(paquete->buffer);
 		free(paquete);
 		pthread_t hilo_sabotaje;
-		pthread_create(&hilo_sabotaje,NULL,(void*)atender_sabotaje,sabotaje);
+		pthread_create(&hilo_sabotaje,NULL,(void*) atender_sabotaje,sabotaje);
 	}
 
 
 
 	printf("hola mundo\n");
-
 	return 0;
-
-	/* ADIO' wachin ! */
 }
+	/* ADIO' wachin ! */
+

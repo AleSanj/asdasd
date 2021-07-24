@@ -211,11 +211,137 @@ void liberar_t_cambio_estado(t_cambio_estado* estructura){
 	free(estructura);
 }
 
+//============================== PEDIDO_MONGO ========================================
+void agregar_paquete_pedido_mongo(t_paquete* paquete, t_pedido_mongo* estructura){
+	int offset = 0;
+
+	paquete->buffer->size += sizeof(uint8_t) * sizeof(uint32_t) + estructura->tamanio_mensaje;
+	paquete->buffer->stream = realloc(paquete->buffer->stream,paquete->buffer->size);
+
+	memcpy(paquete->buffer->stream, &(estructura->id_tripulante), sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(paquete->buffer->stream + offset, &(estructura->tamanio_mensaje), sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	memcpy(paquete->buffer->stream+offset, estructura->mensaje, estructura->tamanio_mensaje);
 
 
+}
+t_pedido_mongo* deserializar_pedido_mongo(t_paquete* paquete){
+	t_pedido_mongo* estructura = malloc(sizeof(t_pedido_mongo));
+	int offset = 0;
 
-//============================== CAMBIO_ESTADO ========================================
+	memcpy(&(estructura->id_tripulante), paquete->buffer->stream, sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(&(estructura->tamanio_mensaje), paquete->buffer->stream+offset, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+	memcpy(estructura->mensaje, paquete->buffer->stream + offset, estructura->tamanio_mensaje);
 
+	eliminar_paquete(paquete);
+	return estructura;
+
+}
+void imprimir_pedido_mongo(t_pedido_mongo* estructura){
+	printf("ID TRIPULANTE: %d\n",estructura->id_tripulante);
+	printf("TAMANIO MENSAJE: %d\n",estructura->tamanio_mensaje);
+	printf("MENSAJE: %s\n",estructura->mensaje);
+	puts("");
+}
+
+void liberar_t_pedido_mongo(t_pedido_mongo* estructura){
+	free(estructura->mensaje);
+	free(estructura);
+}
+
+//============================== MOVIMIENTO_MONGO ========================================
+void agregar_paquete_movimiento_mongo(t_paquete* paquete, t_movimiento_mongo* estructura){
+	int offset = 0;
+
+	paquete->buffer->size += sizeof(uint8_t) * 5;
+	paquete->buffer->stream = realloc(paquete->buffer->stream,paquete->buffer->size);
+
+	memcpy(paquete->buffer->stream, &(estructura->id_tripulante), sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(paquete->buffer->stream, &(estructura->origen_x), sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(paquete->buffer->stream, &(estructura->origen_y), sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(paquete->buffer->stream, &(estructura->destino_x), sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(paquete->buffer->stream, &(estructura->destino_y), sizeof(uint8_t));
+
+}
+
+t_movimiento_mongo* deserializar_movimiento_mongo(t_paquete* paquete){
+	t_movimiento_mongo* estructura = malloc(sizeof(t_movimiento_mongo));
+	int offset = 0;
+
+	memcpy(&(estructura->id_tripulante), paquete->buffer->stream, sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(&(estructura->origen_x), paquete->buffer->stream, sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(&(estructura->origen_y), paquete->buffer->stream, sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(&(estructura->destino_x), paquete->buffer->stream, sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(&(estructura->destino_y), paquete->buffer->stream, sizeof(uint8_t));
+
+	eliminar_paquete(paquete);
+	return estructura;
+
+
+}
+void imprimir_movimiento_mongo(t_movimiento_mongo* estructura){
+	printf("ID TRIPULANTE: %d\n",estructura->id_tripulante);
+	printf("ORIGEN X: %d\n",estructura->origen_x);
+	printf("ORIGEN Y: %d\n",estructura->origen_y);
+	printf("DESTINO X: %d\n",estructura->destino_x);
+	printf("DESTINO Y: %d\n",estructura->destino_y);
+
+}
+void liberar_t_movimiento_mongo(t_movimiento_mongo* estructura){
+	free(estructura);
+}
+
+//============================== CONSUMIR_MONGO ========================================
+
+void agregar_paquete_consumir_recurso(t_paquete* paquete, t_consumir_recurso* estructura){
+	int offset = 0;
+
+	paquete->buffer->size += sizeof(uint8_t) + sizeof(char)*2;
+	paquete->buffer->stream = realloc(paquete->buffer->stream,paquete->buffer->size);
+
+	memcpy(paquete->buffer->stream, &(estructura->cantidad), sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(paquete->buffer->stream, &(estructura->tipo), sizeof(char));
+	offset += sizeof(char);
+	memcpy(paquete->buffer->stream, &(estructura->consumible), sizeof(char));
+
+}
+t_consumir_recurso* deserializar_consumir_recurso(t_paquete* paquete){
+	t_consumir_recurso* estructura = malloc(sizeof(t_movimiento_mongo));
+	int offset = 0;
+
+	memcpy(&(estructura->cantidad), paquete->buffer->stream, sizeof(uint8_t));
+	offset += sizeof(uint8_t);
+	memcpy(&(estructura->tipo), paquete->buffer->stream, sizeof(char));
+	offset += sizeof(char);
+	memcpy(&(estructura->consumible), paquete->buffer->stream, sizeof(char));
+
+	eliminar_paquete(paquete);
+	return estructura;
+}
+void imprimir_consumir_recurso(t_consumir_recurso* estructura){
+	printf("CANTIDAD: %d\n",estructura->cantidad);
+	printf("TIPO: %d\n",estructura->tipo);
+	printf("RECURSO: %d\n",estructura->consumible);
+
+}
+void liberar_t_consumir_recurso(t_consumir_recurso* estructura){
+	free(estructura);
+}
+
+
+//============================== 				  ========================================
 void serializar_tarea_tripulante( Tripulante* tareaTrip, int socket)
 {
 	t_buffer* buffer = malloc(sizeof(t_buffer));
@@ -265,42 +391,42 @@ tareaTripulante* deserializar_tarea_tripulante(t_buffer* buffer)
 	return tarea;
 }
 
-void serializar_tarea(char* tarea, int socket)
-{
-	t_buffer* buffer = malloc(sizeof(t_buffer));
-
-	buffer->size = sizeof(uint32_t)+strlen(tarea)+1;
-	uint32_t tamano= strlen(tarea)+1;
-
-	void* stream = malloc(buffer->size);
-	int offset = 0; // Desplazamiento
-	memcpy(stream+offset,&tamano,sizeof(uint32_t));
-	offset+=sizeof(uint32_t);
-	memcpy(stream+offset,tarea,strlen(tarea)+1);
-	buffer->stream=stream;
-	free(tarea);
-	t_paquete* paquete = malloc(sizeof(t_paquete));
-
-
-				//CODIGO DE OPERACION 1 = UN TRIUPLANTE
-	paquete->codigo_operacion = ENVIOTAREA; // Podemos usar una constante por operación
-	paquete->buffer = buffer; // Nuestro buffer de antes.
-
-				// Armamos el stream a enviar
-	void* a_enviar = malloc(buffer->size + sizeof(uint8_t) + sizeof(uint32_t));
-	offset = 0;
-
-    memcpy(a_enviar + offset, &(paquete->codigo_operacion), sizeof(uint8_t));
-
-	send(socket, a_enviar, buffer->size + sizeof(uint8_t) + sizeof(uint32_t), 0);
-
-				// No nos olvidamos de liberar la memoria que ya no usaremos
-	free(a_enviar);
-	free(paquete->buffer->stream);
-	free(paquete->buffer);
-				free(paquete);
-
-}
+//void serializar_tarea(char* tarea, int socket)
+//{
+//	t_buffer* buffer = malloc(sizeof(t_buffer));
+//
+//	buffer->size = sizeof(uint32_t)+strlen(tarea)+1;
+//	uint32_t tamano= strlen(tarea)+1;
+//
+//	void* stream = malloc(buffer->size);
+//	int offset = 0; // Desplazamiento
+//	memcpy(stream+offset,&tamano,sizeof(uint32_t));
+//	offset+=sizeof(uint32_t);
+//	memcpy(stream+offset,tarea,strlen(tarea)+1);
+//	buffer->stream=stream;
+//	free(tarea);
+//	t_paquete* paquete = malloc(sizeof(t_paquete));
+//
+//
+//				//CODIGO DE OPERACION 1 = UN TRIUPLANTE
+//	paquete->codigo_operacion = ENVIOTAREA; // Podemos usar una constante por operación
+//	paquete->buffer = buffer; // Nuestro buffer de antes.
+//
+//				// Armamos el stream a enviar
+//	void* a_enviar = malloc(buffer->size + sizeof(uint8_t) + sizeof(uint32_t));
+//	offset = 0;
+//
+//    memcpy(a_enviar + offset, &(paquete->codigo_operacion), sizeof(uint8_t));
+//
+//	send(socket, a_enviar, buffer->size + sizeof(uint8_t) + sizeof(uint32_t), 0);
+//
+//				// No nos olvidamos de liberar la memoria que ya no usaremos
+//	free(a_enviar);
+//	free(paquete->buffer->stream);
+//	free(paquete->buffer);
+//				free(paquete);
+//
+//}
 
 char* deserializar_tarea(t_buffer* buffer)
 {

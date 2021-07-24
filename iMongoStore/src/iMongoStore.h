@@ -26,6 +26,8 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <math.h>
+#include <shared/conexion.h>
+
 
 //LOGS, CONFIGS, TRIPULANTE, SABOTAJE Y PATOTA
 typedef struct{
@@ -34,53 +36,8 @@ typedef struct{
 	uint8_t posy;
 } Sabotaje;
 
-typedef struct
-{
-	uint8_t id;
-	uint8_t idPatota;
-	uint32_t estado_length;
-	char* estado;
-	uint32_t Tarea_length;
-	char* Tarea;
-	uint8_t posicionX;
-	uint8_t posicionY;
-	pthread_t hilo;
-
-} Tripulante;
-
-typedef struct
-{
-   uint8_t id;
-	Tripulante* tripulacion [10] ;
-	char* tareas;
-	uint32_t tareas_length;
-}Patota;
-
 t_log* iniciar_logger(char* logger_path);
 t_config* leer_config(char* config_path);
-
-
-//SERIALIZACION
-
-typedef struct {
-    uint32_t size; // Tamaño del payload
-    void* stream; // Payload
-} t_buffer;
-
-typedef struct {
-    uint8_t codigo_operacion;
-    t_buffer* buffer;
-} t_paquete;
-
-//SERIALIZACION
-
-//CONEXION
-//int crear_server(char*,char*,int);
-//int esperar_cliente(int);
-//int crear_conexion(char* ip, char* puerto);
-//void liberar_conexion(int socket_cliente);
-//int iniciar_servidor(char* ip, int port);
-//CONEXION
 
 //VARIABLES GLOBALES
 t_config *mongoStore_config;
