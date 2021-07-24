@@ -48,7 +48,8 @@ t_list* blocks_used;
 char* IP;
 char* logger_path_mongostore;
 char* punto_montaje;
-
+char* puertoDicordiador;
+char* ipDiscordiador;
 int bloques;
 int tamanio_bloque;
 int tiempoSincro;

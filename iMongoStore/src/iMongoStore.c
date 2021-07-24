@@ -349,10 +349,46 @@ void* atender_mensaje (int socketTripulante){
 		break;
 	case MOVIMIENTO_MONGO:;
 		t_movimiento_mongo* mov= deserializar_movimiento_mongo(paquete_recibido);
+		char* tiempo= temporal_get_string_time("%H:%M:%S:%MS");
 		char* bitacorear= sprintf("Se mueve de %d|%d a %d|%d", mov->origen_x,mov->origen_y,mov->destino_x,mov->destino_y);
-		escribir_en_bitacora(mov->id_tripulante,bitacorear);
-		free(bitacorear);
+		string_append(&tiempo,bitacorear);
+		escribir_en_bitacora(mov->id_tripulante,tiempo);
+		free(tiempo);
 		liberar_t_movimiento_mongo(mov);
+		liberar_conexion(socketTripulante);
+		break;
+	case CONSUMIR_RECURSO:;
+		t_consumir_recurso* consu= deserializar_consumir_recurso(paquete_recibido);
+		if(consu->tipo=='C')
+		{
+			eliminarCaracter((int)consu->cantidad, consu->consumible);
+		}
+		else
+		{
+			agregarCaracter((int)consu->cantidad,consu->consumible);
+		}
+		liberar_t_consumir_recurso(consu);
+		liberar_conexion(socketTripulante);
+		break;
+	case INICIO_TAREA:;
+		t_pedido_mongo* inico = deserializar_pedido_mongo(paquete_recibido);
+		char* agregar= temporal_get_string_time("%H:%M:%S:%MS");
+		string_append(&agregar,"SE_INICIO_LA_TAREA_");
+		string_append(&agregar,inico->mensaje);
+		escribir_en_bitacora(inico->id_tripulante,agregar);
+		free(agregar);
+		liberar_t_pedido_mongo(inico);
+		liberar_conexion(socketTripulante);
+		break;
+	case FIN_TAREA:;
+		t_pedido_mongo* inicio = deserializar_pedido_mongo(paquete_recibido);
+		char* agregare = temporal_get_string_time("%H:%M:%S:%MS");
+		string_append(&agregare,"SE_FINALIZA_LA_TAREA_");
+		string_append(&agregare,inicio->mensaje);
+		escribir_en_bitacora(inicio->id_tripulante,agregar);
+		free(agregar);
+		liberar_t_pedido_mongo(inicio);
+		liberar_conexion(socketTripulante);
 		break;
 	}
 
@@ -671,28 +707,29 @@ void interrupt_handler(int signal)
 	char** pocicion_sabotaje=config_get_array_value(mongoStore_config,"POSICIONES_SABOTAJE");
 	//char* a mandar al discordaidor
 	char* posicion_mandar=pocicion_sabotaje[sabotaje_actual];
-	sabotaje_actual++;
 
-// aca arregla el sabotaje
+	int socketCliente=crear_conexion(ipDiscordiador,puertoDicordiador);
+	t_pedido_mongo* posSabo=malloc(sizeof(t_pedido_mongo));
+	posSabo->mensaje=posicion_mandar;
+	posSabo->tamanio_mensaje=strlen(posicion_mandar)+1;
+	t_paquete* paquete_enviar= crear_paquete(SABOTAJE);
+	agregar_paquete_pedido_mongo(paquete_enviar,posSabo);
+	char* bitacorear_sabo= enviar_paquete_respuesta_string(paquete_enviar,socketCliente);
+	int id;
+	recv(socketCliente,&id,sizeof(uint8_t),0);
+	escribir_en_bitacora(id,bitacorear_sabo);
+	// aca arregla el sabotaje
 	arreglar_sabotaje();
-	printf("hola GILL");
-// aca tendria que mandar a discordiador que se arreglo
+	// aca tendria que mandar discordiador que se arreglo
+	recv(socketCliente,bitacorear_sabo,strlen("FINALIZAR_SABOTAJE")+1,0);
+	escribir_en_bitacora(id,bitacorear_sabo);
+	free(bitacorear_sabo);
+
+	sabotaje_actual++;
 
 
 }
 
-//void* atender_mensaje(int cliente){
-//	int socket_cliente = (int) cliente;
-//	t_paquete *paquete = recibir_paquete_y_desempaquetar(socket_cliente);
-//	void *stream_obtenido = paquete -> buffer -> stream;
-//
-//	switch(paquete -> codigo_operacion){
-//
-//	}
-//	free(paquete -> buffer -> stream);
-//	free(paquete -> buffer);
-//	free(paquete);
-//}
 
 
 void inicializar_carpetas(){
@@ -1185,18 +1222,19 @@ void escribir_en_bitacora(int idTripulante, char* texto){
 	string_append(&ruta_bitacora, "/Files/Bitacoras/Tripulante");
 	string_append(&ruta_bitacora, id_trip);
 	string_append(&ruta_bitacora, ".ims");
-	if(verificar_existencia(ruta_bitacora) == 1){
+	if(verificar_existencia(ruta_bitacora) != 1)
+	{
+		generar_bitacora(idTripulante);
+		log_error(logger, "se creo la bitacora!");
+	}
+	else{
 		int longitud = strlen(texto);
 		//Escribe en la bitacora!
-		for (int i = 0; i < longitud; i++){
+		for (int i = 0; i < longitud; i++)
+		{
 			escribirEnBloque(1, texto[i], ruta_bitacora);
 		}
 		escribirEnBloque(1, '\n', ruta_bitacora);
-	}
-	else
-	{
-		printf("No existe esa bitacora!");
-		log_error(logger, "No existe esa bitacora!");
 	}
 }
 
