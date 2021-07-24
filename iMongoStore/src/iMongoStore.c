@@ -133,7 +133,7 @@ char* obtener_bitacora(int id_trip)
 
 			char* leido=leer_resto_bloque(atoi(bloquecitos[auxilio]),zise%tamanio_bloque);
 			pthread_mutex_unlock(&mutexEscrituraBloques);
-				leido[(zise%tamanio_bloque)+1]='\0';
+				leido[(zise%tamanio_bloque)]='\0';
 				memcpy(bitacora+offset,leido,(zise%tamanio_bloque)+1);
 				//offset+=zise%tamanio_bloque+1;
 				free(leido);
@@ -143,7 +143,7 @@ char* obtener_bitacora(int id_trip)
 			pthread_mutex_lock(&mutexEscrituraBloques);
 			 char* leido=leer_bloque(atoi(bloquecitos[auxilio]));
 			 pthread_mutex_unlock(&mutexEscrituraBloques);
-				leido[tamanio_bloque+1]='\0';
+				leido[tamanio_bloque]='\0';
 				memcpy(bitacora+offset,leido,(tamanio_bloque));
 				offset+=tamanio_bloque;
 				free(leido);
@@ -339,9 +339,13 @@ void* atender_mensaje (int socketTripulante){
 	case OBTENER_BITACORA:;
 		t_pedido_mongo* bitacora = deserializar_pedido_mongo(paquete_recibido);
 		char* devolver=obtener_bitacora(bitacora->id_tripulante);
-		//send
+		uint32_t tamanio_bitacora = strlen(devolver)+1;
+		send(socketTripulante,&tamanio_bitacora,sizeof(uint32_t),0);
+		send(socketTripulante,devolver,tamanio_bitacora,0);
 		free(devolver);
+
 		liberar_t_pedido_mongo(bitacora);
+		liberar_conexion(socketTripulante);
 		break;
 	case MOVIMIENTO_MONGO:;
 		t_movimiento_mongo* mov= deserializar_movimiento_mongo(paquete_recibido);

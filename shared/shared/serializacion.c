@@ -234,6 +234,8 @@ t_pedido_mongo* deserializar_pedido_mongo(t_paquete* paquete){
 	offset += sizeof(uint8_t);
 	memcpy(&(estructura->tamanio_mensaje), paquete->buffer->stream+offset, sizeof(uint32_t));
 	offset += sizeof(uint32_t);
+
+	estructura->mensaje = malloc(estructura->tamanio_mensaje);
 	memcpy(estructura->mensaje, paquete->buffer->stream + offset, estructura->tamanio_mensaje);
 
 	eliminar_paquete(paquete);

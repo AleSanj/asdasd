@@ -51,8 +51,15 @@ typedef enum {
 	ELIMINAR_TRIPULANTE,									//LISTO
 	ACTUALIZAR_ESTADO,										//LISTO
 	OBTENER_BITACORA,										//LISTO
-	MOVIMIENTO_MONGO,										//
-	SABOTAJE
+	MOVIMIENTO_MONGO,										//LISTO
+	SABOTAJE,												//LISTO
+	INICIO_TAREA,											//LISTO
+	FIN_TAREA,												//LISTO
+	INICIO_SABOTAJE,										//LISTO
+	FIN_SABOTAJE,											//LISTO
+	CONSUMIR_RECURSO										//LISTO
+
+
 }CODE_OP;
 
 typedef struct

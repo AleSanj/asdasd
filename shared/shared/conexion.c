@@ -33,7 +33,7 @@ int crear_server(char* puerto){
 	      if (bind(socket_server, aux_resultado->ai_addr, aux_resultado->ai_addrlen) != -1) {
 	        break;
 	      } else {
-	    	  printf("\nEl puerto ya esta siendo utilizado\n");
+//	    	  printf("\nEl puerto ya esta siendo utilizado\n");
 	        exit(EXIT_FAILURE);
 	        close(socket_server);
 	      }
@@ -46,7 +46,7 @@ int crear_server(char* puerto){
 
 	  freeaddrinfo(resultado);
 	  if (listen(socket_server, BACKLOG) != -1)
-	      printf("El servidor esta \"escuchando\" la informacion \n");
+//	      printf("El servidor esta \"escuchando\" la informacion \n");
 
 //	  printf("Servidor creado y bindeado correctamente\n");
 
@@ -59,14 +59,14 @@ int esperar_cliente(int socket_server, int backlog){
 
 	struct sockaddr direccion_cliente;
 	socklen_t tamanio_direccion_cliente = sizeof(direccion_cliente);
-	puts("Esperando nuevo cliente...");
+//	puts("Esperando nuevo cliente...");
 	socket_cliente = accept(socket_server, (struct sockaddr *)&direccion_cliente, &tamanio_direccion_cliente);
 	if (socket_cliente == -1) {
 		puts("El cliente no se pudo conectar");
 		return (-1);
 }
 
-	printf("Nuevo cliente aceptado con el socket: %d \n",socket_cliente);
+//	printf("Nuevo cliente aceptado con el socket: %d \n",socket_cliente);
 	return socket_cliente;
 
 
@@ -167,6 +167,7 @@ void crear_buffer(t_paquete* paquete) {
 }
 
 int enviar_paquete(t_paquete* paquete, int socket_cliente) {
+	printf("paquete a enviar de tipo: %d\n",paquete->codigo_operacion);
 	int bytes = paquete->buffer->size + sizeof(uint8_t) + sizeof(uint32_t);
 	void* a_enviar = serializar_paquete(paquete, bytes);
 	int respuesta = ERROR;
@@ -189,7 +190,8 @@ int enviar_paquete(t_paquete* paquete, int socket_cliente) {
 	return respuesta;
 }
 
-char* enviar_paquete_tarea(t_paquete* paquete,int socket){
+char* enviar_paquete_respuesta_string(t_paquete* paquete,int socket){
+	printf("paquete a enviar de tipo: %d\n",paquete->codigo_operacion);
 	int bytes = paquete->buffer->size + sizeof(uint8_t) + sizeof(uint32_t);
 	void* a_enviar = serializar_paquete(paquete, bytes);
 	uint8_t respuesta=0;
@@ -250,7 +252,7 @@ void eliminar_paquete(t_paquete* paquete) {
 }
 
 void liberar_conexion(int socket_cliente) {
-	printf("liberando socket: %d\n",socket_cliente);
+//	printf("liberando socket: %d\n",socket_cliente);
 	close(socket_cliente);
 }
 
