@@ -14,11 +14,7 @@
 #define BACKLOG 5			// Define cuantas conexiones vamos a mantener pendientes al mismo tiempo
 #define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
 
-#define TRIPULANTE 1
-#define PATOTA 1
-#define SABOTAJE 1
-#define USAR_RECURSOS 20
-#define ACTUALIZAR_BITACORA 21
+
 
 struct t_bitarray{
 	char *bitarray;
@@ -40,6 +36,85 @@ typedef struct
 } escrbir_bitacora;
 
 int blocks_sabot;
+
+//	PATH JUAN
+#define PATH_CONFIG "/home/utnso/asdasd/iMongoStore/config/mongoStore.config"
+//#define PATH_CONEXION "/home/utnso/tp-2021-1c-Cebollitas-subcampeon/libCompartida/config/conexiones.config"
+
+//	PATH ALE
+//#define PATH_CONFIG "/home/utnso/Escritorio/Conexiones/iMongoStore/config/mongoStore.config"
+#define PATH_CONEXION "/home/utnso/tp-2021-1c-Cebollitas-subcampeon/libCompartida/config/conexiones.config"
+
+int main(void) {
+	signal(SIGUSR1,&interrupt_handler);
+	mongoStore_config = leer_config(PATH_CONFIG);
+	//conexion_config = leer_config(PATH_CONEXION);
+
+	printf("Checkpoint 1");
+
+	//IP = config_get_string_value(conexion_config, "IP_MONGOSTORE");
+	logger_path_mongostore = config_get_string_value(mongoStore_config, "ARCHIVO_LOG");
+
+	printf("Checkpoint 2");
+
+	logger = iniciar_logger(logger_path_mongostore);
+
+	printf("Checkpoint 3");
+
+	punto_montaje = config_get_string_value(mongoStore_config, "PUNTO_MONTAJE");
+
+	//Generamos la conexion Mongo => Discordiador
+	//int puerto_mongostore = config_get_int_value(conexion_config, "PUERTO_MONGOSTORE");
+	//int server_FS = iniciar_servidor(IP, puerto_mongostore);
+
+	bloques = config_get_int_value(mongoStore_config, "BLOCKS");
+	blocks_sabot=bloques;
+	tamanio_bloque = config_get_int_value(mongoStore_config, "BLOCK_SIZE");
+	tiempoSincro = config_get_int_value(mongoStore_config, "TIEMPO_SINCRONIZACION");
+
+
+	//Inicializamos el File System, consultamos si ya existen los archivos o no
+	char* ruta_superbloque = string_new();
+	char* ruta_blocks = string_new();
+	string_append(&ruta_superbloque, punto_montaje);
+	string_append(&ruta_blocks, punto_montaje);
+	string_append(&ruta_superbloque, "/Superbloque/Superbloque.ims");
+	string_append(&ruta_blocks, "/Blocks/Blocks.ims");
+
+	//Inicializamos File System
+	if(verificar_existencia(ruta_blocks) == 0 && verificar_existencia(ruta_superbloque) == 0){
+		inicializar_carpetas();
+		crear_superbloque();
+		inicializar_bloques();
+		crear_archivo_files();
+	}
+	else
+	{
+		//RESTAURAMOS UN FILE YA CREADO
+		restaurar_file_system();
+	}
+	// LEVANTAMOS LA SINCRO DE LOS BLOQUES
+	pthread_t sincro;
+	pthread_create(&sincro,NULL,sincronizar_blocks,NULL);
+
+//LEVANTAMOS SERVER Y ATENDEMOS TRIPULANTES
+
+	int server_fs=crear_server("6667");//PUERTO HARCODEADO OJO !!!!!!!!!!!!!!!!!!!!!!
+
+	while(1)
+	{
+		int socketTripulante= esperar_cliente(server_fs, 10);
+		if (socketTripulante == -1)
+			continue;
+
+			pthread_t hiloTripulante;
+			pthread_create(&hiloTripulante,NULL,(void*)atender_mensaje,(void*)socketTripulante);
+
+
+	}
+
+	return EXIT_SUCCESS;
+}
 void restaurar_file_system()
 {
 	char* path_superbloque = string_new();
@@ -68,7 +143,7 @@ void restaurar_file_system()
 
 	//Sincronizas
 	msync(superbloque, res, MS_SYNC);
-
+	close(fd);
 
 	char* ruta_blocks = string_new();
 	string_append(&ruta_blocks, punto_montaje);
@@ -88,7 +163,7 @@ void restaurar_file_system()
 
     copiaBlock = mmap(NULL, res, PROT_READ | PROT_WRITE, MAP_SHARED, fdb, 0);
 	msync(copiaBlock,res,MS_SYNC);
-
+	close(fdb);
 
 
 }
@@ -225,105 +300,6 @@ int leer_ultimo_bloque(int bloque,char recu)
 	}
 	return retorno;
 }
-//	PATH JUAN
-//#define PATH_CONFIG "/home/utnso/iMongoStore/iMongoStore/config/mongoStore.config"
-//#define PATH_CONEXION "/home/utnso/tp-2021-1c-Cebollitas-subcampeon/libCompartida/config/conexiones.config"
-
-//	PATH ALE
-#define PATH_CONFIG "/home/utnso/Escritorio/Conexiones/iMongoStore/config/mongoStore.config"
-#define PATH_CONEXION "/home/utnso/tp-2021-1c-Cebollitas-subcampeon/libCompartida/config/conexiones.config"
-
-int main(void) {
-	signal(SIGUSR1,&interrupt_handler);
-	mongoStore_config = leer_config(PATH_CONFIG);
-	//conexion_config = leer_config(PATH_CONEXION);
-
-	printf("Checkpoint 1");
-
-	//IP = config_get_string_value(conexion_config, "IP_MONGOSTORE");
-	logger_path_mongostore = config_get_string_value(mongoStore_config, "ARCHIVO_LOG");
-
-	printf("Checkpoint 2");
-
-	logger = iniciar_logger(logger_path_mongostore);
-
-	printf("Checkpoint 3");
-
-	punto_montaje = config_get_string_value(mongoStore_config, "PUNTO_MONTAJE");
-
-	//Generamos la conexion Mongo => Discordiador
-	//int puerto_mongostore = config_get_int_value(conexion_config, "PUERTO_MONGOSTORE");
-	//int server_FS = iniciar_servidor(IP, puerto_mongostore);
-
-	bloques = config_get_int_value(mongoStore_config, "BLOCKS");
-	blocks_sabot=bloques;
-	tamanio_bloque = config_get_int_value(mongoStore_config, "BLOCK_SIZE");
-	tiempoSincro = config_get_int_value(mongoStore_config, "TIEMPO_SINCRONIZACION");
-
-
-	//Inicializamos el File System, consultamos si ya existen los archivos o no
-	char* ruta_superbloque = string_new();
-	char* ruta_blocks = string_new();
-	string_append(&ruta_superbloque, punto_montaje);
-	string_append(&ruta_blocks, punto_montaje);
-	string_append(&ruta_superbloque, "/Superbloque/Superbloque.ims");
-	string_append(&ruta_blocks, "/Blocks/Blocks.ims");
-
-	//Inicializamos File System
-	if(verificar_existencia(ruta_blocks) == 0 && verificar_existencia(ruta_superbloque) == 0){
-		inicializar_carpetas();
-		crear_superbloque();
-		inicializar_bloques();
-		crear_archivo_files();
-	}
-	else
-	{
-		restaurar_file_system();
-	}
-	pthread_t sincro;
-	pthread_create(&sincro,NULL,sincronizar_blocks,NULL);
-	arreglar_sabotaje();
-////	Operaciones de prueba que andan
-	agregarCaracter(137, 'o');
-//
-	printf("Checkpoint 4\n");
-	agregarCaracter(6,'B');
-	agregarCaracter(9, 'o');
-	eliminarCaracter(5,'O');
-	int hola=leer_ultimo_bloque(0,'O');
-	//arreglar_sabotaje();
-	generar_bitacora(7);
-	escribir_en_bitacora(7,"HOLA EZE TODO PIOLA");
-
-	//char* mostrar=obtener_bitacora(7);
-	//har** ver=string_split(mostrar,"\n");
-	//char* ju=malloc(2);
-	//ju="ho";
-	//printf("%s",mostrar);
-	//uint32_t hola;
-	//memcpy(&hola,superbloque,sizeof(uint32_t));
-	printf("%d  \n",hola);
-	//free(mostrar);
-	puts("CUMBIA 420 PA LO NEGRO\n");
-//	pthread_join(sincro,NULL);
-//LEVANTAMOS SERVER Y ATENDEMOS TRIPULANTES
-
-	int server_fs=crear_server("6667");
-
-	while(1)
-	{
-		int socketTripulante= esperar_cliente(server_fs, 10);
-		if (socketTripulante == -1)
-			continue;
-
-			pthread_t hiloTripulante;
-			pthread_create(&hiloTripulante,NULL,atender_mensaje,socketTripulante);
-
-
-	}
-
-	return EXIT_SUCCESS;
-}
 
 void* atender_mensaje (int socketTripulante){
 	int respuesta;
@@ -350,7 +326,8 @@ void* atender_mensaje (int socketTripulante){
 	case MOVIMIENTO_MONGO:;
 		t_movimiento_mongo* mov= deserializar_movimiento_mongo(paquete_recibido);
 		char* tiempo= temporal_get_string_time("%H:%M:%S:%MS");
-		char* bitacorear= sprintf("Se mueve de %d|%d a %d|%d", mov->origen_x,mov->origen_y,mov->destino_x,mov->destino_y);
+		char* bitacorear=string_new();
+		sprintf(bitacorear,"Se mueve de %d|%d a %d|%d", mov->origen_x,mov->origen_y,mov->destino_x,mov->destino_y);
 		string_append(&tiempo,bitacorear);
 		escribir_en_bitacora(mov->id_tripulante,tiempo);
 		free(tiempo);
@@ -593,7 +570,7 @@ void agregar_blocks_bitacoras(t_list* blocks_used)
 		string_append(&ruta_bita,string_itoa(tripulante));
 		string_append(&ruta_bita,".ims");
 	}
-
+	free(ruta_bita);
 }
 void agregar_blocks_recursos(t_list* blocks_used)
 {
@@ -609,8 +586,9 @@ void agregar_blocks_recursos(t_list* blocks_used)
 	string_append(&ruta_comida,punto_montaje);
 	string_append(&ruta_comida,"/Files/Comida.ims");
 	agregar_a_lista(ruta_comida,blocks_used);
-
-
+	free(ruta_oxigeno);
+	free(ruta_basura);
+	free(ruta_comida);
 }
 
 _Bool esElMsmoBit(int t,  int b)
@@ -660,6 +638,8 @@ void arreglar_bitMap()
 
 
 	}
+	msync(bitmap -> bitarray, tamanioBitmap, MS_SYNC);
+	msync(superbloque, 2*sizeof(uint32_t)+tamanioBitmap, MS_SYNC);
 
 	list_destroy(blocks_used);
 }
@@ -671,6 +651,7 @@ void arreglar_blocks()
 	if(bloquetotal!=bloques)
 	{
 		memcpy(superbloque+sizeof(uint32_t),&bloques,sizeof(uint32_t));
+		msync(superbloque, 2*sizeof(uint32_t)+tamanioBitmap, MS_SYNC);
 	}
 }
 
@@ -1225,7 +1206,10 @@ void escribir_en_bitacora(int idTripulante, char* texto){
 	if(verificar_existencia(ruta_bitacora) != 1)
 	{
 		generar_bitacora(idTripulante);
-		log_error(logger, "se creo la bitacora!");
+		char*log=string_new();
+		sprintf(log,"Se creo la bitacora del tripulante %d",idTripulante);
+		log_info(logger, log);
+		free(log);
 	}
 	else{
 		int longitud = strlen(texto);
@@ -1234,6 +1218,7 @@ void escribir_en_bitacora(int idTripulante, char* texto){
 		{
 			escribirEnBloque(1, texto[i], ruta_bitacora);
 		}
+
 		escribirEnBloque(1, '\n', ruta_bitacora);
 	}
 }

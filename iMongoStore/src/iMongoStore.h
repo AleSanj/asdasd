@@ -97,5 +97,17 @@ void eliminarCaracter(int cantidad, char caracter);
 void eliminarEnBloque(int cantidad, char caracter, char* rutita);
 int existeEnArray(char** array, char contenido);
 _Bool esMetadataRecurso(char* rutini);
+// sabotajes y lectura de blocks
+void restaurar_file_system();
+char* leer_bloque(int nuro_bloque);
+char* leer_resto_bloque(int nuro_bloque,int resto);
+char* obtener_bitacora(int id_trip);
+void* sincronizar_blocks();
+void borrar_bloque_entero(int bloqe);
+void borrar_resto_bloque(int bloq, int resto);
+void borrar_parte_bloque(int blok, int cant);
+int leer_ultimo_bloque(int bloque,char recu);
+
+
 
 #endif /* IMONGOSTORE_H_ */
