@@ -73,6 +73,7 @@
 //
 //
 //}
+
 void agregar_paquete_iniciar_patota(t_paquete* paquete, t_iniciar_patota* estructura){
 	int offset = 0;
 	paquete->buffer->size += sizeof(uint32_t) + sizeof(uint8_t)*2 + estructura->tamanio_tareas;

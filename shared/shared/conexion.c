@@ -33,7 +33,7 @@ int crear_server(char* puerto){
 	      if (bind(socket_server, aux_resultado->ai_addr, aux_resultado->ai_addrlen) != -1) {
 	        break;
 	      } else {
-//	    	  printf("\nEl puerto ya esta siendo utilizado\n");
+	    	  printf("\nEl puerto ya esta siendo utilizado\n");
 	        exit(EXIT_FAILURE);
 	        close(socket_server);
 	      }
@@ -48,7 +48,7 @@ int crear_server(char* puerto){
 	  if (listen(socket_server, BACKLOG) != -1)
 //	      printf("El servidor esta \"escuchando\" la informacion \n");
 
-//	  printf("Servidor creado y bindeado correctamente\n");
+	  printf("Servidor creado y bindeado correctamente\n");
 
 
 	  return socket_server;
