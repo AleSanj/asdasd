@@ -44,6 +44,8 @@ t_config *mongoStore_config;
 t_config *conexion_config;
 t_log *logger;
 t_list* blocks_used;
+pthread_t sincro;
+pthread_t sabo;
 
 char* IP;
 char* logger_path_mongostore;
@@ -64,10 +66,11 @@ void* copiaBlock;
 void* superbloque;
 
 int bloquesDelSistema;
-int sabotaje_actual=1;
+int sabotaje_actual=0;
 int size_o=0;
 int size_c=0;
 int size_b=0;
+bool correr_programa=true;
 
 pthread_mutex_t mutexEscrituraBloques;
 
@@ -107,7 +110,7 @@ void borrar_bloque_entero(int bloqe);
 void borrar_resto_bloque(int bloq, int resto);
 void borrar_parte_bloque(int blok, int cant);
 int leer_ultimo_bloque(int bloque,char recu);
-
+void* atender_signal();
 
 
 #endif /* IMONGOSTORE_H_ */

@@ -12,8 +12,7 @@
 #include <signal.h>
 //#define PUERTO "6667"
 #define BACKLOG 5			// Define cuantas conexiones vamos a mantener pendientes al mismo tiempo
-#define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
-
+#define PACKAGESIZE 1024// Define cual va a ser el size maximo del paquete a enviar
 
 
 struct t_bitarray{
@@ -45,8 +44,10 @@ int blocks_sabot;
 //#define PATH_CONFIG "/home/utnso/Escritorio/Conexiones/iMongoStore/config/mongoStore.config"
 #define PATH_CONEXION "/home/utnso/tp-2021-1c-Cebollitas-subcampeon/libCompartida/config/conexiones.config"
 
+
+
 int main(void) {
-	signal(SIGUSR1,&interrupt_handler);
+
 	mongoStore_config = leer_config(PATH_CONFIG);
 	//conexion_config = leer_config(PATH_CONEXION);
 
@@ -64,6 +65,8 @@ int main(void) {
 	punto_montaje = config_get_string_value(mongoStore_config, "PUNTO_MONTAJE");
 
 	//Generamos la conexion Mongo => Discordiador
+	ipDiscordiador=config_get_string_value(mongoStore_config,"IP_DISCORDIADOR");
+	puertoDicordiador=config_get_string_value(mongoStore_config,"PUERTO_DISCORDIADOR");
 	//int puerto_mongostore = config_get_int_value(conexion_config, "PUERTO_MONGOSTORE");
 	//int server_FS = iniciar_servidor(IP, puerto_mongostore);
 
@@ -87,21 +90,26 @@ int main(void) {
 		crear_superbloque();
 		inicializar_bloques();
 		crear_archivo_files();
+		log_info(logger,"Se inicializo el file System");
 	}
 	else
 	{
 		//RESTAURAMOS UN FILE YA CREADO
 		restaurar_file_system();
+		log_info(logger,"Se restauro el file System");
 	}
 	// LEVANTAMOS LA SINCRO DE LOS BLOQUES
-	pthread_t sincro;
+
 	pthread_create(&sincro,NULL,sincronizar_blocks,NULL);
+
+	pthread_create(&sabo,NULL,atender_signal,NULL);
+
 
 //LEVANTAMOS SERVER Y ATENDEMOS TRIPULANTES
 
 	int server_fs=crear_server("6667");//PUERTO HARCODEADO OJO !!!!!!!!!!!!!!!!!!!!!!
 
-	while(1)
+	while(correr_programa)
 	{
 		int socketTripulante= esperar_cliente(server_fs, 10);
 		if (socketTripulante == -1)
@@ -114,6 +122,17 @@ int main(void) {
 	}
 
 	return EXIT_SUCCESS;
+}
+
+
+//--------------------------------FUNCIONES-----------------------------------------------------
+
+void* atender_signal()
+{
+	signal(SIGUSR1,&interrupt_handler);
+	pause();
+
+	return NULL;
 }
 void restaurar_file_system()
 {
@@ -233,7 +252,7 @@ char* obtener_bitacora(int id_trip)
 }
 void* sincronizar_blocks()
 {
-	while(1){
+	while(correr_programa){
 			sleep(tiempoSincro);
 			int res=tamanio_bloque*bloques;
 			pthread_mutex_lock(&mutexEscrituraBloques);
@@ -248,6 +267,7 @@ void* sincronizar_blocks()
 				log_error(logger, "Sincronizacion exitosa con el bloque");
 		    }
 		}
+
 	return NULL;
 }
 void borrar_bloque_entero(int bloqe)
@@ -367,6 +387,10 @@ void* atender_mensaje (int socketTripulante){
 		liberar_t_pedido_mongo(inicio);
 		liberar_conexion(socketTripulante);
 		break;
+	case FIN:;
+		correr_programa=false;
+		pthread_exit(&sabo);
+		pthread_exit(&sincro);
 	}
 
 	return NULL;
@@ -1394,8 +1418,8 @@ void agregarCaracter(int cantidad, char caracter){
 }
 
 t_log* iniciar_logger(char* logger_path){
-	t_log *logger;
-	if((logger = log_create(logger_path, "cliente", 0, LOG_LEVEL_INFO)) == NULL){
+	t_log *logger= log_create(logger_path, "Mongo", 1, LOG_LEVEL_INFO);
+	if(logger  == NULL){
 		printf("No se puede leer el logger");
 		exit(1);
 	}
