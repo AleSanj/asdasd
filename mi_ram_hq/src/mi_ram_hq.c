@@ -8,6 +8,15 @@
  ============================================================================
  */
 
+// =============== PAHTS =================
+//-------------------------------------
+//PARA EJECUTAR DESDE CONSOLA USAR:
+//#define PATH_CONFIG "src/mi_ram_hq.config"
+//-------------------------------------
+//PARA EJECUTAR DESDE ECLIPSE USAR:
+#define PATH_CONFIG "src/mi_ram_hq.config"
+//-------------------------------------
+
 #include "mi_ram_hq.h"
 
 
@@ -17,11 +26,7 @@
 int main(void) {
 	int socketCliente, socketServer;
 
-//	PATH MARTIN
-//	config = config_create("/home/utnso/Escritorio/tp-2021-1c-Cebollitas-subcampeon/mi_ram_hq/src/mi_ram_hq.config");
-
-//	PATH ALE
-	config = config_create("/home/utnso/Escritorio/Conexiones/mi_ram_hq/src/mi_ram_hq.config");
+	config = config_create(PATH_CONFIG);
 	funcionando=true;
 	tamMemoria = config_get_int_value(config, "TAMANIO_MEMORIA");
 	esquemaMemoria = config_get_string_value(config, "ESQUEMA_MEMORIA");

@@ -8,6 +8,18 @@
  ============================================================================
  */
 
+// =============== PAHTS =================
+//-------------------------------------
+//PARA EJECUTAR DESDE CONSOLA USAR:
+#define PATH_CONFIG "../discordiador.config"
+#define PATH_TAREAS "../src/tareas/"
+//-------------------------------------
+//PARA EJECUTAR DESDE ECLIPSE USAR:
+//#define PATH_CONFIG "discordiador.config"
+//#define PATH_TAREAS "src/tareas/"
+//-------------------------------------
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -34,6 +46,7 @@ sem_t multiProcesamiento;
 
 pthread_t firstInit;
 pthread_mutex_t mutexIO;
+pthread_t hilo_sabotaje;
 
 //Semaforos para modificar las colas -------------
 pthread_mutex_t sem_cola_new;
@@ -67,6 +80,7 @@ char* ipMongoStore;
 char* puertoMongoStore;
 char* algoritmo;
 char* puertoSabotaje;
+int cliente_sabotaje;
 
 int a = 0;
 int TripulantesTotales = 0;
@@ -216,7 +230,7 @@ char* leer_tareas(char* path, int* cantidad_tareas){
 //	char* raiz = strdup("/home/utnso/Escritorio/tp-2021-1c-Cebollitas-subcampeon/discordiador/src/tareas/");
 
 //	path ale
-	char* raiz = strdup("/home/utnso/Escritorio/Conexiones/discordiador/src/tareas/");
+	char* raiz = strdup(PATH_TAREAS);
 
 //	path juan
 //	char* raiz = strdup("/home/utnso/Escritorio/Conexiones/discordiador/src/tareas/");
@@ -414,10 +428,9 @@ void* iniciar_Planificacion()
 		//este para proteger la lista de ejecutados
 		pthread_mutex_lock(&sem_cola_exec);
 		//AGREGO A LISTA DE EJECUCION
-		Tripulante* tripulante= (Tripulante*)queue_pop(ready);
+		Tripulante* tripulante= (Tripulante*) queue_pop(ready);
 		cambiar_estado(tripulante,"EXEC");
-//		Ativar semaforo tripulatne
-		printf("MOVI A %d a EXEC",tripulante->id);
+		printf("MOVI A %d a EXEC\n",tripulante->id);
 		list_add(execute, tripulante);
 		pthread_mutex_unlock(&sem_cola_ready);
 		pthread_mutex_unlock(&sem_cola_exec);
@@ -478,7 +491,7 @@ void* moverTripulante(Tripulante* tripu)
 	if (tripu->Tarea->posicion_x > tripu->posicionX) {
 		tripu->posicionX++;
 		enviar_posicion(tripu,socket_miram);
-		enviar_posicion_mongo(posicion_actual_x,posicion_actual_y,tripu,socket_miram);
+//		enviar_posicion_mongo(posicion_actual_x,posicion_actual_y,tripu,socket_miram);
 
 		return ret;
 
@@ -487,7 +500,7 @@ void* moverTripulante(Tripulante* tripu)
 	if (tripu->Tarea->posicion_x < tripu->posicionX) {
 		tripu->posicionX--;
 		enviar_posicion(tripu,socket_miram);
-		enviar_posicion_mongo(posicion_actual_x,posicion_actual_y,tripu,socket_miram);
+//		enviar_posicion_mongo(posicion_actual_x,posicion_actual_y,tripu,socket_miram);
 
 		return ret;
 	}
@@ -495,7 +508,7 @@ void* moverTripulante(Tripulante* tripu)
 	if (tripu->Tarea->posiciion_y < tripu->posicionY) {
 		tripu->posicionY--;
 		enviar_posicion(tripu,socket_miram);
-		enviar_posicion_mongo(posicion_actual_x,posicion_actual_y,tripu,socket_miram);
+//		enviar_posicion_mongo(posicion_actual_x,posicion_actual_y,tripu,socket_miram);
 
 		return ret;
 	}
@@ -503,7 +516,7 @@ void* moverTripulante(Tripulante* tripu)
 	if (tripu->Tarea->posiciion_y > tripu->posicionY) {
 		tripu->posicionY++;
 		enviar_posicion(tripu,socket_miram);
-		enviar_posicion_mongo(posicion_actual_x,posicion_actual_y,tripu,socket_miram);
+//		enviar_posicion_mongo(posicion_actual_x,posicion_actual_y,tripu,socket_miram);
 
 		return ret;
 	}
@@ -526,60 +539,60 @@ void enviar_posicion(Tripulante* tripulante,int socket_miram){
 
 }
 
-void enviar_inicio_fin_mongo(int socket_mongostore, Tripulante* enviar, char c){
+void enviar_inicio_fin_mongo(Tripulante* enviar, char c){
 	char* mensaje;
-
-	switch (c){
-	case 'I':;
-	t_paquete* paquete_inicio = crear_paquete(INICIO_TAREA);
-	t_pedido_mongo* mensaje_inicio = malloc(sizeof(t_pedido_mongo));
-	mensaje = strdup(enviar->Tarea->nombre);
-
-	mensaje_inicio-> id_tripulante= enviar->id;
-	mensaje_inicio-> tamanio_mensaje = strlen(mensaje)+1;
-	mensaje_inicio-> mensaje  = mensaje;
-
-	agregar_paquete_pedido_mongo(paquete_inicio,mensaje_inicio);
-	enviar_paquete(paquete_inicio,socket_mongostore);
-
-	liberar_t_pedido_mongo(mensaje_inicio);
-	break;
-
-	case 'F':;
-	t_paquete* paquete_fin = crear_paquete(FIN_TAREA);
-	t_pedido_mongo* mensaje_fin = malloc(sizeof(t_pedido_mongo));
-	mensaje = strdup(enviar->Tarea->nombre);
-
-	mensaje_fin-> id_tripulante= enviar->id;
-	mensaje_fin-> tamanio_mensaje = strlen(mensaje)+1;
-	mensaje_fin-> mensaje  = mensaje;
-
-	agregar_paquete_pedido_mongo(paquete_fin,mensaje_fin);
-	enviar_paquete(paquete_fin,socket_mongostore);
-
-	liberar_t_pedido_mongo(mensaje_fin);
-	break;
+//	int socket_mongostore = conectarse_mongo();
+//	switch (c){
+//	case 'I':;
+//	t_paquete* paquete_inicio = crear_paquete(INICIO_TAREA);
+//	t_pedido_mongo* mensaje_inicio = malloc(sizeof(t_pedido_mongo));
+//	mensaje = strdup(enviar->Tarea->nombre);
+//
+//	mensaje_inicio-> id_tripulante= enviar->id;
+//	mensaje_inicio-> tamanio_mensaje = strlen(mensaje)+1;
+//	mensaje_inicio-> mensaje  = mensaje;
+//
+//	agregar_paquete_pedido_mongo(paquete_inicio,mensaje_inicio);
+//	enviar_paquete(paquete_inicio,socket_mongostore);
+//
+//	liberar_t_pedido_mongo(mensaje_inicio);
+//	break;
+//
+//	case 'F':;
+//	t_paquete* paquete_fin = crear_paquete(FIN_TAREA);
+//	t_pedido_mongo* mensaje_fin = malloc(sizeof(t_pedido_mongo));
+//	mensaje = strdup(enviar->Tarea->nombre);
+//
+//	mensaje_fin-> id_tripulante= enviar->id;
+//	mensaje_fin-> tamanio_mensaje = strlen(mensaje)+1;
+//	mensaje_fin-> mensaje  = mensaje;
+//
+//	agregar_paquete_pedido_mongo(paquete_fin,mensaje_fin);
+//	enviar_paquete(paquete_fin,socket_mongostore);
+//
+//	liberar_t_pedido_mongo(mensaje_fin);
+//	break;
 
 	}
 
 void enviar_consumir_recurso(Tripulante* tripulante){
-	int socket_mongostore = conectarse_mongo();
-	t_paquete* paquete = crear_paquete(CONSUMIR_RECURSO);
-	t_consumir_recurso* consumir = malloc(sizeof(consumir));
-	consumir->cantidad = tripulante->Tarea->parametro;
-	char** tarea_dividida = string_split(tripulante->Tarea->nombre,"_");
-
-	consumir->tipo = tarea_dividida[0][0];
-	consumir->consumible = tarea_dividida[1][0];
-
-	agregar_paquete_consumir_recurso(paquete,consumir);
-	enviar_paquete(paquete,socket_mongostore);
-	liberar_t_consumir_recurso(consumir);
-
-	free(tarea_dividida[0]);
-	free(tarea_dividida[1]);
-	free(tarea_dividida);
-}
+//	int socket_mongostore = conectarse_mongo();
+//	t_paquete* paquete = crear_paquete(CONSUMIR_RECURSO);
+//	t_consumir_recurso* consumir = malloc(sizeof(consumir));
+//	consumir->cantidad = tripulante->Tarea->parametro;
+//	char** tarea_dividida = string_split(tripulante->Tarea->nombre,"_");
+//
+//	consumir->tipo = tarea_dividida[0][0];
+//	consumir->consumible = tarea_dividida[1][0];
+//
+//	agregar_paquete_consumir_recurso(paquete,consumir);
+//	enviar_paquete(paquete,socket_mongostore);
+//	liberar_t_consumir_recurso(consumir);
+//
+//	free(tarea_dividida[0]);
+//	free(tarea_dividida[1]);
+//	free(tarea_dividida);
+//}
 
 
 
@@ -590,8 +603,7 @@ void enviarMongoStore(Tripulante* enviar) {
 	// char* ="22:09 inicio consumir_oxigeno    "
 	//char[0], [O,B,C]ocigeno|comida|basura, parametro->tarea
 	esta_haciendo_IO=enviar;
-	int socket_mongostore= conectarse_mongo();
-	enviar_inicio_fin_mongo(socket_mongostore,enviar,'I');
+	enviar_inicio_fin_mongo(enviar,'I');
 
 //	enviar_consumir_recurso(enviar);
 	while((enviar->espera!=0)&& enviar->vida)
@@ -605,7 +617,7 @@ void enviarMongoStore(Tripulante* enviar) {
 	}
 	//lo paso a cola ready
 	// char* ="22:09 Fin consumir_oxigeno"
-	enviar_inicio_fin_mongo(socket_mongostore,enviar,'F');
+	enviar_inicio_fin_mongo(enviar,'F');
 	bloqueado_a_ready(enviar);
 
 
@@ -643,8 +655,7 @@ void hacerFifo(Tripulante* tripu) {
 	}
 	else {
 		//una vez que llego donde tenia que llegar espera lo que tenia que esperar
-		int socket_mongostore = conectarse_mongo();
-		enviar_inicio_fin_mongo(socket_mongostore,tripu,'I');
+		enviar_inicio_fin_mongo(tripu,'I');
 		while((tripu->espera !=0) && tripu->vida)
 		{
 			sem_wait(&hilosEnEjecucion);
@@ -652,8 +663,7 @@ void hacerFifo(Tripulante* tripu) {
 			sem_post(&hilosEnEjecucion);
 			tripu->espera --;
 		}
-		socket_mongostore = conectarse_mongo();
-		enviar_inicio_fin_mongo(socket_mongostore,tripu,'F');
+		enviar_inicio_fin_mongo(tripu,'F');
 		free(tripu->Tarea->nombre);
 		tripu->Tarea->nombre = NULL;
 		tripu->Tarea =NULL;
@@ -668,7 +678,7 @@ void hacerRoundRobin(Tripulante* tripulant) {
 		contadorQuantum=tripulant->kuantum;
 	}
 	//obtener_parametros_tarea(tripulant, &tarea_x,&tarea_y);
-
+	//todo CREO QUE ESTE HACIA QUE SIEMPRE EJECUTE EL MISMO TRIPULANTE, SIN PASAR POR READY PARA QUE SE REPLANIFIQUE
 	while (contadorQuantum < quantum)
 	{
 		if ((tripulant->posicionX == tripulant->Tarea->posicion_x && tripulant->posicionY == tripulant->Tarea->posiciion_y)&& tripulant->vida)
@@ -676,6 +686,7 @@ void hacerRoundRobin(Tripulante* tripulant) {
 			break;
 		}
 		//este es el semaforo para pausar laejecucion
+//		todo este semaforo entiendo que es para
 		sem_wait(&hilosEnEjecucion);
 		sleep(retardoCpu);
 		moverTripulante(tripulant);
@@ -689,8 +700,7 @@ void hacerRoundRobin(Tripulante* tripulant) {
 		tripulant->kuantum=0;
 		hacerTareaIO(tripulant);
 	}
-	int socket_mongostore = conectarse_mongo();
-	enviar_inicio_fin_mongo(socket_mongostore,tripulant,'I');
+	enviar_inicio_fin_mongo(tripulant,'I');
 	while ((contadorQuantum < quantum) && tripulant->vida && tripulant->espera > 0)
 	{
 
@@ -709,8 +719,7 @@ void hacerRoundRobin(Tripulante* tripulant) {
 	if (tripulant->posicionX == tripulant->Tarea->posicion_x && tripulant->posicionY == tripulant->Tarea->posiciion_y && tripulant->espera==0 &&tripulant->vida)
 	{
 		tripulant->kuantum=contadorQuantum;
-		socket_mongostore = conectarse_mongo();
-		enviar_inicio_fin_mongo(socket_mongostore,tripulant,'F');
+		enviar_inicio_fin_mongo(tripulant,'F');
 		free(tripulant->Tarea->nombre);
 		free(tripulant->Tarea);
 		tripulant->Tarea->nombre = NULL;
@@ -775,13 +784,39 @@ void* vivirTripulante(Tripulante* tripulante) {
 	eliminarTripulante(tripulante);
 	return NULL;
 }
-void* atender_sabotaje(char* posiciones, int mongostore)
+void* atender_sabotaje(char* posiciones)
 {
 	//separo los parametros del sabotaje
 	char** posiciones_divididas = string_split(posiciones, "|");
 
 	int posx = strtol(posiciones_divididas[0],NULL,10);
 	int posy; strtol(posiciones_divididas[1],NULL,10);
+
+	free(posiciones_divididas[0]);
+	free(posiciones_divididas[1]);
+	free(posiciones_divididas);
+	free(posiciones);
+
+	char* inicio_sabotaje = strdup("INICIO_DE_SABOTAJE");
+	uint8_t tamanio_inicio_sabotaje = strlen(inicio_sabotaje)+1;
+	send(cliente_sabotaje,&tamanio_inicio_sabotaje,sizeof(uint8_t),0);
+	send(cliente_sabotaje,inicio_sabotaje,tamanio_inicio_sabotaje,0);
+	free(inicio_sabotaje);
+
+
+	char* fin_sabotaje = strdup("FINALIZAR_SABOTAJE");
+	uint8_t tamanio_fin_sabotaje= strlen(fin_sabotaje)+1;
+	send(cliente_sabotaje,&tamanio_fin_sabotaje,sizeof(uint8_t),0);
+	send(cliente_sabotaje,fin_sabotaje,tamanio_fin_sabotaje,0);
+	free(inicio_sabotaje);
+	//////	SEMAFORO PARA TESTEAR //////
+	//todo
+	sem_t prueba;
+	sem_init(&prueba, 0, 0);
+	puts("ME QUEDO EN EL SEMAFORO DE PRUEBAS");
+	sem_wait(&prueba);
+	//////	SEMAFORO PARA TESTEAR //////
+
 
 	Tripulante* mas_cerca = malloc(sizeof(Tripulante));
 	//busco el tripulante mas cerca
@@ -835,8 +870,8 @@ void* atender_sabotaje(char* posiciones, int mongostore)
 			esta_haciendo_IO->estado="Bloqueado Sabotaje";
 
 			int tiempo_sabota=tiempo_sabotaje;
-			char* inicio_sabotaje = NULL;
-			char* fin_sabotaje = NULL;
+//			char* inicio_sabotaje = NULL;
+//			char* fin_sabotaje = NULL;
 
 		if(calcular_distancia(mas_cerca, posx, posy)<calcular_distancia(auxiliar,posx,posy))
 		{
@@ -845,22 +880,22 @@ void* atender_sabotaje(char* posiciones, int mongostore)
 			sleep(retardoCpu);
 			moverTripulante(mas_cerca);
 			}
-			inicio_sabotaje = strdup("INICIO_DE_SABOTAJE");
-			uint8_t tamanio_inicio_sabotaje = strlen(inicio_sabotaje)+1;
-			send(mongostore,&tamanio_inicio_sabotaje,sizeof(uint8_t),0);
-			send(mongostore,inicio_sabotaje,tamanio_inicio_sabotaje,0);
-			free(inicio_sabotaje);
+//			inicio_sabotaje = strdup("INICIO_DE_SABOTAJE");
+//			uint8_t tamanio_inicio_sabotaje = strlen(inicio_sabotaje)+1;
+//			send(cliente_sabotaje,&tamanio_inicio_sabotaje,sizeof(uint8_t),0);
+//			send(cliente_sabotaje,inicio_sabotaje,tamanio_inicio_sabotaje,0);
+//			free(inicio_sabotaje);
 
 			while(tiempo_sabota!=0)
 			{
 				sleep(retardoCpu);
 				tiempo_sabotaje--;
 			}
-			fin_sabotaje = strdup("FINALIZAR_SABOTAJE");
-			uint8_t tamanio_fin_sabotaje= strlen(fin_sabotaje)+1;
-			send(mongostore,&tamanio_fin_sabotaje,sizeof(uint8_t),0);
-			send(mongostore,fin_sabotaje,tamanio_fin_sabotaje,0);
-			free(inicio_sabotaje);
+//			fin_sabotaje = strdup("FINALIZAR_SABOTAJE");
+//			uint8_t tamanio_fin_sabotaje= strlen(fin_sabotaje)+1;
+//			send(cliente_sabotaje,&tamanio_fin_sabotaje,sizeof(uint8_t),0);
+//			send(cliente_sabotaje,fin_sabotaje,tamanio_fin_sabotaje,0);
+//			free(inicio_sabotaje);
 		}
 		else
 		{
@@ -871,8 +906,8 @@ void* atender_sabotaje(char* posiciones, int mongostore)
 			}
 			inicio_sabotaje = strdup("INICIO_DE_SABOTAJE");
 			uint8_t tamanio_inicio_sabotaje = strlen(inicio_sabotaje)+1;
-			send(mongostore,&tamanio_inicio_sabotaje,sizeof(uint8_t),0);
-			send(mongostore,inicio_sabotaje,tamanio_inicio_sabotaje,0);
+			send(cliente_sabotaje,&tamanio_inicio_sabotaje,sizeof(uint8_t),0);
+			send(cliente_sabotaje,inicio_sabotaje,tamanio_inicio_sabotaje,0);
 			free(inicio_sabotaje);
 
 			while(tiempo_sabota!=0)
@@ -882,8 +917,8 @@ void* atender_sabotaje(char* posiciones, int mongostore)
 			}
 			fin_sabotaje = strdup("FIN_DE_SABOTAJE");
 			uint8_t tamanio_fin_sabotaje= strlen(fin_sabotaje)+1;
-			send(mongostore,&tamanio_fin_sabotaje,sizeof(uint8_t),0);
-			send(mongostore,fin_sabotaje,tamanio_fin_sabotaje,0);
+			send(cliente_sabotaje,&tamanio_fin_sabotaje,sizeof(uint8_t),0);
+			send(cliente_sabotaje,fin_sabotaje,tamanio_fin_sabotaje,0);
 			free(inicio_sabotaje);
 		}
 		pthread_mutex_lock(&sem_cola_exec);
@@ -928,7 +963,7 @@ void* atender_sabotaje(char* posiciones, int mongostore)
 				esta_haciendo_IO->estado="Bloqueado IO";
 
 				sem_post(&pararIo);
-				liberar_conexion(mongostore);
+				liberar_conexion(cliente_sabotaje);
 	return NULL;
 }
 
@@ -1169,10 +1204,10 @@ int hacerConsola() {
 				pthread_mutex_lock(&sem_cola_ready);
 				pthread_mutex_lock(&sem_cola_new);
 				queue_push(ready,queue_pop(new));
-				sem_post(&sem_tripulante_en_ready);
 				pthread_mutex_unlock(&sem_cola_ready);
 				pthread_mutex_unlock(&sem_cola_new);
 
+				sem_post(&sem_tripulante_en_ready);
 
 
 				//inicializamos su hilo y su semaforo
@@ -1195,7 +1230,7 @@ int hacerConsola() {
 
 		if (string_contains(linea,"INICIAR_PLANIFICACION"))
 		{
-			puts("jeje entro");
+			puts("SE INICIO LA PLANIFICACION");
 			if(primerInicio)
 			{
 				//pthread_detach(firstInit);
@@ -1390,21 +1425,18 @@ int hacerConsola() {
 
 	free(linea);
 }
-void* hilo_sabotaje(){
-
-}
-
 int main() {
 //	PATH MARTIN
 //	config = config_create("/home/utnso/Escritorio/tp-2021-1c-Cebollitas-subcampeon/discordiador/discordiador.config");
 
 //	PATH ALE
-	config = config_create("/home/utnso/Escritorio/Conexiones/discordiador/discordiador.config");
+	config = config_create(PATH_CONFIG);
 
 //	PATH JUAN
 //	config = config_create("/home/utnso/Escritorio/Conexiones/discordiador/discordiador.config");
 
 	ipMiRam= config_get_string_value(config, "IP_MI_RAM_HQ");
+	printf("%s miram",ipMiRam);
 	puertoMiRam = config_get_string_value(config, "PUERTO_MI_RAM_HQ");
 	puertoSabotaje = config_get_string_value(config, "PUERTO_SABOTAJE");
 	multiProcesos = config_get_int_value(config, "GRADO_MULTITAREA");
@@ -1453,29 +1485,21 @@ int main() {
 	pthread_create(&consola, NULL, (void *) hacerConsola, NULL);
 //	pthread_join(consola,NULL);
 
-//	//////	SEMAFORO PARA TESTEAR //////
-//	//todo
-//	sem_t prueba;
-//	sem_init(&prueba, 0, 0);
-//	puts("ME QUEDO EN EL SEMAFORO DE PRUEBAS");
-//	sem_wait(&prueba);
-//	//////	SEMAFORO PARA TESTEAR //////
-
 	int socket_sabotaje = crear_server(puertoSabotaje);
 	printf("servidor abuerto con el socket %d\n",socket_sabotaje);
 	while(correr_programa)
 	{
-		int mongostore = esperar_cliente(socket_sabotaje, 3);
+		cliente_sabotaje = esperar_cliente(socket_sabotaje, 3);
 		int respuesta;
-		t_paquete* paquete_recibido = recibir_paquete(mongostore, &respuesta);
+		t_paquete* paquete_recibido = recibir_paquete(cliente_sabotaje, &respuesta);
 		if (paquete_recibido->codigo_operacion == -1 || respuesta == ERROR) {
-			liberar_conexion(mongostore);
+			liberar_conexion(cliente_sabotaje);
 			eliminar_paquete(paquete_recibido);
 		}
 
-		printf("SABOTAJE RECIBIDO: %s\n",paquete_recibido->codigo_operacion);
+		printf("SABOTAJE RECIBIDO: %d\n",paquete_recibido->codigo_operacion);
 		t_pedido_mongo* posiciciones_sabotaje = deserializar_pedido_mongo(paquete_recibido);
-		int parar_todo_sabotaje;
+		int parar_todo_sabotaje=0;
 		  while (parar_todo_sabotaje < multiProcesos)
 		  {
 		  sem_wait(&hilosEnEjecucion);
@@ -1483,7 +1507,7 @@ int main() {
 		  }
 		  sem_wait(&pararIo);
 
-		pthread_create(&hilo_sabotaje,NULL,(void*) atender_sabotaje,(posiciciones_sabotaje->mensaje,mongostore));
+		pthread_create(&hilo_sabotaje,NULL,(void*) atender_sabotaje,posiciciones_sabotaje->mensaje);
 
 
 	}

@@ -43,21 +43,20 @@ typedef enum {
 }CONEXION_A;
 /*========================== TIPOS DE MENSAJES =================================*/
 typedef enum {
-	INICIAR_PATOTA, //Es lo mismo que iniciar_paota?		// LISTO
-	TRIPULANTE,												// LISTO
-	PEDIR_TAREA,											// LISTO
-//pedir y enviar tarea se podria hacer en un solo mensaje, una vez hecha la conexion se puede hacer
-	ACTUALIZAR_POS,											//LISTO
-	ELIMINAR_TRIPULANTE,									//LISTO
-	ACTUALIZAR_ESTADO,										//LISTO
-	OBTENER_BITACORA,										//LISTO
-	MOVIMIENTO_MONGO,										//LISTO
-	SABOTAJE,												//LISTO
-	INICIO_TAREA,											//LISTO
-	FIN_TAREA,												//LISTO
-	INICIO_SABOTAJE,										//LISTO
-	FIN_SABOTAJE,											//LISTO
-	CONSUMIR_RECURSO										//LISTO
+/* 0 */	INICIAR_PATOTA, //Es lo mismo que iniciar_paota?		//LISTO
+/* 1 */	TRIPULANTE,												//LISTO
+/* 2 */	PEDIR_TAREA,											//LISTO
+/* 3 */	ACTUALIZAR_POS,											//LISTO
+/* 4 */ ELIMINAR_TRIPULANTE,									//LISTO
+/* 5 */ ACTUALIZAR_ESTADO,										//LISTO
+/* 6 */ OBTENER_BITACORA,										//LISTO
+/* 7 */ MOVIMIENTO_MONGO,										//LISTO
+/* 8 */ SABOTAJE,												//LISTO
+/* 9 */ INICIO_TAREA,											//LISTO
+/* 10 */ FIN_TAREA,												//LISTO
+/* 11 */ INICIO_SABOTAJE,										//LISTO
+/* 12 */ FIN_SABOTAJE,											//LISTO
+/* 13 */ CONSUMIR_RECURSO										//LISTO
 
 
 }CODE_OP;

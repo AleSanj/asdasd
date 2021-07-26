@@ -36,29 +36,30 @@ typedef struct
 
 int blocks_sabot;
 
-//	PATH JUAN
-#define PATH_CONFIG "/home/utnso/asdasd/iMongoStore/config/mongoStore.config"
-//#define PATH_CONEXION "/home/utnso/tp-2021-1c-Cebollitas-subcampeon/libCompartida/config/conexiones.config"
 
-//	PATH ALE
-//#define PATH_CONFIG "/home/utnso/Escritorio/Conexiones/iMongoStore/config/mongoStore.config"
-#define PATH_CONEXION "/home/utnso/tp-2021-1c-Cebollitas-subcampeon/libCompartida/config/conexiones.config"
-
+//-------------------------------------
+//PARA EJECUTAR DESDE CONSOLA USAR:
+#define PATH_CONFIG "../config/mongoStore.config"
+#define PATH_LOG "../config/archivoLogeo.log"
+//-------------------------------------
+//PARA EJECUTAR DESDE ECLIPSE USAR:
+//#define PATH_CONFIG "config/mongoStore.config"
+//#define PATH_LOG "config/archivoLogeo.log"
+//-------------------------------------
 
 
 int main(void) {
 
 	mongoStore_config = leer_config(PATH_CONFIG);
-	//conexion_config = leer_config(PATH_CONEXION);
 
 	printf("Checkpoint 1");
 
 	//IP = config_get_string_value(conexion_config, "IP_MONGOSTORE");
-	logger_path_mongostore = config_get_string_value(mongoStore_config, "ARCHIVO_LOG");
+//	logger_path_mongostore = config_get_string_value(mongoStore_config, "ARCHIVO_LOG");
 
 	printf("Checkpoint 2");
 
-	logger = iniciar_logger(logger_path_mongostore);
+	logger = iniciar_logger(PATH_LOG);
 
 	printf("Checkpoint 3");
 
@@ -74,8 +75,6 @@ int main(void) {
 	blocks_sabot=bloques;
 	tamanio_bloque = config_get_int_value(mongoStore_config, "BLOCK_SIZE");
 	tiempoSincro = config_get_int_value(mongoStore_config, "TIEMPO_SINCRONIZACION");
-
-
 	//Inicializamos el File System, consultamos si ya existen los archivos o no
 	char* ruta_superbloque = string_new();
 	char* ruta_blocks = string_new();
@@ -84,6 +83,41 @@ int main(void) {
 	string_append(&ruta_superbloque, "/Superbloque/Superbloque.ims");
 	string_append(&ruta_blocks, "/Blocks/Blocks.ims");
 
+		//prueba_servidor_sabotaje
+		//////////////////////////////////////
+		char* prueba_mandar = "3|1";
+
+		int socketCliente=crear_conexion(ipDiscordiador,puertoDicordiador);
+		t_pedido_mongo* posSabo=malloc(sizeof(t_pedido_mongo));
+		posSabo->mensaje=prueba_mandar;
+		posSabo->tamanio_mensaje=strlen(prueba_mandar)+1;
+
+		t_paquete* paquete_enviar= crear_paquete(SABOTAJE);
+		agregar_paquete_pedido_mongo(paquete_enviar,posSabo);
+		char* bitacorear_sabo = enviar_paquete_respuesta_string(paquete_enviar,socketCliente);
+		int id;
+		recv(socketCliente,&id,sizeof(uint8_t),0);
+		escribir_en_bitacora(id,bitacorear_sabo);
+
+		// aca arregla el sabotaje
+
+		// aca tendria que mandar discordiador que se arreglo
+
+		recv(socketCliente,bitacorear_sabo,strlen("FINALIZAR_SABOTAJE")+1,0);
+		escribir_en_bitacora(id,bitacorear_sabo);
+		free(bitacorear_sabo);
+
+		sabotaje_actual++;
+		//////////////////////////////////////
+
+
+		//////	SEMAFORO PARA TESTEAR //////
+		//todo
+		sem_t prueba;
+		sem_init(&prueba, 0, 0);
+		puts("ME QUEDO EN EL SEMAFORO DE PRUEBAS");
+		sem_wait(&prueba);
+		//////	SEMAFORO PARA TESTEAR //////
 	//Inicializamos File System
 	if(verificar_existencia(ruta_blocks) == 0 && verificar_existencia(ruta_superbloque) == 0){
 		inicializar_carpetas();
@@ -718,6 +752,7 @@ void interrupt_handler(int signal)
 	t_pedido_mongo* posSabo=malloc(sizeof(t_pedido_mongo));
 	posSabo->mensaje=posicion_mandar;
 	posSabo->tamanio_mensaje=strlen(posicion_mandar)+1;
+
 	t_paquete* paquete_enviar= crear_paquete(SABOTAJE);
 	agregar_paquete_pedido_mongo(paquete_enviar,posSabo);
 	char* bitacorear_sabo= enviar_paquete_respuesta_string(paquete_enviar,socketCliente);
@@ -1234,7 +1269,7 @@ void escribir_en_bitacora(int idTripulante, char* texto){
 		char*log=string_new();
 		sprintf(log,"Se creo la bitacora del tripulante %d",idTripulante);
 		log_info(logger, log);
-		free(log);
+//		free(log);
 	}
 	else{
 		int longitud = strlen(texto);
@@ -1431,6 +1466,7 @@ t_config* leer_config(char* config_path){
 	t_config* config=malloc(sizeof(config));
 	if((config = config_create(config_path)) == NULL){
 		printf("No se pudo leer la config");
+		free(config);
 		exit(2);
 	}
 	return config;
