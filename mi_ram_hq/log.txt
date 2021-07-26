@@ -1,0 +1,48 @@
+[INFO] 02:06:03:485 Memoria/(8363:8383): Guarde las tareas de la patota 1
+
+[INFO] 02:06:03:486 Memoria/(8363:8383): Guarde el PCB de la patota 1
+
+[INFO] 02:06:03:486 Memoria/(8363:8385): Guarde el tripulante 1
+
+[INFO] 02:06:03:489 Memoria/(8363:8387): Guarde el tripulante 2
+
+[INFO] 02:06:03:490 Memoria/(8363:8390): Guarde el tripulante 3
+
+[INFO] 02:06:03:491 Memoria/(8363:8392): Guarde el tripulante 4
+
+[INFO] 02:06:24:414 Memoria/(8363:8411): Actualice el estado del tripulante 1 a E
+
+[INFO] 02:06:24:415 Memoria/(8363:8413): Mande la tarea DESCARGAR_ITINERARIO;70;27;1
+
+[INFO] 02:06:24:418 Memoria/(8363:8414): Actualice el estado del tripulante 2 a E
+
+[INFO] 02:06:24:419 Memoria/(8363:8416): Mande la tarea DESCARGAR_ITINERARIO;70;27;1
+
+[INFO] 02:06:24:419 Memoria/(8363:8417): Actualice el estado del tripulante 3 a E
+
+[INFO] 02:06:24:419 Memoria/(8363:8418): Mande la tarea DESCARGAR_ITINERARIO;70;27;1
+
+[INFO] 02:07:21:242 Memoria/(8699:8708): Guarde las tareas de la patota 1
+
+[INFO] 02:07:21:242 Memoria/(8699:8708): Guarde el PCB de la patota 1
+
+[INFO] 02:07:21:242 Memoria/(8699:8710): Guarde el tripulante 1
+
+[INFO] 02:07:21:245 Memoria/(8699:8712): Guarde el tripulante 2
+
+[INFO] 02:07:21:246 Memoria/(8699:8715): Guarde el tripulante 3
+
+[INFO] 02:07:21:247 Memoria/(8699:8717): Guarde el tripulante 4
+
+[INFO] 02:07:29:464 Memoria/(8699:8727): Actualice el estado del tripulante 1 a E
+
+[INFO] 02:07:29:467 Memoria/(8699:8729): Mande la tarea DESCARGAR_ITINERARIO;70;27;1
+
+[INFO] 02:07:29:468 Memoria/(8699:8730): Actualice el estado del tripulante 2 a E
+
+[INFO] 02:07:29:469 Memoria/(8699:8731): Mande la tarea DESCARGAR_ITINERARIO;70;27;1
+
+[INFO] 02:07:29:469 Memoria/(8699:8732): Actualice el estado del tripulante 3 a E
+
+[INFO] 02:07:29:469 Memoria/(8699:8733): Mande la tarea DESCARGAR_ITINERARIO;70;27;1
+

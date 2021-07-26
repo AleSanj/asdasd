@@ -21,7 +21,7 @@ int main(void) {
 //	config = config_create("/home/utnso/Escritorio/tp-2021-1c-Cebollitas-subcampeon/mi_ram_hq/src/mi_ram_hq.config");
 
 //	PATH ALE
-	config = config_create("/home/utnso/Escritorio/Conexiones/mi_ram_hq/src/mi_ram_hq.config");
+	config = config_create("../src/mi_ram_hq.config");
 	funcionando=true;
 	tamMemoria = config_get_int_value(config, "TAMANIO_MEMORIA");
 	esquemaMemoria = config_get_string_value(config, "ESQUEMA_MEMORIA");
@@ -43,7 +43,11 @@ int main(void) {
 	}else{
 		tipoDeGuardado = BESTFIT;
 	}
-
+	if((logger = log_create("../log.txt", "Memoria", 0, LOG_LEVEL_INFO)) == NULL)
+		{
+			printf(" No pude leer el logger\n");
+			exit(1);
+		}
 	memoria = malloc(tamMemoria);
 	listaElementos = list_create();
 	listaDeTablasDePaginas = list_create();
@@ -109,7 +113,7 @@ void administrar_cliente(int socketCliente){
 			int espacioNecesario;
 			espacioNecesario = estructura_iniciar_patota->tamanio_tareas + (estructura_iniciar_patota->cantTripulantes*21)+8;
 			if(espacioLibre<espacioNecesario){
-				//puts("Le dije que no tengo mas espacio");
+				log_info(logger, "No tengo espacio en la memoria para guardar la patota %d\n",estructura_iniciar_patota->idPatota);
 				send(socketCliente,6,sizeof(uint32_t),0);
 				send(socketCliente, "fault",6,0);
 			}else{
@@ -128,8 +132,10 @@ void administrar_cliente(int socketCliente){
 					list_add(listaDeTablasDePaginas,nuevaListaDeTablasDePaginas);
 				}
 				guardar_en_memoria_general(estructura_iniciar_patota->Tareas,estructura_iniciar_patota->idPatota,estructura_iniciar_patota->tamanio_tareas,estructura_iniciar_patota->idPatota,'A');
+				log_info(logger, "Guarde las tareas de la patota %d\n",estructura_iniciar_patota->idPatota);
 				nuevaPatota->tareas =  calcular_direccion_logica_archivo(estructura_iniciar_patota->idPatota);
 				guardar_en_memoria_general(nuevaPatota,estructura_iniciar_patota->idPatota,sizeof(pcb),estructura_iniciar_patota->idPatota,'P');
+				log_info(logger, "Guarde el PCB de la patota %d\n",estructura_iniciar_patota->idPatota);
 			}
 			break;
 		case TRIPULANTE:;
@@ -145,7 +151,6 @@ void administrar_cliente(int socketCliente){
 				guardar_en_memoria_general(nuevoTripulante,estructura_tripulante->id_tripulante,21,estructura_tripulante->id_patota,'T');
 				for(int i =0; i<94;i++){
 					if (vectorIdTripulantes[i]==-1){
-						//printf("Dentro del if i= %d \n",i);
 						vectorIdTripulantes[i] = nuevoTripulante->id;
 						pthread_mutex_lock(&mutexMapa);
 						dibujarTripulante(nuevoTripulante,(i+33));
@@ -153,6 +158,7 @@ void administrar_cliente(int socketCliente){
 						break;
 					}
 				}
+				log_info(logger, "Guarde el tripulante %d\n",estructura_tripulante->id_tripulante);
 				//printf("CREE UN TRIPULANTE: %d\n",nuevoTripulante->id);
 
 		//		liberar_tripulante(estructura_tripulante);
@@ -171,7 +177,7 @@ void administrar_cliente(int socketCliente){
 						break;
 					}
 				}
-
+				log_info(logger, "Borre el tripulante %d\n",tripulante_a_eliminar->id_tripulante);
 					break;
 
 		case PEDIR_TAREA:;
@@ -206,7 +212,7 @@ void administrar_cliente(int socketCliente){
 					}
 				}
 
-
+				log_info(logger, "Mande la tarea %s\n",arrayTareas[tripulanteATraer->proxTarea]);
 				liberar_conexion(socketCliente);
 
 				break;
@@ -255,10 +261,11 @@ void administrar_cliente(int socketCliente){
 				}else{
 					pthread_mutex_lock(&mutexMemoria);
 					actualizar_estado_segmentacion(tripulante_a_actualizar->id_tripulante,tripulante_a_actualizar->id_patota,tripulante_a_actualizar->estado);
-					pthread_mutex_lock(&mutexMemoria);
+					pthread_mutex_unlock(&mutexMemoria);
 					tcb* tcbDePrueba = malloc(sizeof(tcb));
 					tcbDePrueba = buscar_en_memoria_general(tripulante_a_actualizar->id_tripulante,tripulante_a_actualizar->id_patota,'T');
 				}
+				log_info(logger, "Actualice el estado del tripulante %d a %c\n",tripulante_a_actualizar->id_tripulante, tripulante_a_actualizar->estado);
 				break;
 
 		default:;
