@@ -301,6 +301,12 @@ tarea_tripulante* convertir_tarea(char* tarea){
 	 tarea_tripulante* tarea_convertida = malloc(sizeof(tarea_tripulante));
 	 char** id_dividido;
 	 char** parametros_divididos;
+	 if (!strcmp(tarea,"fault")){
+		 tarea_convertida->nombre = strdup(tarea);
+		 return tarea_convertida;
+	 }
+
+
 	 if (es_tarea_IO(tarea)){
 		 id_dividido = string_n_split(tarea,2 ," ");
 		 parametros_divididos = string_n_split(id_dividido[1],4,";");
@@ -348,7 +354,7 @@ void mover_a_finalizado(Tripulante* tripulante){
 	t_list* lista_block = bloqueados->elements;
 	pthread_mutex_lock(&trip_comparar);
 	trip_cmp = tripulante;
-	if (string_contains(tripulante->estado,"Ready")){
+	if (string_contains(tripulante->estado,"READY")){
 		pthread_mutex_lock(&sem_cola_ready);
 		pthread_mutex_lock(&sem_cola_exit);
 		list_add(finalizado,list_remove_by_condition(lista_ready,(void*)esElMismoTripulante));
@@ -358,7 +364,7 @@ void mover_a_finalizado(Tripulante* tripulante){
 		return;
 	}
 
-	if (string_contains(tripulante->estado,"Blocked")){
+	if (string_contains(tripulante->estado,"BLOCKED")){
 		pthread_mutex_lock(&sem_cola_bloqIO);
 		pthread_mutex_lock(&sem_cola_exit);
 		list_add(finalizado,list_remove_by_condition(lista_block,(void*)esElMismoTripulante));
@@ -368,7 +374,7 @@ void mover_a_finalizado(Tripulante* tripulante){
 		return;
 		}
 
-	if (string_contains(tripulante->estado,"Exec")){
+	if (string_contains(tripulante->estado,"EXEC")){
 		pthread_mutex_lock(&sem_cola_exec);
 		pthread_mutex_lock(&sem_cola_exit);
 		list_add(finalizado,list_remove_by_condition(execute,(void*)esElMismoTripulante));
@@ -773,12 +779,12 @@ void* vivirTripulante(Tripulante* tripulante) {
 		}
 
 		printf("TAREA: %s\n",tripulante->Tarea->nombre);
-		if (string_contains(tripulante->Tarea->nombre,"FAULT")){
+		if (string_contains(tripulante->Tarea->nombre,"fault")){
 			tripulante->vida = false;
 			continue;
 		}
 //		Si MIRAM ya los empieza en ready ya no seria necesario mandarselo con la funcino cambiar_estado()
-//		cambiar_estado(tripulante,"Exec");
+//		cambiar_estado(tripulante,"EXEC");
 
 			hacerTarea(tripulante);
 	}
@@ -929,7 +935,7 @@ void* atender_sabotaje(char* posiciones)
 				Tripulante* iterado=(Tripulante*)list_get(execute,i);
 
 
-				iterado->estado="Exec";
+				iterado->estado = strdup("EXEC");
 			}
 		pthread_mutex_unlock(&sem_cola_exec);
 		int a = 0;

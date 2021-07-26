@@ -109,7 +109,7 @@ void administrar_cliente(int socketCliente){
 			eliminar_paquete(paquete_recibido);
 		}
 
-		printf("PAQUETE DE TIPO %d RECIBIDO\n",paquete_recibido->codigo_operacion);
+//		printf("PAQUETE DE TIPO %d RECIBIDO\n",paquete_recibido->codigo_operacion);
 
 	switch(paquete_recibido->codigo_operacion) {
 		case INICIAR_PATOTA:;
@@ -205,8 +205,12 @@ void administrar_cliente(int socketCliente){
 					i++;
 				}
 				if(tripulanteATraer->proxTarea==totalDeTareas){
-					send(socketCliente,6,sizeof(uint32_t),0);
-					send(socketCliente, "fault",6,0);
+					char* fault = strdup("fault");
+					uint32_t tamanio_fault = strlen(fault)+1;
+					send(socketCliente,&tamanio_fault,sizeof(uint32_t),0);
+					send(socketCliente, fault,tamanio_fault,0);
+					free(fault);
+
 					log_info(logger, "Mande la tarea fault\n");
 				}else{
 					int tamanio_tarea = strlen(arrayTareas[tripulanteATraer->proxTarea])+1;
