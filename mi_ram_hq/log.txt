@@ -1,0 +1,1010 @@
+[INFO] 16:25:09:124 Memoria/(24168:24212): Guarde las tareas de la patota 1
+
+[INFO] 16:25:09:124 Memoria/(24168:24212): Guarde el PCB de la patota 1
+
+[INFO] 16:25:09:125 Memoria/(24168:24214): Guarde el tripulante 1
+
+[INFO] 16:25:09:128 Memoria/(24168:24216): Guarde el tripulante 2
+
+[INFO] 16:25:09:129 Memoria/(24168:24219): Guarde el tripulante 3
+
+[INFO] 16:25:09:130 Memoria/(24168:24221): Guarde el tripulante 4
+
+[INFO] 16:25:15:222 Memoria/(24168:24239): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:25:15:222 Memoria/(24168:24240): Mande la tarea DESCARGAR_ITINERARIO;70;27;10
+
+[INFO] 16:25:15:223 Memoria/(24168:24241): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:25:15:223 Memoria/(24168:24242): Mande la tarea DESCARGAR_ITINERARIO;70;27;10
+
+[INFO] 16:25:15:223 Memoria/(24168:24243): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:25:15:223 Memoria/(24168:24244): Mande la tarea DESCARGAR_ITINERARIO;70;27;10
+
+[INFO] 16:25:16:223 Memoria/(24168:24245): Actualice el estado del tripulante 1 a X=31 Y=30
+
+[INFO] 16:25:16:223 Memoria/(24168:24246): Actualice el estado del tripulante 2 a X=41 Y=40
+
+[INFO] 16:25:16:224 Memoria/(24168:24247): Actualice el estado del tripulante 3 a X=51 Y=20
+
+[INFO] 16:25:17:223 Memoria/(24168:24248): Actualice el estado del tripulante 1 a X=32 Y=30
+
+[INFO] 16:25:17:224 Memoria/(24168:24249): Actualice el estado del tripulante 2 a X=42 Y=40
+
+[INFO] 16:25:17:224 Memoria/(24168:24250): Actualice el estado del tripulante 3 a X=52 Y=20
+
+[INFO] 16:25:18:224 Memoria/(24168:24251): Actualice el estado del tripulante 1 a X=33 Y=30
+
+[INFO] 16:25:18:224 Memoria/(24168:24252): Actualice el estado del tripulante 2 a X=43 Y=40
+
+[INFO] 16:25:18:224 Memoria/(24168:24253): Actualice el estado del tripulante 3 a X=53 Y=20
+
+[INFO] 16:25:19:224 Memoria/(24168:24255): Actualice el estado del tripulante 1 a X=34 Y=30
+
+[INFO] 16:25:19:225 Memoria/(24168:24256): Actualice el estado del tripulante 2 a X=44 Y=40
+
+[INFO] 16:25:19:225 Memoria/(24168:24257): Actualice el estado del tripulante 3 a X=54 Y=20
+
+[INFO] 16:25:20:226 Memoria/(24168:24264): Actualice el estado del tripulante 1 a X=35 Y=30
+
+[INFO] 16:25:20:226 Memoria/(24168:24265): Actualice el estado del tripulante 2 a X=45 Y=40
+
+[INFO] 16:25:20:226 Memoria/(24168:24266): Actualice el estado del tripulante 3 a X=55 Y=20
+
+[INFO] 16:25:21:226 Memoria/(24168:24267): Actualice el estado del tripulante 1 a X=36 Y=30
+
+[INFO] 16:25:21:226 Memoria/(24168:24268): Actualice el estado del tripulante 2 a X=46 Y=40
+
+[INFO] 16:25:21:227 Memoria/(24168:24269): Actualice el estado del tripulante 3 a X=56 Y=20
+
+[INFO] 16:25:22:227 Memoria/(24168:24270): Actualice el estado del tripulante 1 a X=37 Y=30
+
+[INFO] 16:25:22:227 Memoria/(24168:24271): Actualice el estado del tripulante 2 a X=47 Y=40
+
+[INFO] 16:25:22:227 Memoria/(24168:24272): Actualice el estado del tripulante 3 a X=57 Y=20
+
+[INFO] 16:25:23:228 Memoria/(24168:24273): Actualice el estado del tripulante 1 a X=38 Y=30
+
+[INFO] 16:25:23:228 Memoria/(24168:24274): Actualice el estado del tripulante 2 a X=48 Y=40
+
+[INFO] 16:25:23:228 Memoria/(24168:24275): Actualice el estado del tripulante 3 a X=58 Y=20
+
+[INFO] 16:25:24:228 Memoria/(24168:24277): Actualice el estado del tripulante 1 a X=39 Y=30
+
+[INFO] 16:25:24:229 Memoria/(24168:24278): Actualice el estado del tripulante 2 a X=49 Y=40
+
+[INFO] 16:25:24:229 Memoria/(24168:24279): Actualice el estado del tripulante 3 a X=59 Y=20
+
+[INFO] 16:25:25:229 Memoria/(24168:24286): Actualice el estado del tripulante 1 a X=40 Y=30
+
+[INFO] 16:25:25:229 Memoria/(24168:24287): Actualice el estado del tripulante 1 a R
+
+[INFO] 16:25:25:229 Memoria/(24168:24288): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:25:25:229 Memoria/(24168:24289): Actualice el estado del tripulante 2 a X=50 Y=40
+
+[INFO] 16:25:25:230 Memoria/(24168:24290): Actualice el estado del tripulante 3 a X=60 Y=20
+
+[INFO] 16:25:25:230 Memoria/(24168:24291): Mande la tarea DESCARGAR_ITINERARIO;70;27;10
+
+[INFO] 16:25:25:230 Memoria/(24168:24292): Actualice el estado del tripulante 2 a R
+
+[INFO] 16:25:25:230 Memoria/(24168:24293): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:25:25:230 Memoria/(24168:24294): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:25:25:230 Memoria/(24168:24295): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:25:26:231 Memoria/(24168:24296): Actualice el estado del tripulante 4 a X=61 Y=10
+
+[INFO] 16:25:26:231 Memoria/(24168:24297): Actualice el estado del tripulante 1 a X=41 Y=30
+
+[INFO] 16:25:26:231 Memoria/(24168:24298): Actualice el estado del tripulante 2 a X=51 Y=40
+
+[INFO] 16:25:27:232 Memoria/(24168:24299): Actualice el estado del tripulante 4 a X=62 Y=10
+
+[INFO] 16:25:27:232 Memoria/(24168:24300): Actualice el estado del tripulante 1 a X=42 Y=30
+
+[INFO] 16:25:27:232 Memoria/(24168:24301): Actualice el estado del tripulante 2 a X=52 Y=40
+
+[INFO] 16:25:28:232 Memoria/(24168:24302): Actualice el estado del tripulante 4 a X=63 Y=10
+
+[INFO] 16:25:28:232 Memoria/(24168:24303): Actualice el estado del tripulante 1 a X=43 Y=30
+
+[INFO] 16:25:28:233 Memoria/(24168:24304): Actualice el estado del tripulante 2 a X=53 Y=40
+
+[INFO] 16:25:29:233 Memoria/(24168:24306): Actualice el estado del tripulante 4 a X=64 Y=10
+
+[INFO] 16:25:29:233 Memoria/(24168:24307): Actualice el estado del tripulante 1 a X=44 Y=30
+
+[INFO] 16:25:29:234 Memoria/(24168:24308): Actualice el estado del tripulante 2 a X=54 Y=40
+
+[INFO] 16:25:30:233 Memoria/(24168:24315): Actualice el estado del tripulante 4 a X=65 Y=10
+
+[INFO] 16:25:30:234 Memoria/(24168:24316): Actualice el estado del tripulante 1 a X=45 Y=30
+
+[INFO] 16:25:30:234 Memoria/(24168:24317): Actualice el estado del tripulante 2 a X=55 Y=40
+
+[INFO] 16:25:31:234 Memoria/(24168:24318): Actualice el estado del tripulante 4 a X=66 Y=10
+
+[INFO] 16:25:31:235 Memoria/(24168:24319): Actualice el estado del tripulante 1 a X=46 Y=30
+
+[INFO] 16:25:31:235 Memoria/(24168:24320): Actualice el estado del tripulante 2 a X=56 Y=40
+
+[INFO] 16:25:32:235 Memoria/(24168:24321): Actualice el estado del tripulante 4 a X=67 Y=10
+
+[INFO] 16:25:32:235 Memoria/(24168:24322): Actualice el estado del tripulante 1 a X=47 Y=30
+
+[INFO] 16:25:32:235 Memoria/(24168:24323): Actualice el estado del tripulante 2 a X=57 Y=40
+
+[INFO] 16:25:33:235 Memoria/(24168:24324): Actualice el estado del tripulante 4 a X=68 Y=10
+
+[INFO] 16:25:33:236 Memoria/(24168:24325): Actualice el estado del tripulante 1 a X=48 Y=30
+
+[INFO] 16:25:33:236 Memoria/(24168:24326): Actualice el estado del tripulante 2 a X=58 Y=40
+
+[INFO] 16:25:34:236 Memoria/(24168:24328): Actualice el estado del tripulante 4 a X=69 Y=10
+
+[INFO] 16:25:34:236 Memoria/(24168:24329): Actualice el estado del tripulante 1 a X=49 Y=30
+
+[INFO] 16:25:34:236 Memoria/(24168:24330): Actualice el estado del tripulante 2 a X=59 Y=40
+
+[INFO] 16:25:35:236 Memoria/(24168:24337): Actualice el estado del tripulante 4 a X=70 Y=10
+
+[INFO] 16:25:35:237 Memoria/(24168:24338): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:25:35:237 Memoria/(24168:24339): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:25:35:237 Memoria/(24168:24340): Actualice el estado del tripulante 1 a X=50 Y=30
+
+[INFO] 16:25:35:237 Memoria/(24168:24341): Actualice el estado del tripulante 2 a X=60 Y=40
+
+[INFO] 16:25:35:238 Memoria/(24168:24342): Actualice el estado del tripulante 1 a R
+
+[INFO] 16:25:35:238 Memoria/(24168:24343): Actualice el estado del tripulante 2 a R
+
+[INFO] 16:25:35:238 Memoria/(24168:24344): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:25:35:238 Memoria/(24168:24345): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:25:36:237 Memoria/(24168:24346): Actualice el estado del tripulante 3 a X=61 Y=20
+
+[INFO] 16:25:36:238 Memoria/(24168:24347): Actualice el estado del tripulante 4 a X=70 Y=11
+
+[INFO] 16:25:36:239 Memoria/(24168:24348): Actualice el estado del tripulante 1 a X=51 Y=30
+
+[INFO] 16:25:37:238 Memoria/(24168:24349): Actualice el estado del tripulante 3 a X=62 Y=20
+
+[INFO] 16:25:37:239 Memoria/(24168:24350): Actualice el estado del tripulante 4 a X=70 Y=12
+
+[INFO] 16:25:37:239 Memoria/(24168:24351): Actualice el estado del tripulante 1 a X=52 Y=30
+
+[INFO] 16:25:38:238 Memoria/(24168:24352): Actualice el estado del tripulante 3 a X=63 Y=20
+
+[INFO] 16:25:38:239 Memoria/(24168:24353): Actualice el estado del tripulante 4 a X=70 Y=13
+
+[INFO] 16:25:38:240 Memoria/(24168:24354): Actualice el estado del tripulante 1 a X=53 Y=30
+
+[INFO] 16:25:39:238 Memoria/(24168:24356): Actualice el estado del tripulante 3 a X=64 Y=20
+
+[INFO] 16:25:39:239 Memoria/(24168:24357): Actualice el estado del tripulante 4 a X=70 Y=14
+
+[INFO] 16:25:39:240 Memoria/(24168:24358): Actualice el estado del tripulante 1 a X=54 Y=30
+
+[INFO] 16:25:40:239 Memoria/(24168:24365): Actualice el estado del tripulante 3 a X=65 Y=20
+
+[INFO] 16:25:40:240 Memoria/(24168:24366): Actualice el estado del tripulante 4 a X=70 Y=15
+
+[INFO] 16:25:40:240 Memoria/(24168:24367): Actualice el estado del tripulante 1 a X=55 Y=30
+
+[INFO] 16:25:41:239 Memoria/(24168:24368): Actualice el estado del tripulante 3 a X=66 Y=20
+
+[INFO] 16:25:41:240 Memoria/(24168:24369): Actualice el estado del tripulante 4 a X=70 Y=16
+
+[INFO] 16:25:41:240 Memoria/(24168:24370): Actualice el estado del tripulante 1 a X=56 Y=30
+
+[INFO] 16:25:42:240 Memoria/(24168:24376): Actualice el estado del tripulante 3 a X=67 Y=20
+
+[INFO] 16:25:42:240 Memoria/(24168:24377): Actualice el estado del tripulante 4 a X=70 Y=17
+
+[INFO] 16:25:42:241 Memoria/(24168:24378): Actualice el estado del tripulante 1 a X=57 Y=30
+
+[INFO] 16:25:43:240 Memoria/(24168:24379): Actualice el estado del tripulante 3 a X=68 Y=20
+
+[INFO] 16:25:43:241 Memoria/(24168:24380): Actualice el estado del tripulante 4 a X=70 Y=18
+
+[INFO] 16:25:43:241 Memoria/(24168:24381): Actualice el estado del tripulante 1 a X=58 Y=30
+
+[INFO] 16:25:44:241 Memoria/(24168:24383): Actualice el estado del tripulante 3 a X=69 Y=20
+
+[INFO] 16:25:44:241 Memoria/(24168:24384): Actualice el estado del tripulante 4 a X=70 Y=19
+
+[INFO] 16:25:44:242 Memoria/(24168:24385): Actualice el estado del tripulante 1 a X=59 Y=30
+
+[INFO] 16:25:45:242 Memoria/(24168:24392): Actualice el estado del tripulante 3 a X=70 Y=20
+
+[INFO] 16:25:45:242 Memoria/(24168:24393): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:25:45:242 Memoria/(24168:24394): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:25:45:242 Memoria/(24168:24395): Actualice el estado del tripulante 4 a X=70 Y=20
+
+[INFO] 16:25:45:243 Memoria/(24168:24396): Actualice el estado del tripulante 1 a X=60 Y=30
+
+[INFO] 16:25:45:243 Memoria/(24168:24397): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:25:45:243 Memoria/(24168:24398): Actualice el estado del tripulante 1 a R
+
+[INFO] 16:25:45:243 Memoria/(24168:24399): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:25:45:243 Memoria/(24168:24400): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:25:46:242 Memoria/(24168:24401): Actualice el estado del tripulante 2 a X=61 Y=40
+
+[INFO] 16:25:46:243 Memoria/(24168:24402): Actualice el estado del tripulante 3 a X=70 Y=21
+
+[INFO] 16:25:46:244 Memoria/(24168:24403): Actualice el estado del tripulante 4 a X=70 Y=21
+
+[INFO] 16:25:47:243 Memoria/(24168:24404): Actualice el estado del tripulante 2 a X=62 Y=40
+
+[INFO] 16:25:47:244 Memoria/(24168:24405): Actualice el estado del tripulante 3 a X=70 Y=22
+
+[INFO] 16:25:47:244 Memoria/(24168:24406): Actualice el estado del tripulante 4 a X=70 Y=22
+
+[INFO] 16:25:48:243 Memoria/(24168:24407): Actualice el estado del tripulante 2 a X=63 Y=40
+
+[INFO] 16:25:48:244 Memoria/(24168:24408): Actualice el estado del tripulante 3 a X=70 Y=23
+
+[INFO] 16:25:48:245 Memoria/(24168:24409): Actualice el estado del tripulante 4 a X=70 Y=23
+
+[INFO] 16:25:49:244 Memoria/(24168:24411): Actualice el estado del tripulante 2 a X=64 Y=40
+
+[INFO] 16:25:49:244 Memoria/(24168:24412): Actualice el estado del tripulante 3 a X=70 Y=24
+
+[INFO] 16:25:49:245 Memoria/(24168:24413): Actualice el estado del tripulante 4 a X=70 Y=24
+
+[INFO] 16:25:50:244 Memoria/(24168:24420): Actualice el estado del tripulante 2 a X=65 Y=40
+
+[INFO] 16:25:50:245 Memoria/(24168:24421): Actualice el estado del tripulante 3 a X=70 Y=25
+
+[INFO] 16:25:50:245 Memoria/(24168:24422): Actualice el estado del tripulante 4 a X=70 Y=25
+
+[INFO] 16:25:51:245 Memoria/(24168:24423): Actualice el estado del tripulante 2 a X=66 Y=40
+
+[INFO] 16:25:51:245 Memoria/(24168:24424): Actualice el estado del tripulante 3 a X=70 Y=26
+
+[INFO] 16:25:51:246 Memoria/(24168:24425): Actualice el estado del tripulante 4 a X=70 Y=26
+
+[INFO] 16:25:52:247 Memoria/(24168:24426): Actualice el estado del tripulante 2 a X=67 Y=40
+
+[INFO] 16:25:52:247 Memoria/(24168:24427): Actualice el estado del tripulante 3 a X=70 Y=27
+
+[INFO] 16:25:52:247 Memoria/(24168:24428): Actualice el estado del tripulante 4 a X=70 Y=27
+
+[INFO] 16:25:53:247 Memoria/(24168:24429): Actualice el estado del tripulante 2 a X=68 Y=40
+
+[INFO] 16:25:54:248 Memoria/(24168:24431): Actualice el estado del tripulante 2 a X=69 Y=40
+
+[INFO] 16:25:55:251 Memoria/(24168:24438): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:25:55:251 Memoria/(24168:24439): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:25:55:251 Memoria/(24168:24440): Actualice el estado del tripulante 2 a X=70 Y=40
+
+[INFO] 16:25:55:252 Memoria/(24168:24441): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:25:55:252 Memoria/(24168:24442): Actualice el estado del tripulante 2 a R
+
+[INFO] 16:25:55:252 Memoria/(24168:24443): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:25:55:253 Memoria/(24168:24444): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:25:56:253 Memoria/(24168:24445): Actualice el estado del tripulante 1 a X=61 Y=30
+
+[INFO] 16:25:57:253 Memoria/(24168:24446): Actualice el estado del tripulante 1 a X=62 Y=30
+
+[INFO] 16:25:58:253 Memoria/(24168:24447): Actualice el estado del tripulante 1 a X=63 Y=30
+
+[INFO] 16:25:59:253 Memoria/(24168:24449): Actualice el estado del tripulante 1 a X=64 Y=30
+
+[INFO] 16:26:00:254 Memoria/(24168:24456): Actualice el estado del tripulante 1 a X=65 Y=30
+
+[INFO] 16:26:01:254 Memoria/(24168:24457): Actualice el estado del tripulante 1 a X=66 Y=30
+
+[INFO] 16:26:02:255 Memoria/(24168:24458): Mande la tarea GENERAR_OXIGENO 10;50;30;15
+
+[INFO] 16:26:02:255 Memoria/(24168:24459): Mande la tarea GENERAR_OXIGENO 10;50;30;15
+
+[INFO] 16:26:02:255 Memoria/(24168:24460): Actualice el estado del tripulante 1 a X=67 Y=30
+
+[INFO] 16:26:03:256 Memoria/(24168:24461): Actualice el estado del tripulante 3 a X=69 Y=27
+
+[INFO] 16:26:03:257 Memoria/(24168:24462): Actualice el estado del tripulante 4 a X=69 Y=27
+
+[INFO] 16:26:03:257 Memoria/(24168:24463): Actualice el estado del tripulante 1 a X=68 Y=30
+
+[INFO] 16:26:04:256 Memoria/(24168:24465): Actualice el estado del tripulante 3 a X=68 Y=27
+
+[INFO] 16:26:04:257 Memoria/(24168:24466): Actualice el estado del tripulante 4 a X=68 Y=27
+
+[INFO] 16:26:04:257 Memoria/(24168:24467): Actualice el estado del tripulante 1 a X=69 Y=30
+
+[INFO] 16:26:05:257 Memoria/(24168:24474): Actualice el estado del tripulante 3 a X=67 Y=27
+
+[INFO] 16:26:05:257 Memoria/(24168:24475): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:26:05:257 Memoria/(24168:24476): Actualice el estado del tripulante 4 a X=67 Y=27
+
+[INFO] 16:26:05:258 Memoria/(24168:24477): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:26:05:258 Memoria/(24168:24478): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:26:05:258 Memoria/(24168:24479): Actualice el estado del tripulante 1 a X=70 Y=30
+
+[INFO] 16:26:05:258 Memoria/(24168:24480): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:26:05:258 Memoria/(24168:24481): Actualice el estado del tripulante 1 a R
+
+[INFO] 16:26:05:259 Memoria/(24168:24482): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:26:06:258 Memoria/(24168:24483): Actualice el estado del tripulante 2 a X=70 Y=39
+
+[INFO] 16:26:06:259 Memoria/(24168:24484): Actualice el estado del tripulante 3 a X=66 Y=27
+
+[INFO] 16:26:06:259 Memoria/(24168:24485): Actualice el estado del tripulante 4 a X=66 Y=27
+
+[INFO] 16:26:07:259 Memoria/(24168:24486): Actualice el estado del tripulante 2 a X=70 Y=38
+
+[INFO] 16:26:07:259 Memoria/(24168:24487): Actualice el estado del tripulante 3 a X=65 Y=27
+
+[INFO] 16:26:07:259 Memoria/(24168:24488): Actualice el estado del tripulante 4 a X=65 Y=27
+
+[INFO] 16:26:08:260 Memoria/(24168:24489): Actualice el estado del tripulante 2 a X=70 Y=37
+
+[INFO] 16:26:08:260 Memoria/(24168:24490): Actualice el estado del tripulante 3 a X=64 Y=27
+
+[INFO] 16:26:08:261 Memoria/(24168:24491): Actualice el estado del tripulante 4 a X=64 Y=27
+
+[INFO] 16:26:09:261 Memoria/(24168:24493): Actualice el estado del tripulante 2 a X=70 Y=36
+
+[INFO] 16:26:09:261 Memoria/(24168:24494): Actualice el estado del tripulante 3 a X=63 Y=27
+
+[INFO] 16:26:09:262 Memoria/(24168:24495): Actualice el estado del tripulante 4 a X=63 Y=27
+
+[INFO] 16:26:10:261 Memoria/(24168:24502): Actualice el estado del tripulante 2 a X=70 Y=35
+
+[INFO] 16:26:10:262 Memoria/(24168:24503): Actualice el estado del tripulante 3 a X=62 Y=27
+
+[INFO] 16:26:10:262 Memoria/(24168:24504): Actualice el estado del tripulante 4 a X=62 Y=27
+
+[INFO] 16:26:11:262 Memoria/(24168:24505): Actualice el estado del tripulante 2 a X=70 Y=34
+
+[INFO] 16:26:11:262 Memoria/(24168:24506): Actualice el estado del tripulante 3 a X=61 Y=27
+
+[INFO] 16:26:11:263 Memoria/(24168:24507): Actualice el estado del tripulante 4 a X=61 Y=27
+
+[INFO] 16:26:12:263 Memoria/(24168:24508): Actualice el estado del tripulante 2 a X=70 Y=33
+
+[INFO] 16:26:12:263 Memoria/(24168:24509): Actualice el estado del tripulante 3 a X=60 Y=27
+
+[INFO] 16:26:12:264 Memoria/(24168:24510): Actualice el estado del tripulante 4 a X=60 Y=27
+
+[INFO] 16:26:13:263 Memoria/(24168:24511): Actualice el estado del tripulante 2 a X=70 Y=32
+
+[INFO] 16:26:13:264 Memoria/(24168:24512): Actualice el estado del tripulante 3 a X=59 Y=27
+
+[INFO] 16:26:13:264 Memoria/(24168:24513): Actualice el estado del tripulante 4 a X=59 Y=27
+
+[INFO] 16:26:14:264 Memoria/(24168:24515): Actualice el estado del tripulante 2 a X=70 Y=31
+
+[INFO] 16:26:14:264 Memoria/(24168:24516): Actualice el estado del tripulante 3 a X=58 Y=27
+
+[INFO] 16:26:14:264 Memoria/(24168:24517): Actualice el estado del tripulante 4 a X=58 Y=27
+
+[INFO] 16:26:15:264 Memoria/(24168:24526): Actualice el estado del tripulante 2 a X=70 Y=30
+
+[INFO] 16:26:15:265 Memoria/(24168:24527): Actualice el estado del tripulante 2 a R
+
+[INFO] 16:26:15:265 Memoria/(24168:24528): Actualice el estado del tripulante 3 a X=57 Y=27
+
+[INFO] 16:26:15:265 Memoria/(24168:24529): Actualice el estado del tripulante 4 a X=57 Y=27
+
+[INFO] 16:26:15:265 Memoria/(24168:24530): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:26:15:265 Memoria/(24168:24531): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:26:15:266 Memoria/(24168:24532): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:26:15:266 Memoria/(24168:24533): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:26:15:266 Memoria/(24168:24534): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:26:16:266 Memoria/(24168:24535): Actualice el estado del tripulante 1 a X=70 Y=29
+
+[INFO] 16:26:16:266 Memoria/(24168:24536): Actualice el estado del tripulante 2 a X=70 Y=29
+
+[INFO] 16:26:16:267 Memoria/(24168:24537): Actualice el estado del tripulante 3 a X=56 Y=27
+
+[INFO] 16:26:17:266 Memoria/(24168:24538): Actualice el estado del tripulante 1 a X=70 Y=28
+
+[INFO] 16:26:17:267 Memoria/(24168:24539): Actualice el estado del tripulante 2 a X=70 Y=28
+
+[INFO] 16:26:17:267 Memoria/(24168:24540): Actualice el estado del tripulante 3 a X=55 Y=27
+
+[INFO] 16:26:18:267 Memoria/(24168:24541): Actualice el estado del tripulante 1 a X=70 Y=27
+
+[INFO] 16:26:18:267 Memoria/(24168:24542): Actualice el estado del tripulante 2 a X=70 Y=27
+
+[INFO] 16:26:18:268 Memoria/(24168:24543): Actualice el estado del tripulante 3 a X=54 Y=27
+
+[INFO] 16:26:19:268 Memoria/(24168:24545): Actualice el estado del tripulante 3 a X=53 Y=27
+
+[INFO] 16:26:20:268 Memoria/(24168:24552): Actualice el estado del tripulante 3 a X=52 Y=27
+
+[INFO] 16:26:21:268 Memoria/(24168:24553): Actualice el estado del tripulante 3 a X=51 Y=27
+
+[INFO] 16:26:22:269 Memoria/(24168:24554): Actualice el estado del tripulante 3 a X=50 Y=27
+
+[INFO] 16:26:23:269 Memoria/(24168:24555): Actualice el estado del tripulante 3 a X=50 Y=28
+
+[INFO] 16:26:24:270 Memoria/(24168:24557): Actualice el estado del tripulante 3 a X=50 Y=29
+
+[INFO] 16:26:25:268 Memoria/(24168:24564): Actualice el estado del tripulante 1 a R
+
+[INFO] 16:26:25:268 Memoria/(24168:24565): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:26:25:268 Memoria/(24168:24566): Actualice el estado del tripulante 2 a R
+
+[INFO] 16:26:25:268 Memoria/(24168:24567): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:26:25:270 Memoria/(24168:24568): Actualice el estado del tripulante 3 a X=50 Y=30
+
+[INFO] 16:26:25:270 Memoria/(24168:24569): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:26:25:270 Memoria/(24168:24570): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:26:26:269 Memoria/(24168:24571): Actualice el estado del tripulante 4 a X=56 Y=27
+
+[INFO] 16:26:27:269 Memoria/(24168:24573): Actualice el estado del tripulante 4 a X=55 Y=27
+
+[INFO] 16:26:28:270 Memoria/(24168:24574): Mande la tarea GENERAR_OXIGENO 10;50;30;15
+
+[INFO] 16:26:28:270 Memoria/(24168:24575): Actualice el estado del tripulante 4 a X=54 Y=27
+
+[INFO] 16:26:28:271 Memoria/(24168:24576): Mande la tarea GENERAR_OXIGENO 10;50;30;15
+
+[INFO] 16:26:29:270 Memoria/(24168:24578): Actualice el estado del tripulante 1 a X=69 Y=27
+
+[INFO] 16:26:29:271 Memoria/(24168:24579): Actualice el estado del tripulante 4 a X=53 Y=27
+
+[INFO] 16:26:29:271 Memoria/(24168:24580): Actualice el estado del tripulante 2 a X=69 Y=27
+
+[INFO] 16:26:30:271 Memoria/(24168:24587): Actualice el estado del tripulante 1 a X=68 Y=27
+
+[INFO] 16:26:30:272 Memoria/(24168:24588): Actualice el estado del tripulante 4 a X=52 Y=27
+
+[INFO] 16:26:30:272 Memoria/(24168:24589): Actualice el estado del tripulante 2 a X=68 Y=27
+
+[INFO] 16:26:31:272 Memoria/(24168:24590): Actualice el estado del tripulante 1 a X=67 Y=27
+
+[INFO] 16:26:31:272 Memoria/(24168:24591): Actualice el estado del tripulante 4 a X=51 Y=27
+
+[INFO] 16:26:31:273 Memoria/(24168:24592): Actualice el estado del tripulante 2 a X=67 Y=27
+
+[INFO] 16:26:32:272 Memoria/(24168:24593): Actualice el estado del tripulante 1 a X=66 Y=27
+
+[INFO] 16:26:32:273 Memoria/(24168:24594): Actualice el estado del tripulante 4 a X=50 Y=27
+
+[INFO] 16:26:32:273 Memoria/(24168:24595): Actualice el estado del tripulante 2 a X=66 Y=27
+
+[INFO] 16:26:33:273 Memoria/(24168:24596): Actualice el estado del tripulante 1 a X=65 Y=27
+
+[INFO] 16:26:33:273 Memoria/(24168:24597): Actualice el estado del tripulante 4 a X=50 Y=28
+
+[INFO] 16:26:33:274 Memoria/(24168:24598): Actualice el estado del tripulante 2 a X=65 Y=27
+
+[INFO] 16:26:34:274 Memoria/(24168:24600): Actualice el estado del tripulante 1 a X=64 Y=27
+
+[INFO] 16:26:34:274 Memoria/(24168:24601): Actualice el estado del tripulante 4 a X=50 Y=29
+
+[INFO] 16:26:34:275 Memoria/(24168:24602): Actualice el estado del tripulante 2 a X=64 Y=27
+
+[INFO] 16:26:35:275 Memoria/(24168:24609): Actualice el estado del tripulante 1 a X=63 Y=27
+
+[INFO] 16:26:35:276 Memoria/(24168:24610): Actualice el estado del tripulante 4 a X=50 Y=30
+
+[INFO] 16:26:35:276 Memoria/(24168:24611): Actualice el estado del tripulante 1 a R
+
+[INFO] 16:26:35:276 Memoria/(24168:24612): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:26:35:276 Memoria/(24168:24613): Actualice el estado del tripulante 2 a X=63 Y=27
+
+[INFO] 16:26:35:277 Memoria/(24168:24614): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:26:35:277 Memoria/(24168:24615): Actualice el estado del tripulante 2 a R
+
+[INFO] 16:26:35:277 Memoria/(24168:24616): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:26:35:277 Memoria/(24168:24617): Actualice el estado del tripulante 3 a B
+
+[INFO] 16:26:35:277 Memoria/(24168:24618): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:26:35:277 Memoria/(24168:24619): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:26:36:277 Memoria/(24168:24620): Actualice el estado del tripulante 1 a X=62 Y=27
+
+[INFO] 16:26:36:278 Memoria/(24168:24621): Actualice el estado del tripulante 2 a X=62 Y=27
+
+[INFO] 16:26:37:278 Memoria/(24168:24622): Actualice el estado del tripulante 1 a X=61 Y=27
+
+[INFO] 16:26:37:278 Memoria/(24168:24623): Actualice el estado del tripulante 2 a X=61 Y=27
+
+[INFO] 16:26:38:278 Memoria/(24168:24624): Actualice el estado del tripulante 1 a X=60 Y=27
+
+[INFO] 16:26:38:278 Memoria/(24168:24625): Actualice el estado del tripulante 2 a X=60 Y=27
+
+[INFO] 16:26:39:278 Memoria/(24168:24627): Actualice el estado del tripulante 1 a X=59 Y=27
+
+[INFO] 16:26:39:279 Memoria/(24168:24628): Actualice el estado del tripulante 2 a X=59 Y=27
+
+[INFO] 16:26:40:279 Memoria/(24168:24635): Actualice el estado del tripulante 1 a X=58 Y=27
+
+[INFO] 16:26:40:279 Memoria/(24168:24636): Actualice el estado del tripulante 2 a X=58 Y=27
+
+[INFO] 16:26:41:279 Memoria/(24168:24637): Actualice el estado del tripulante 1 a X=57 Y=27
+
+[INFO] 16:26:41:279 Memoria/(24168:24638): Actualice el estado del tripulante 2 a X=57 Y=27
+
+[INFO] 16:26:42:279 Memoria/(24168:24639): Actualice el estado del tripulante 1 a X=56 Y=27
+
+[INFO] 16:26:42:280 Memoria/(24168:24640): Actualice el estado del tripulante 2 a X=56 Y=27
+
+[INFO] 16:26:43:279 Memoria/(24168:24641): Actualice el estado del tripulante 1 a X=55 Y=27
+
+[INFO] 16:26:43:280 Memoria/(24168:24642): Actualice el estado del tripulante 2 a X=55 Y=27
+
+[INFO] 16:26:44:280 Memoria/(24168:24644): Actualice el estado del tripulante 1 a X=54 Y=27
+
+[INFO] 16:26:44:280 Memoria/(24168:24645): Actualice el estado del tripulante 2 a X=54 Y=27
+
+[INFO] 16:26:45:280 Memoria/(24168:24652): Actualice el estado del tripulante 1 a X=53 Y=27
+
+[INFO] 16:26:45:280 Memoria/(24168:24653): Actualice el estado del tripulante 1 a R
+
+[INFO] 16:26:45:281 Memoria/(24168:24654): Actualice el estado del tripulante 2 a X=53 Y=27
+
+[INFO] 16:26:45:281 Memoria/(24168:24655): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:26:45:281 Memoria/(24168:24656): Actualice el estado del tripulante 2 a R
+
+[INFO] 16:26:45:281 Memoria/(24168:24657): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:26:46:281 Memoria/(24168:24658): Actualice el estado del tripulante 1 a X=52 Y=27
+
+[INFO] 16:26:46:282 Memoria/(24168:24659): Actualice el estado del tripulante 2 a X=52 Y=27
+
+[INFO] 16:26:47:282 Memoria/(24168:24660): Actualice el estado del tripulante 1 a X=51 Y=27
+
+[INFO] 16:26:47:282 Memoria/(24168:24661): Actualice el estado del tripulante 2 a X=51 Y=27
+
+[INFO] 16:26:48:282 Memoria/(24168:24662): Actualice el estado del tripulante 1 a X=50 Y=27
+
+[INFO] 16:26:48:283 Memoria/(24168:24663): Actualice el estado del tripulante 2 a X=50 Y=27
+
+[INFO] 16:26:49:283 Memoria/(24168:24665): Actualice el estado del tripulante 1 a X=50 Y=28
+
+[INFO] 16:26:49:283 Memoria/(24168:24666): Actualice el estado del tripulante 2 a X=50 Y=28
+
+[INFO] 16:26:50:280 Memoria/(24168:24673): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:26:50:280 Memoria/(24168:24674): Mande la tarea TOMAR_AGUA;40;20;2
+
+[INFO] 16:26:50:280 Memoria/(24168:24675): Actualice el estado del tripulante 4 a B
+
+[INFO] 16:26:50:280 Memoria/(24168:24676): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:26:50:283 Memoria/(24168:24677): Actualice el estado del tripulante 1 a X=50 Y=29
+
+[INFO] 16:26:50:284 Memoria/(24168:24678): Actualice el estado del tripulante 2 a X=50 Y=29
+
+[INFO] 16:26:51:280 Memoria/(24168:24679): Actualice el estado del tripulante 3 a X=49 Y=30
+
+[INFO] 16:26:51:284 Memoria/(24168:24680): Actualice el estado del tripulante 1 a X=50 Y=30
+
+[INFO] 16:26:51:284 Memoria/(24168:24681): Actualice el estado del tripulante 2 a X=50 Y=30
+
+[INFO] 16:26:52:281 Memoria/(24168:24682): Actualice el estado del tripulante 3 a X=48 Y=30
+
+[INFO] 16:26:53:282 Memoria/(24168:24683): Actualice el estado del tripulante 3 a X=47 Y=30
+
+[INFO] 16:26:54:282 Memoria/(24168:24685): Actualice el estado del tripulante 3 a X=46 Y=30
+
+[INFO] 16:26:55:282 Memoria/(24168:24692): Actualice el estado del tripulante 3 a X=45 Y=30
+
+[INFO] 16:26:56:283 Memoria/(24168:24693): Actualice el estado del tripulante 3 a X=44 Y=30
+
+[INFO] 16:26:57:283 Memoria/(24168:24694): Actualice el estado del tripulante 3 a X=43 Y=30
+
+[INFO] 16:26:58:283 Memoria/(24168:24695): Actualice el estado del tripulante 3 a X=42 Y=30
+
+[INFO] 16:26:59:284 Memoria/(24168:24697): Actualice el estado del tripulante 3 a X=41 Y=30
+
+[INFO] 16:27:00:284 Memoria/(24168:24704): Actualice el estado del tripulante 3 a X=40 Y=30
+
+[INFO] 16:27:00:284 Memoria/(24168:24705): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:27:00:284 Memoria/(24168:24706): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:27:01:285 Memoria/(24168:24707): Actualice el estado del tripulante 3 a X=40 Y=29
+
+[INFO] 16:27:02:285 Memoria/(24168:24708): Actualice el estado del tripulante 3 a X=40 Y=28
+
+[INFO] 16:27:03:285 Memoria/(24168:24709): Actualice el estado del tripulante 3 a X=40 Y=27
+
+[INFO] 16:27:04:286 Memoria/(24168:24711): Actualice el estado del tripulante 3 a X=40 Y=26
+
+[INFO] 16:27:05:285 Memoria/(24168:24718): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:27:05:285 Memoria/(24168:24719): Mande la tarea TOMAR_AGUA;40;20;2
+
+[INFO] 16:27:05:286 Memoria/(24168:24720): Actualice el estado del tripulante 1 a B
+
+[INFO] 16:27:05:286 Memoria/(24168:24721): Actualice el estado del tripulante 2 a B
+
+[INFO] 16:27:05:286 Memoria/(24168:24722): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:27:05:286 Memoria/(24168:24723): Actualice el estado del tripulante 3 a X=40 Y=25
+
+[INFO] 16:27:06:286 Memoria/(24168:24724): Actualice el estado del tripulante 4 a X=49 Y=30
+
+[INFO] 16:27:06:286 Memoria/(24168:24725): Actualice el estado del tripulante 3 a X=40 Y=24
+
+[INFO] 16:27:07:286 Memoria/(24168:24726): Actualice el estado del tripulante 4 a X=48 Y=30
+
+[INFO] 16:27:07:287 Memoria/(24168:24727): Actualice el estado del tripulante 3 a X=40 Y=23
+
+[INFO] 16:27:08:287 Memoria/(24168:24728): Actualice el estado del tripulante 4 a X=47 Y=30
+
+[INFO] 16:27:08:287 Memoria/(24168:24729): Actualice el estado del tripulante 3 a X=40 Y=22
+
+[INFO] 16:27:09:287 Memoria/(24168:24731): Actualice el estado del tripulante 4 a X=46 Y=30
+
+[INFO] 16:27:09:287 Memoria/(24168:24732): Actualice el estado del tripulante 3 a X=40 Y=21
+
+[INFO] 16:27:10:287 Memoria/(24168:24739): Actualice el estado del tripulante 4 a X=45 Y=30
+
+[INFO] 16:27:10:288 Memoria/(24168:24740): Actualice el estado del tripulante 3 a X=40 Y=20
+
+[INFO] 16:27:10:288 Memoria/(24168:24741): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:27:10:288 Memoria/(24168:24742): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:27:11:287 Memoria/(24168:24743): Actualice el estado del tripulante 4 a X=44 Y=30
+
+[INFO] 16:27:12:288 Memoria/(24168:24744): Actualice el estado del tripulante 4 a X=43 Y=30
+
+[INFO] 16:27:12:288 Memoria/(24168:24745): Mande la tarea GENERAR_OXIGENO 10;35;21;15
+
+[INFO] 16:27:13:289 Memoria/(24168:24746): Actualice el estado del tripulante 4 a X=42 Y=30
+
+[INFO] 16:27:13:289 Memoria/(24168:24747): Actualice el estado del tripulante 3 a X=39 Y=20
+
+[INFO] 16:27:14:290 Memoria/(24168:24749): Actualice el estado del tripulante 4 a X=41 Y=30
+
+[INFO] 16:27:14:290 Memoria/(24168:24750): Actualice el estado del tripulante 3 a X=38 Y=20
+
+[INFO] 16:27:15:290 Memoria/(24168:24759): Actualice el estado del tripulante 4 a X=40 Y=30
+
+[INFO] 16:27:15:291 Memoria/(24168:24760): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:27:15:291 Memoria/(24168:24761): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:27:15:291 Memoria/(24168:24762): Actualice el estado del tripulante 3 a X=37 Y=20
+
+[INFO] 16:27:16:291 Memoria/(24168:24763): Actualice el estado del tripulante 4 a X=40 Y=29
+
+[INFO] 16:27:16:292 Memoria/(24168:24764): Actualice el estado del tripulante 3 a X=36 Y=20
+
+[INFO] 16:27:17:292 Memoria/(24168:24765): Actualice el estado del tripulante 4 a X=40 Y=28
+
+[INFO] 16:27:17:292 Memoria/(24168:24766): Actualice el estado del tripulante 3 a X=35 Y=20
+
+[INFO] 16:27:18:293 Memoria/(24168:24767): Actualice el estado del tripulante 4 a X=40 Y=27
+
+[INFO] 16:27:18:293 Memoria/(24168:24768): Actualice el estado del tripulante 3 a X=35 Y=21
+
+[INFO] 16:27:19:293 Memoria/(24168:24770): Actualice el estado del tripulante 4 a X=40 Y=26
+
+[INFO] 16:27:20:288 Memoria/(24168:24777): Actualice el estado del tripulante 1 a R
+
+[INFO] 16:27:20:288 Memoria/(24168:24778): Mande la tarea TOMAR_AGUA;40;20;2
+
+[INFO] 16:27:20:288 Memoria/(24168:24779): Actualice el estado del tripulante 3 a B
+
+[INFO] 16:27:20:289 Memoria/(24168:24780): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:27:20:294 Memoria/(24168:24781): Actualice el estado del tripulante 4 a X=40 Y=25
+
+[INFO] 16:27:21:289 Memoria/(24168:24782): Actualice el estado del tripulante 1 a X=49 Y=30
+
+[INFO] 16:27:21:295 Memoria/(24168:24783): Actualice el estado del tripulante 4 a X=40 Y=24
+
+[INFO] 16:27:22:289 Memoria/(24168:24784): Actualice el estado del tripulante 1 a X=48 Y=30
+
+[INFO] 16:27:22:295 Memoria/(24168:24785): Actualice el estado del tripulante 4 a X=40 Y=23
+
+[INFO] 16:27:23:289 Memoria/(24168:24786): Actualice el estado del tripulante 1 a X=47 Y=30
+
+[INFO] 16:27:23:296 Memoria/(24168:24787): Actualice el estado del tripulante 4 a X=40 Y=22
+
+[INFO] 16:27:24:290 Memoria/(24168:24789): Actualice el estado del tripulante 1 a X=46 Y=30
+
+[INFO] 16:27:24:290 Memoria/(24168:24790): Actualice el estado del tripulante 1 a R
+
+[INFO] 16:27:24:290 Memoria/(24168:24791): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:27:24:296 Memoria/(24168:24792): Actualice el estado del tripulante 4 a X=40 Y=21
+
+[INFO] 16:27:25:290 Memoria/(24168:24799): Actualice el estado del tripulante 1 a X=45 Y=30
+
+[INFO] 16:27:25:297 Memoria/(24168:24800): Actualice el estado del tripulante 4 a X=40 Y=20
+
+[INFO] 16:27:25:298 Memoria/(24168:24801): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:27:25:298 Memoria/(24168:24802): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:27:26:291 Memoria/(24168:24803): Actualice el estado del tripulante 1 a X=44 Y=30
+
+[INFO] 16:27:27:291 Memoria/(24168:24804): Actualice el estado del tripulante 1 a X=43 Y=30
+
+[INFO] 16:27:27:299 Memoria/(24168:24805): Mande la tarea GENERAR_OXIGENO 10;35;21;15
+
+[INFO] 16:27:28:292 Memoria/(24168:24806): Actualice el estado del tripulante 1 a X=42 Y=30
+
+[INFO] 16:27:28:299 Memoria/(24168:24807): Actualice el estado del tripulante 4 a X=39 Y=20
+
+[INFO] 16:27:29:293 Memoria/(24168:24809): Actualice el estado del tripulante 1 a X=41 Y=30
+
+[INFO] 16:27:29:300 Memoria/(24168:24810): Actualice el estado del tripulante 4 a X=38 Y=20
+
+[INFO] 16:27:30:293 Memoria/(24168:24817): Actualice el estado del tripulante 1 a X=40 Y=30
+
+[INFO] 16:27:30:300 Memoria/(24168:24818): Actualice el estado del tripulante 4 a X=37 Y=20
+
+[INFO] 16:27:31:294 Memoria/(24168:24819): Actualice el estado del tripulante 1 a X=40 Y=29
+
+[INFO] 16:27:31:300 Memoria/(24168:24820): Actualice el estado del tripulante 4 a X=36 Y=20
+
+[INFO] 16:27:32:294 Memoria/(24168:24821): Actualice el estado del tripulante 1 a X=40 Y=28
+
+[INFO] 16:27:32:301 Memoria/(24168:24822): Actualice el estado del tripulante 4 a X=35 Y=20
+
+[INFO] 16:27:33:295 Memoria/(24168:24823): Actualice el estado del tripulante 1 a X=40 Y=27
+
+[INFO] 16:27:33:302 Memoria/(24168:24824): Actualice el estado del tripulante 4 a X=35 Y=21
+
+[INFO] 16:27:34:295 Memoria/(24168:24826): Actualice el estado del tripulante 1 a X=40 Y=26
+
+[INFO] 16:27:34:296 Memoria/(24168:24827): Actualice el estado del tripulante 1 a R
+
+[INFO] 16:27:34:296 Memoria/(24168:24828): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:27:35:293 Memoria/(24168:24835): Actualice el estado del tripulante 2 a R
+
+[INFO] 16:27:35:293 Memoria/(24168:24836): Mande la tarea TOMAR_AGUA;40;20;2
+
+[INFO] 16:27:35:293 Memoria/(24168:24837): Actualice el estado del tripulante 4 a B
+
+[INFO] 16:27:35:294 Memoria/(24168:24838): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:27:35:296 Memoria/(24168:24839): Actualice el estado del tripulante 1 a X=40 Y=25
+
+[INFO] 16:27:36:294 Memoria/(24168:24840): Actualice el estado del tripulante 2 a X=49 Y=30
+
+[INFO] 16:27:36:296 Memoria/(24168:24841): Actualice el estado del tripulante 1 a X=40 Y=24
+
+[INFO] 16:27:37:294 Memoria/(24168:24842): Actualice el estado del tripulante 2 a X=48 Y=30
+
+[INFO] 16:27:37:297 Memoria/(24168:24843): Actualice el estado del tripulante 1 a X=40 Y=23
+
+[INFO] 16:27:38:294 Memoria/(24168:24844): Actualice el estado del tripulante 2 a X=47 Y=30
+
+[INFO] 16:27:38:297 Memoria/(24168:24845): Actualice el estado del tripulante 1 a X=40 Y=22
+
+[INFO] 16:27:39:295 Memoria/(24168:24847): Actualice el estado del tripulante 2 a X=46 Y=30
+
+[INFO] 16:27:39:295 Memoria/(24168:24848): Actualice el estado del tripulante 2 a R
+
+[INFO] 16:27:39:295 Memoria/(24168:24849): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:27:39:297 Memoria/(24168:24850): Actualice el estado del tripulante 1 a X=40 Y=21
+
+[INFO] 16:27:40:296 Memoria/(24168:24857): Actualice el estado del tripulante 2 a X=45 Y=30
+
+[INFO] 16:27:40:298 Memoria/(24168:24858): Actualice el estado del tripulante 1 a X=40 Y=20
+
+[INFO] 16:27:41:297 Memoria/(24168:24859): Actualice el estado del tripulante 2 a X=44 Y=30
+
+[INFO] 16:27:42:298 Memoria/(24168:24860): Actualice el estado del tripulante 2 a X=43 Y=30
+
+[INFO] 16:27:42:298 Memoria/(24168:24861): Mande la tarea GENERAR_OXIGENO 10;35;21;15
+
+[INFO] 16:27:43:299 Memoria/(24168:24862): Actualice el estado del tripulante 2 a X=42 Y=30
+
+[INFO] 16:27:43:299 Memoria/(24168:24863): Actualice el estado del tripulante 1 a X=39 Y=20
+
+[INFO] 16:27:44:299 Memoria/(24168:24865): Actualice el estado del tripulante 2 a X=41 Y=30
+
+[INFO] 16:27:44:300 Memoria/(24168:24866): Actualice el estado del tripulante 1 a X=38 Y=20
+
+[INFO] 16:27:44:300 Memoria/(24168:24867): Actualice el estado del tripulante 1 a R
+
+[INFO] 16:27:44:300 Memoria/(24168:24868): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:27:45:299 Memoria/(24168:24875): Actualice el estado del tripulante 2 a X=40 Y=30
+
+[INFO] 16:27:45:300 Memoria/(24168:24876): Actualice el estado del tripulante 1 a X=37 Y=20
+
+[INFO] 16:27:46:300 Memoria/(24168:24877): Actualice el estado del tripulante 2 a X=40 Y=29
+
+[INFO] 16:27:46:300 Memoria/(24168:24878): Actualice el estado del tripulante 1 a X=36 Y=20
+
+[INFO] 16:27:47:300 Memoria/(24168:24879): Actualice el estado del tripulante 2 a X=40 Y=28
+
+[INFO] 16:27:47:301 Memoria/(24168:24880): Actualice el estado del tripulante 1 a X=35 Y=20
+
+[INFO] 16:27:48:301 Memoria/(24168:24881): Actualice el estado del tripulante 2 a X=40 Y=27
+
+[INFO] 16:27:48:301 Memoria/(24168:24882): Actualice el estado del tripulante 1 a X=35 Y=21
+
+[INFO] 16:27:49:302 Memoria/(24168:24884): Actualice el estado del tripulante 2 a X=40 Y=26
+
+[INFO] 16:27:49:302 Memoria/(24168:24885): Actualice el estado del tripulante 2 a R
+
+[INFO] 16:27:49:303 Memoria/(24168:24886): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:27:50:298 Memoria/(24168:24893): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:27:50:299 Memoria/(24168:24894): Mande la tarea IRSE_A_DORMIR;20;10;1
+
+[INFO] 16:27:50:299 Memoria/(24168:24895): Actualice el estado del tripulante 1 a B
+
+[INFO] 16:27:50:299 Memoria/(24168:24896): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:27:50:303 Memoria/(24168:24897): Actualice el estado del tripulante 2 a X=40 Y=25
+
+[INFO] 16:27:51:299 Memoria/(24168:24898): Actualice el estado del tripulante 3 a X=34 Y=21
+
+[INFO] 16:27:51:303 Memoria/(24168:24899): Actualice el estado del tripulante 2 a X=40 Y=24
+
+[INFO] 16:27:52:300 Memoria/(24168:24900): Actualice el estado del tripulante 3 a X=33 Y=21
+
+[INFO] 16:27:52:300 Memoria/(24168:24901): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:27:52:300 Memoria/(24168:24902): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:27:52:304 Memoria/(24168:24903): Actualice el estado del tripulante 2 a X=40 Y=23
+
+[INFO] 16:27:53:300 Memoria/(24168:24904): Actualice el estado del tripulante 3 a X=32 Y=21
+
+[INFO] 16:27:53:304 Memoria/(24168:24905): Actualice el estado del tripulante 2 a X=40 Y=22
+
+[INFO] 16:27:54:300 Memoria/(24168:24907): Actualice el estado del tripulante 3 a X=31 Y=21
+
+[INFO] 16:27:54:304 Memoria/(24168:24908): Actualice el estado del tripulante 2 a X=40 Y=21
+
+[INFO] 16:27:55:301 Memoria/(24168:24915): Actualice el estado del tripulante 3 a X=30 Y=21
+
+[INFO] 16:27:55:305 Memoria/(24168:24916): Actualice el estado del tripulante 2 a X=40 Y=20
+
+[INFO] 16:27:56:301 Memoria/(24168:24917): Actualice el estado del tripulante 3 a X=29 Y=21
+
+[INFO] 16:27:57:302 Memoria/(24168:24918): Actualice el estado del tripulante 3 a X=28 Y=21
+
+[INFO] 16:27:57:305 Memoria/(24168:24919): Mande la tarea GENERAR_OXIGENO 10;35;21;15
+
+[INFO] 16:27:58:303 Memoria/(24168:24920): Actualice el estado del tripulante 3 a X=27 Y=21
+
+[INFO] 16:27:58:306 Memoria/(24168:24921): Actualice el estado del tripulante 2 a X=39 Y=20
+
+[INFO] 16:27:59:304 Memoria/(24168:24923): Actualice el estado del tripulante 3 a X=26 Y=21
+
+[INFO] 16:27:59:306 Memoria/(24168:24924): Actualice el estado del tripulante 2 a X=38 Y=20
+
+[INFO] 16:27:59:306 Memoria/(24168:24925): Actualice el estado del tripulante 2 a R
+
+[INFO] 16:27:59:307 Memoria/(24168:24926): Actualice el estado del tripulante 2 a E
+
+[INFO] 16:28:00:304 Memoria/(24168:24933): Actualice el estado del tripulante 3 a X=25 Y=21
+
+[INFO] 16:28:00:307 Memoria/(24168:24934): Actualice el estado del tripulante 2 a X=37 Y=20
+
+[INFO] 16:28:01:305 Memoria/(24168:24935): Actualice el estado del tripulante 3 a X=24 Y=21
+
+[INFO] 16:28:01:308 Memoria/(24168:24936): Actualice el estado del tripulante 2 a X=36 Y=20
+
+[INFO] 16:28:02:306 Memoria/(24168:24937): Actualice el estado del tripulante 3 a X=23 Y=21
+
+[INFO] 16:28:02:306 Memoria/(24168:24938): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:28:02:306 Memoria/(24168:24939): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:28:02:308 Memoria/(24168:24940): Actualice el estado del tripulante 2 a X=35 Y=20
+
+[INFO] 16:28:03:306 Memoria/(24168:24941): Actualice el estado del tripulante 3 a X=22 Y=21
+
+[INFO] 16:28:03:308 Memoria/(24168:24942): Actualice el estado del tripulante 2 a X=35 Y=21
+
+[INFO] 16:28:04:307 Memoria/(24168:24944): Actualice el estado del tripulante 3 a X=21 Y=21
+
+[INFO] 16:28:05:304 Memoria/(24168:24951): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:28:05:304 Memoria/(24168:24952): Mande la tarea IRSE_A_DORMIR;20;10;1
+
+[INFO] 16:28:05:305 Memoria/(24168:24953): Actualice el estado del tripulante 2 a B
+
+[INFO] 16:28:05:305 Memoria/(24168:24954): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:28:05:307 Memoria/(24168:24955): Actualice el estado del tripulante 3 a X=20 Y=21
+
+[INFO] 16:28:06:305 Memoria/(24168:24956): Actualice el estado del tripulante 4 a X=34 Y=21
+
+[INFO] 16:28:06:307 Memoria/(24168:24957): Actualice el estado del tripulante 3 a X=20 Y=20
+
+[INFO] 16:28:07:305 Memoria/(24168:24959): Actualice el estado del tripulante 4 a X=33 Y=21
+
+[INFO] 16:28:07:306 Memoria/(24168:24960): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:28:07:306 Memoria/(24168:24961): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:28:07:308 Memoria/(24168:24962): Actualice el estado del tripulante 3 a X=20 Y=19
+
+[INFO] 16:28:08:306 Memoria/(24168:24963): Actualice el estado del tripulante 4 a X=32 Y=21
+
+[INFO] 16:28:08:309 Memoria/(24168:24964): Actualice el estado del tripulante 3 a X=20 Y=18
+
+[INFO] 16:28:09:306 Memoria/(24168:24966): Actualice el estado del tripulante 4 a X=31 Y=21
+
+[INFO] 16:28:09:309 Memoria/(24168:24967): Actualice el estado del tripulante 3 a X=20 Y=17
+
+[INFO] 16:28:10:307 Memoria/(24168:24974): Actualice el estado del tripulante 4 a X=30 Y=21
+
+[INFO] 16:28:10:309 Memoria/(24168:24975): Actualice el estado del tripulante 3 a X=20 Y=16
+
+[INFO] 16:28:11:308 Memoria/(24168:24976): Actualice el estado del tripulante 4 a X=29 Y=21
+
+[INFO] 16:28:11:310 Memoria/(24168:24977): Actualice el estado del tripulante 3 a X=20 Y=15
+
+[INFO] 16:28:12:308 Memoria/(24168:24978): Actualice el estado del tripulante 4 a X=28 Y=21
+
+[INFO] 16:28:12:310 Memoria/(24168:24979): Actualice el estado del tripulante 3 a X=20 Y=14
+
+[INFO] 16:28:12:310 Memoria/(24168:24980): Actualice el estado del tripulante 3 a R
+
+[INFO] 16:28:12:310 Memoria/(24168:24981): Actualice el estado del tripulante 3 a E
+
+[INFO] 16:28:13:309 Memoria/(24168:24982): Actualice el estado del tripulante 4 a X=27 Y=21
+
+[INFO] 16:28:13:311 Memoria/(24168:24983): Actualice el estado del tripulante 3 a X=20 Y=13
+
+[INFO] 16:28:14:310 Memoria/(24168:24985): Actualice el estado del tripulante 4 a X=26 Y=21
+
+[INFO] 16:28:14:311 Memoria/(24168:24986): Actualice el estado del tripulante 3 a X=20 Y=12
+
+[INFO] 16:28:15:310 Memoria/(24168:24995): Actualice el estado del tripulante 4 a X=25 Y=21
+
+[INFO] 16:28:15:311 Memoria/(24168:24996): Actualice el estado del tripulante 3 a X=20 Y=11
+
+[INFO] 16:28:16:311 Memoria/(24168:24997): Actualice el estado del tripulante 4 a X=24 Y=21
+
+[INFO] 16:28:16:311 Memoria/(24168:24998): Actualice el estado del tripulante 3 a X=20 Y=10
+
+[INFO] 16:28:17:312 Memoria/(24168:24999): Actualice el estado del tripulante 4 a X=23 Y=21
+
+[INFO] 16:28:17:312 Memoria/(24168:25000): Actualice el estado del tripulante 4 a R
+
+[INFO] 16:28:17:312 Memoria/(24168:25001): Actualice el estado del tripulante 4 a E
+
+[INFO] 16:28:17:312 Memoria/(24168:25002): Mande la tarea fault
+
