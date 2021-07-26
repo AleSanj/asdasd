@@ -619,17 +619,108 @@ void *borrar_de_memoria_paginacion(int idElemento, int idPatota, char tipo){
             break;
         }
     }
-
+    int payloadBorrado=0;
     if ((offset == 0 && tamanioPayload >= tamPagina) || (offset == 0 && paginaInicial == list_size(tablaDePaginas)-1)){
-        bitarrayMemoria[paginaInicial] = 0;
+        paginaEnTabla_struct* paginaABorrar = malloc(sizeof(paginaEnTabla_struct));
+    	paginaABorrar = list_get(tablaDePaginas, paginaInicial);
+    	if (paginaABorrar->presencia == 1){
+    		bitarrayMemoria[paginaABorrar->frame] = 0;
+    	}else{
+    		bitarraySwap[paginaABorrar->frame] = 0;
+    	}
+
         list_remove_and_destroy_element(tablaDePaginas,paginaInicial,free);
         list_remove_and_destroy_element(listaElementos,posicionElementoEvaluado,free);
         actualizarListaElementos(paginaInicial,idPatota);
-    }else if(offset!=0){
-        paginaEnTabla_struct *paginaAActualizar = list_get(tablaDePaginas,paginaInicial);
-        paginaAActualizar->espacioOcupado = offset;
-        list_replace(tablaDePaginas,paginaInicial,paginaAActualizar);
+        payloadBorrado += tamPagina;
+        actualizarListaElementos(paginaInicial,idPatota);
+    }else if(offset == 0 && tamanioPayload < tamPagina){
+    	paginaEnTabla_struct *paginaAActualizar = malloc(sizeof(paginaEnTabla_struct));
+    	paginaAActualizar =	list_get(tablaDePaginas,paginaInicial);
+    	paginaAActualizar->espacioOcupado -= tamanioPayload;
+    	if (paginaAActualizar->espacioOcupado == 0){
+    		if (paginaAActualizar->presencia == 1){
+    		   bitarrayMemoria[paginaAActualizar->frame] = 0;
+    		}else{
+    		   bitarraySwap[paginaAActualizar->frame] = 0;
+    		}
+    		list_remove_and_destroy_element(tablaDePaginas,paginaInicial,free);
+    	}else{
+    	    list_replace(tablaDePaginas,paginaInicial,paginaAActualizar);
+    	}
+    	list_remove_and_destroy_element(listaElementos,posicionElementoEvaluado,free);
+    	actualizarListaElementos(paginaInicial,idPatota);
+    	payloadBorrado += tamanioPayload;
+    }
+    else if(offset!=0 && tamanioPayload >= tamPagina-offset){
+        paginaEnTabla_struct *paginaAActualizar = malloc(sizeof(paginaEnTabla_struct));
+        paginaAActualizar =	list_get(tablaDePaginas,paginaInicial);
+        paginaAActualizar->espacioOcupado -= tamPagina-offset;
+        if (paginaAActualizar->espacioOcupado == 0){
+        	if (paginaAActualizar->presencia == 1){
+        		bitarrayMemoria[paginaAActualizar->frame] = 0;
+        	}else{
+        		bitarraySwap[paginaAActualizar->frame] = 0;
+        	}
+        	list_remove(tablaDePaginas,paginaInicial);
+        }else{
+        	list_replace(tablaDePaginas,paginaInicial,paginaAActualizar);
+        }
+
         list_remove_and_destroy_element(listaElementos,posicionElementoEvaluado,free);
+        actualizarListaElementos(paginaInicial,idPatota);
+        payloadBorrado += (tamPagina-offset);
+    }else if(offset!=0 && tamanioPayload < tamPagina-offset){
+    	paginaEnTabla_struct *paginaAActualizar = malloc(sizeof(paginaEnTabla_struct));
+    	paginaAActualizar = list_get(tablaDePaginas,paginaInicial);
+    	paginaAActualizar->espacioOcupado -= tamanioPayload;
+    	if (paginaAActualizar->espacioOcupado == 0){
+    		if (paginaAActualizar->presencia == 1){
+    		   bitarrayMemoria[paginaAActualizar->frame] = 0;
+    		}else{
+    		   bitarraySwap[paginaAActualizar->frame] = 0;
+    		}
+    		list_remove_and_destroy_element(tablaDePaginas,paginaInicial,free);
+    	}else{
+    		list_replace(tablaDePaginas,paginaInicial,paginaAActualizar);
+    	}
+    	payloadBorrado += tamanioPayload;
+    	list_remove_and_destroy_element(listaElementos,posicionElementoEvaluado,free);
+    	actualizarListaElementos(paginaInicial,idPatota);
+    }
+    while(payloadBorrado != tamanioPayload){
+    	paginaInicial++;
+    	if ((tamanioPayload -  payloadBorrado >= tamPagina) || (paginaInicial == list_size(tablaDePaginas)-1)){
+    		paginaEnTabla_struct* paginaABorrar = malloc(sizeof(paginaEnTabla_struct));
+    		paginaABorrar = list_get(tablaDePaginas, paginaInicial);
+    		if (paginaABorrar->presencia == 1){
+    			bitarrayMemoria[paginaABorrar->frame] = 0;
+    		}else{
+    			bitarraySwap[paginaABorrar->frame] = 0;
+    		}
+
+    		list_remove_and_destroy_element(tablaDePaginas,paginaInicial,free);
+    		payloadBorrado += tamPagina;
+    		actualizarListaElementos(paginaInicial,idPatota);
+    	}else if(tamanioPayload < tamPagina){
+        	paginaEnTabla_struct *paginaAActualizar = malloc(sizeof(paginaEnTabla_struct));
+        	paginaAActualizar =	list_get(tablaDePaginas,paginaInicial);
+        	paginaAActualizar->espacioOcupado -= tamanioPayload;
+        	if (paginaAActualizar->espacioOcupado == 0){
+        		if (paginaAActualizar->presencia == 1){
+        		   bitarrayMemoria[paginaAActualizar->frame] = 0;
+        		}else{
+        		   bitarraySwap[paginaAActualizar->frame] = 0;
+        		}
+        		list_remove_and_destroy_element(tablaDePaginas,paginaInicial,free);
+        	}else{
+        	    list_replace(tablaDePaginas,paginaInicial,paginaAActualizar);
+        	}
+        	list_remove_and_destroy_element(listaElementos,posicionElementoEvaluado,free);
+        	actualizarListaElementos(paginaInicial,idPatota);
+        	payloadBorrado += tamanioPayload;
+        }
+
     }
 }
 

@@ -10,11 +10,11 @@
 
 // =============== PAHTS =================
 //-------------------------------------
-//PARA EJECUTAR DESDE CONSOLA USAR:
-#define PATH_CONFIG "../src/mi_ram_hq.config"
-//-------------------------------------
 //PARA EJECUTAR DESDE ECLIPSE USAR:
 //#define PATH_CONFIG "src/mi_ram_hq.config"
+//-------------------------------------
+//PARA EJECUTAR DESDE CONSOLA USAR:
+#define PATH_CONFIG "../src/mi_ram_hq.config"
 //-------------------------------------
 
 #include "mi_ram_hq.h"
@@ -79,7 +79,7 @@ int main(void) {
 
 	}
 
-//	nivel = crear_mapa();
+	nivel = crear_mapa();
 	socketServer = crear_server(puerto);
 
 	while (funcionando) {
@@ -207,6 +207,7 @@ void administrar_cliente(int socketCliente){
 				if(tripulanteATraer->proxTarea==totalDeTareas){
 					send(socketCliente,6,sizeof(uint32_t),0);
 					send(socketCliente, "fault",6,0);
+					log_info(logger, "Mande la tarea fault\n");
 				}else{
 					int tamanio_tarea = strlen(arrayTareas[tripulanteATraer->proxTarea])+1;
 					send(socketCliente, &tamanio_tarea,sizeof(uint32_t),0);
@@ -216,9 +217,10 @@ void administrar_cliente(int socketCliente){
 					}else if (strcmp(esquemaMemoria,"SEGMENTACION")==0){
 						actualizar_indice_segmentacion(tripulante_solicitud->id_tripulante,tripulante_solicitud->id_patota);
 					}
+					log_info(logger, "Mande la tarea %s\n",arrayTareas[tripulanteATraer->proxTarea]);
 				}
 
-				log_info(logger, "Mande la tarea %s\n",arrayTareas[tripulanteATraer->proxTarea]);
+
 				liberar_conexion(socketCliente);
 
 				break;
@@ -250,7 +252,7 @@ void administrar_cliente(int socketCliente){
 						break;
 					}
 				}
-
+				log_info(logger, "Actualice el estado del tripulante %d a X=%d Y=%d\n",tripulante_a_mover->id_tripulante, tripulante_a_mover->posicion_x,tripulante_a_mover->posicion_y);
 				break;
 
 		case ACTUALIZAR_ESTADO:;
@@ -274,6 +276,8 @@ void administrar_cliente(int socketCliente){
 				log_info(logger, "Actualice el estado del tripulante %d a %c\n",tripulante_a_actualizar->id_tripulante, tripulante_a_actualizar->estado);
 				break;
 
+		//case FINALIZAR:;
+			//break;
 		default:;
 			puts("No hizo nada");
 			break;
