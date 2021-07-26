@@ -11,10 +11,10 @@
 // =============== PAHTS =================
 //-------------------------------------
 //PARA EJECUTAR DESDE CONSOLA USAR:
-#define PATH_CONFIG "src/mi_ram_hq.config"
+#define PATH_CONFIG "../src/mi_ram_hq.config"
 //-------------------------------------
 //PARA EJECUTAR DESDE ECLIPSE USAR:
-//#define PATH_CONFIG "../src/mi_ram_hq.config"
+//#define PATH_CONFIG "src/mi_ram_hq.config"
 //-------------------------------------
 
 #include "mi_ram_hq.h"
@@ -86,6 +86,7 @@ int main(void) {
 		socketCliente = esperar_cliente(socketServer, 5);
 		if (socketCliente == -1)
 			continue;
+
 			pthread_t hiloCliente;
 			pthread_create(&hiloCliente,NULL,(void*)administrar_cliente,socketCliente);
 			pthread_join(hiloCliente,NULL);
@@ -101,14 +102,14 @@ int main(void) {
 
 
 void administrar_cliente(int socketCliente){
-	int respuesta;
-		t_paquete* paquete_recibido = recibir_paquete(socketCliente, &respuesta); // @suppress("Type cannot be resolved")
+		int respuesta;
+		t_paquete* paquete_recibido = recibir_paquete(socketCliente, &respuesta);
 		if (paquete_recibido->codigo_operacion == -1 || respuesta == ERROR) {
 			liberar_conexion(socketCliente);
 			eliminar_paquete(paquete_recibido);
 		}
 
-		//printf("PAQUETE DE TIPO %d RECIBIDO\n",paquete_recibido->codigo_operacion);
+		printf("PAQUETE DE TIPO %d RECIBIDO\n",paquete_recibido->codigo_operacion);
 
 	switch(paquete_recibido->codigo_operacion) {
 		case INICIAR_PATOTA:;

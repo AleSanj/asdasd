@@ -672,7 +672,7 @@ void hacerFifo(Tripulante* tripu) {
 
 }
 void hacerRoundRobin(Tripulante* tripulant) {
-	int contadorQuantum=0;
+	int contadorQuantum = 0;
 	if (tripulant->kuantum!=0)
 	{
 		contadorQuantum=tripulant->kuantum;
@@ -695,6 +695,7 @@ void hacerRoundRobin(Tripulante* tripulant) {
 		//le tiroun post al semaforo que me permite frenar la ejecucion
 
 	}
+
 	if(contadorQuantum<quantum && (tripulant->Tarea->es_io) && tripulant->vida)
 	{
 		tripulant->kuantum=0;
@@ -728,7 +729,7 @@ void hacerRoundRobin(Tripulante* tripulant) {
 		sem_post(&(tripulant->sem_pasaje_a_exec));
 	}else
 	{
-		tripulant->kuantum=0;
+		tripulant->kuantum = 0;
 		//protejo las colas o listas
 		pthread_mutex_lock(&sem_cola_ready);
 		pthread_mutex_lock(&sem_cola_exec);
@@ -1489,15 +1490,16 @@ int main() {
 	printf("servidor abuerto con el socket %d\n",socket_sabotaje);
 	while(correr_programa)
 	{
-		cliente_sabotaje = esperar_cliente(socket_sabotaje, 3);
+		int cliente_Sabo = esperar_cliente(socket_sabotaje, 3);
+//		cliente_sabotaje = esperar_cliente(socket_sabotaje, 3);
 		int respuesta;
-		t_paquete* paquete_recibido = recibir_paquete(cliente_sabotaje, &respuesta);
+		t_paquete* paquete_recibido = recibir_paquete(cliente_Sabo, &respuesta);
 		if (paquete_recibido->codigo_operacion == -1 || respuesta == ERROR) {
-			liberar_conexion(cliente_sabotaje);
+			liberar_conexion(cliente_Sabo);
 			eliminar_paquete(paquete_recibido);
 		}
 
-		printf("SABOTAJE RECIBIDO: %d\n",paquete_recibido->codigo_operacion);
+//		printf("SABOTAJE RECIBIDO: %d\n",paquete_recibido->codigo_operacion);
 		t_pedido_mongo* posiciciones_sabotaje = deserializar_pedido_mongo(paquete_recibido);
 		int parar_todo_sabotaje=0;
 		  while (parar_todo_sabotaje < multiProcesos)
@@ -1508,8 +1510,7 @@ int main() {
 		  sem_wait(&pararIo);
 
 		pthread_create(&hilo_sabotaje,NULL,(void*) atender_sabotaje,posiciciones_sabotaje->mensaje);
-
-
+		pthread_join(&hilo_sabotaje,NULL);
 	}
 
 

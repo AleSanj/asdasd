@@ -421,7 +421,7 @@ void* atender_mensaje (int socketTripulante){
 		liberar_t_pedido_mongo(inicio);
 		liberar_conexion(socketTripulante);
 		break;
-//	case FIN:;
+//	case FINALIZAR:;
 //		correr_programa=false;
 //		pthread_exit(&sabo);
 //		pthread_exit(&sincro);

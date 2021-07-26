@@ -1,0 +1,10 @@
+[INFO] 16:46:55:160 Memoria/(31194:31212): Guarde las tareas de la patota 1
+
+[INFO] 16:46:55:160 Memoria/(31194:31212): Guarde el PCB de la patota 1
+
+[INFO] 16:46:55:160 Memoria/(31194:31213): Guarde el tripulante 1
+
+[INFO] 16:47:22:984 Memoria/(31194:31231): Actualice el estado del tripulante 1 a E
+
+[INFO] 16:47:22:984 Memoria/(31194:31232): Mande la tarea DESCARGAR_ITINERARIO;70;27;10
+
