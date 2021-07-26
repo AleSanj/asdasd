@@ -592,7 +592,7 @@ void enviar_consumir_recurso(Tripulante* tripulante){
 //	free(tarea_dividida[0]);
 //	free(tarea_dividida[1]);
 //	free(tarea_dividida);
-}
+//}
 
 
 
