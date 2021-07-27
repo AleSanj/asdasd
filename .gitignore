@@ -25,4 +25,8 @@
 *.log
 /.metadata/
 
+# Zip - Rar
+*.zip
+*.rar
+
 /RemoteSystemsTempFiles/

@@ -472,3 +472,313 @@
 
 [INFO] 17:28:28:435 Memoria/(4691:4751): Borre el tripulante 1
 
+[INFO] 00:51:09:649 Memoria/(15110:16672): Guarde las tareas de la patota 1
+
+[INFO] 00:51:09:678 Memoria/(15110:16672): Guarde el PCB de la patota 1
+
+[INFO] 00:51:09:681 Memoria/(15110:16673): Guarde el tripulante 1
+
+[INFO] 00:55:54:070 Memoria/(17189:17239): Guarde las tareas de la patota 1
+
+[INFO] 00:55:54:109 Memoria/(17189:17239): Guarde el PCB de la patota 1
+
+[INFO] 00:55:54:114 Memoria/(17189:17240): Guarde el tripulante 1
+
+[INFO] 00:57:48:959 Memoria/(17189:17496): Guarde las tareas de la patota 1
+
+[INFO] 00:57:48:986 Memoria/(17189:17496): Guarde el PCB de la patota 1
+
+[INFO] 00:57:48:994 Memoria/(17189:17497): Guarde el tripulante 1
+
+[INFO] 00:57:56:397 Memoria/(17189:17510): Actualice el estado del tripulante 1 a E
+
+[INFO] 00:58:10:180 Memoria/(17189:17524): Mande la tarea DESCARGAR_ITINERARIO;3;9;10
+
+[INFO] 00:58:22:547 Memoria/(17189:17542): Actualice el estado del tripulante 1 a X=1 Y=0
+
+[INFO] 00:58:23:547 Memoria/(17189:17544): Actualice el estado del tripulante 1 a X=2 Y=0
+
+[INFO] 00:58:24:548 Memoria/(17189:17545): Actualice el estado del tripulante 1 a X=3 Y=0
+
+[INFO] 00:58:25:549 Memoria/(17189:17546): Actualice el estado del tripulante 1 a X=3 Y=1
+
+[INFO] 00:58:26:551 Memoria/(17189:17550): Actualice el estado del tripulante 1 a X=3 Y=2
+
+[INFO] 00:58:27:552 Memoria/(17189:17552): Actualice el estado del tripulante 1 a X=3 Y=3
+
+[INFO] 00:58:28:554 Memoria/(17189:17553): Actualice el estado del tripulante 1 a X=3 Y=4
+
+[INFO] 00:58:29:554 Memoria/(17189:17554): Actualice el estado del tripulante 1 a X=3 Y=5
+
+[INFO] 00:58:30:555 Memoria/(17189:17555): Actualice el estado del tripulante 1 a X=3 Y=6
+
+[INFO] 00:58:31:561 Memoria/(17189:17559): Actualice el estado del tripulante 1 a X=3 Y=7
+
+[INFO] 00:58:31:578 Memoria/(17189:17560): Actualice el estado del tripulante 1 a R
+
+[INFO] 00:58:31:579 Memoria/(17189:17561): Actualice el estado del tripulante 1 a E
+
+[INFO] 00:58:55:766 Memoria/(17189:17587): Actualice el estado del tripulante 1 a X=3 Y=8
+
+[INFO] 00:58:56:767 Memoria/(17189:17593): Actualice el estado del tripulante 1 a X=3 Y=9
+
+[INFO] 00:59:04:794 Memoria/(17189:17598): Actualice el estado del tripulante 1 a R
+
+[INFO] 00:59:04:795 Memoria/(17189:17600): Actualice el estado del tripulante 1 a E
+
+[INFO] 00:59:12:867 Memoria/(17189:17610): Mande la tarea fault
+
+[INFO] 00:59:12:868 Memoria/(17189:17612): Borre el tripulante 1
+
+[INFO] 00:59:12:872 Memoria/(17189:17613): Actualice el estado del tripulante 1 a E
+
+[INFO] 11:31:02:747 Memoria/(6788:6817): Guarde las tareas de la patota 1
+
+[INFO] 11:31:02:767 Memoria/(6788:6817): Guarde el PCB de la patota 1
+
+[INFO] 11:31:02:773 Memoria/(6788:6818): Guarde el tripulante 1
+
+[INFO] 11:31:35:001 Memoria/(6788:6983): Actualice el estado del tripulante 1 a E
+
+[INFO] 11:31:54:679 Memoria/(6788:6999): Mande la tarea DESCARGAR_ITINERARIO;3;9;10
+
+[INFO] 11:32:15:739 Memoria/(6788:7034): Actualice el estado del tripulante 1 a X=1 Y=1
+
+[INFO] 11:32:16:742 Memoria/(6788:7035): Actualice el estado del tripulante 1 a X=2 Y=1
+
+[INFO] 11:32:17:743 Memoria/(6788:7036): Actualice el estado del tripulante 1 a X=3 Y=1
+
+[INFO] 11:32:18:744 Memoria/(6788:7037): Actualice el estado del tripulante 1 a X=3 Y=2
+
+[INFO] 11:32:19:749 Memoria/(6788:7047): Actualice el estado del tripulante 1 a X=3 Y=3
+
+[INFO] 11:32:20:756 Memoria/(6788:7054): Actualice el estado del tripulante 1 a X=3 Y=4
+
+[INFO] 11:32:21:757 Memoria/(6788:7056): Actualice el estado del tripulante 1 a X=3 Y=5
+
+[INFO] 11:32:22:758 Memoria/(6788:7057): Actualice el estado del tripulante 1 a X=3 Y=6
+
+[INFO] 11:32:23:758 Memoria/(6788:7058): Actualice el estado del tripulante 1 a X=3 Y=7
+
+[INFO] 11:32:24:759 Memoria/(6788:7062): Actualice el estado del tripulante 1 a X=3 Y=8
+
+[INFO] 11:32:24:777 Memoria/(6788:7063): Actualice el estado del tripulante 1 a R
+
+[INFO] 11:32:24:785 Memoria/(6788:7064): Actualice el estado del tripulante 1 a E
+
+[INFO] 11:40:41:586 Memoria/(6788:7716): Actualice el estado del tripulante 1 a X=3 Y=9
+
+[INFO] 11:47:32:757 Memoria/(6788:8325): Actualice el estado del tripulante 1 a R
+
+[INFO] 11:47:34:301 Memoria/(6788:8330): Actualice el estado del tripulante 1 a E
+
+[INFO] 11:51:13:487 Memoria/(6788:8565): Mande la tarea fault
+
+[INFO] 11:51:44:759 Memoria/(6788:8614): Borre el tripulante 1
+
+[INFO] 11:54:33:551 Memoria/(8825:8992): Guarde las tareas de la patota 1
+
+[INFO] 11:54:33:551 Memoria/(8825:8992): Guarde el PCB de la patota 1
+
+[INFO] 11:54:33:552 Memoria/(8825:8996): Guarde el tripulante 1
+
+[INFO] 11:54:41:078 Memoria/(8825:9012): Actualice el estado del tripulante 1 a E
+
+[INFO] 11:58:20:501 Memoria/(8825:9732): Mande la tarea DESCARGAR_ITINERARIO;3;9;10
+
+[INFO] 11:58:40:066 Memoria/(8825:9806): Actualice el estado del tripulante 1 a X=3 Y=4
+
+[INFO] 11:58:41:067 Memoria/(8825:9815): Actualice el estado del tripulante 1 a X=3 Y=5
+
+[INFO] 11:58:42:068 Memoria/(8825:9819): Actualice el estado del tripulante 1 a X=3 Y=6
+
+[INFO] 11:58:43:072 Memoria/(8825:9823): Actualice el estado del tripulante 1 a X=3 Y=7
+
+[INFO] 11:58:44:078 Memoria/(8825:9827): Actualice el estado del tripulante 1 a X=3 Y=8
+
+[INFO] 11:58:45:075 Memoria/(8825:9832): Actualice el estado del tripulante 1 a X=3 Y=9
+
+[INFO] 11:58:49:079 Memoria/(8825:9848): Actualice el estado del tripulante 1 a R
+
+[INFO] 11:58:49:098 Memoria/(8825:9850): Actualice el estado del tripulante 1 a E
+
+[INFO] 11:59:20:906 Memoria/(8825:10004): Mande la tarea fault
+
+[INFO] 12:02:53:079 Memoria/(10606:10607): Guarde las tareas de la patota 1
+
+[INFO] 12:02:53:079 Memoria/(10606:10607): Guarde el PCB de la patota 1
+
+[INFO] 12:02:53:089 Memoria/(10606:10618): Guarde el tripulante 1
+
+[INFO] 12:03:06:749 Memoria/(10606:10655): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:03:06:755 Memoria/(10606:10656): Mande la tarea DESCARGAR_ITINERARIO;3;9;10
+
+[INFO] 12:03:07:765 Memoria/(10606:10657): Actualice el estado del tripulante 1 a X=4 Y=5
+
+[INFO] 12:03:08:764 Memoria/(10606:10661): Actualice el estado del tripulante 1 a X=3 Y=5
+
+[INFO] 12:03:09:764 Memoria/(10606:10662): Actualice el estado del tripulante 1 a X=3 Y=6
+
+[INFO] 12:03:10:765 Memoria/(10606:10669): Actualice el estado del tripulante 1 a X=3 Y=7
+
+[INFO] 12:03:11:766 Memoria/(10606:10671): Actualice el estado del tripulante 1 a X=3 Y=8
+
+[INFO] 12:03:12:767 Memoria/(10606:10675): Actualice el estado del tripulante 1 a X=3 Y=9
+
+[INFO] 12:03:16:776 Memoria/(10606:10685): Actualice el estado del tripulante 1 a R
+
+[INFO] 12:03:16:777 Memoria/(10606:10687): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:03:22:786 Memoria/(10606:10702): Mande la tarea fault
+
+[INFO] 12:04:53:549 Memoria/(10606:11043): Guarde las tareas de la patota 1
+
+[INFO] 12:04:53:549 Memoria/(10606:11043): Guarde el PCB de la patota 1
+
+[INFO] 12:04:53:556 Memoria/(10606:11046): Guarde el tripulante 1
+
+[INFO] 12:04:54:966 Memoria/(10606:11050): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:05:45:950 Memoria/(10606:11298): Mande la tarea fault
+
+[INFO] 12:05:45:961 Memoria/(10606:11301): Borre el tripulante 1
+
+[INFO] 12:05:45:965 Memoria/(10606:11302): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:06:16:846 Memoria/(11457:11506): Guarde las tareas de la patota 1
+
+[INFO] 12:06:16:846 Memoria/(11457:11506): Guarde el PCB de la patota 1
+
+[INFO] 12:06:16:851 Memoria/(11457:11508): Guarde el tripulante 1
+
+[INFO] 12:06:18:057 Memoria/(11457:11511): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:06:37:434 Memoria/(11457:11561): Mande la tarea DESCARGAR_ITINERARIO;3;9;10
+
+[INFO] 12:10:53:129 Memoria/(11457:12209): Actualice el estado del tripulante 1 a X=3 Y=4
+
+[INFO] 12:10:54:130 Memoria/(11457:12212): Actualice el estado del tripulante 1 a X=3 Y=5
+
+[INFO] 12:10:55:134 Memoria/(11457:12216): Actualice el estado del tripulante 1 a X=3 Y=6
+
+[INFO] 12:10:56:135 Memoria/(11457:12220): Actualice el estado del tripulante 1 a X=3 Y=7
+
+[INFO] 12:10:57:136 Memoria/(11457:12224): Actualice el estado del tripulante 1 a X=3 Y=8
+
+[INFO] 12:10:58:137 Memoria/(11457:12228): Actualice el estado del tripulante 1 a X=3 Y=9
+
+[INFO] 12:11:02:141 Memoria/(11457:12239): Actualice el estado del tripulante 1 a R
+
+[INFO] 12:11:02:145 Memoria/(11457:12241): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:13:54:743 Memoria/(11457:12518): Mande la tarea fault
+
+[INFO] 12:13:54:747 Memoria/(11457:12520): Borre el tripulante 1
+
+[INFO] 12:15:21:260 Memoria/(12561:12744): Guarde las tareas de la patota 1
+
+[INFO] 12:15:21:260 Memoria/(12561:12744): Guarde el PCB de la patota 1
+
+[INFO] 12:15:21:264 Memoria/(12561:12746): Guarde el tripulante 1
+
+[INFO] 12:15:33:648 Memoria/(12561:12757): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:15:33:648 Memoria/(12561:12758): Mande la tarea DESCARGAR_ITINERARIO;3;9;10
+
+[INFO] 12:15:34:649 Memoria/(12561:12759): Actualice el estado del tripulante 1 a X=3 Y=4
+
+[INFO] 12:15:35:649 Memoria/(12561:12763): Actualice el estado del tripulante 1 a X=3 Y=5
+
+[INFO] 12:15:36:650 Memoria/(12561:12764): Actualice el estado del tripulante 1 a X=3 Y=6
+
+[INFO] 12:15:37:651 Memoria/(12561:12765): Actualice el estado del tripulante 1 a X=3 Y=7
+
+[INFO] 12:15:38:651 Memoria/(12561:12767): Actualice el estado del tripulante 1 a X=3 Y=8
+
+[INFO] 12:15:39:652 Memoria/(12561:12768): Actualice el estado del tripulante 1 a X=3 Y=9
+
+[INFO] 12:15:43:214 Memoria/(12561:12847): Actualice el estado del tripulante 1 a R
+
+[INFO] 12:15:43:215 Memoria/(12561:12849): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:15:49:217 Memoria/(12561:12904): Mande la tarea fault
+
+[INFO] 12:15:49:217 Memoria/(12561:12905): Borre el tripulante 1
+
+[INFO] 12:16:34:668 Memoria/(12948:12971): Guarde las tareas de la patota 1
+
+[INFO] 12:16:34:668 Memoria/(12948:12971): Guarde el PCB de la patota 1
+
+[INFO] 12:16:34:674 Memoria/(12948:12974): Guarde el tripulante 1
+
+[INFO] 12:16:39:323 Memoria/(12948:12981): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:16:39:324 Memoria/(12948:12982): Mande la tarea DESCARGAR_ITINERARIO;3;9;10
+
+[INFO] 12:16:40:324 Memoria/(12948:12987): Actualice el estado del tripulante 1 a X=3 Y=4
+
+[INFO] 12:16:41:325 Memoria/(12948:12988): Actualice el estado del tripulante 1 a X=3 Y=5
+
+[INFO] 12:16:42:326 Memoria/(12948:12989): Actualice el estado del tripulante 1 a X=3 Y=6
+
+[INFO] 12:16:43:327 Memoria/(12948:12990): Actualice el estado del tripulante 1 a X=3 Y=7
+
+[INFO] 12:16:44:328 Memoria/(12948:12991): Actualice el estado del tripulante 1 a X=3 Y=8
+
+[INFO] 12:16:45:329 Memoria/(12948:12996): Actualice el estado del tripulante 1 a X=3 Y=9
+
+[INFO] 12:16:49:332 Memoria/(12948:12997): Actualice el estado del tripulante 1 a R
+
+[INFO] 12:16:49:333 Memoria/(12948:12999): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:16:55:337 Memoria/(12948:13007): Mande la tarea fault
+
+[INFO] 12:16:55:338 Memoria/(12948:13009): Borre el tripulante 1
+
+[INFO] 12:17:27:734 Memoria/(13041:13042): Guarde las tareas de la patota 1
+
+[INFO] 12:17:27:734 Memoria/(13041:13042): Guarde el PCB de la patota 1
+
+[INFO] 12:17:27:737 Memoria/(13041:13047): Guarde el tripulante 1
+
+[INFO] 12:17:37:533 Memoria/(13041:13065): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:17:37:533 Memoria/(13041:13066): Mande la tarea DESCARGAR_ITINERARIO;3;9;10
+
+[INFO] 12:17:38:533 Memoria/(13041:13067): Actualice el estado del tripulante 1 a X=1 Y=0
+
+[INFO] 12:17:39:534 Memoria/(13041:13068): Actualice el estado del tripulante 1 a X=2 Y=0
+
+[INFO] 12:17:40:535 Memoria/(13041:13072): Actualice el estado del tripulante 1 a X=3 Y=0
+
+[INFO] 12:17:41:536 Memoria/(13041:13073): Actualice el estado del tripulante 1 a X=3 Y=1
+
+[INFO] 12:17:42:536 Memoria/(13041:13075): Actualice el estado del tripulante 1 a X=3 Y=2
+
+[INFO] 12:17:43:537 Memoria/(13041:13076): Actualice el estado del tripulante 1 a X=3 Y=3
+
+[INFO] 12:17:44:538 Memoria/(13041:13077): Actualice el estado del tripulante 1 a X=3 Y=4
+
+[INFO] 12:17:45:539 Memoria/(13041:13081): Actualice el estado del tripulante 1 a X=3 Y=5
+
+[INFO] 12:17:46:540 Memoria/(13041:13082): Actualice el estado del tripulante 1 a X=3 Y=6
+
+[INFO] 12:17:47:540 Memoria/(13041:13083): Actualice el estado del tripulante 1 a X=3 Y=7
+
+[INFO] 12:17:47:541 Memoria/(13041:13084): Actualice el estado del tripulante 1 a R
+
+[INFO] 12:17:47:541 Memoria/(13041:13085): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:17:48:542 Memoria/(13041:13087): Actualice el estado del tripulante 1 a X=3 Y=8
+
+[INFO] 12:17:49:543 Memoria/(13041:13088): Actualice el estado del tripulante 1 a X=3 Y=9
+
+[INFO] 12:17:57:547 Memoria/(13041:13097): Actualice el estado del tripulante 1 a R
+
+[INFO] 12:17:57:547 Memoria/(13041:13099): Actualice el estado del tripulante 1 a E
+
+[INFO] 12:17:59:549 Memoria/(13041:13102): Mande la tarea fault
+
+[INFO] 12:17:59:549 Memoria/(13041:13103): Borre el tripulante 1
+

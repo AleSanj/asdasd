@@ -8,17 +8,6 @@
  ============================================================================
  */
 
-// =============== PAHTS =================
-//-------------------------------------
-//PARA EJECUTAR DESDE CONSOLA USAR:
-#define PATH_CONFIG "../discordiador.config"
-#define PATH_TAREAS "../src/tareas/"
-//-------------------------------------
-//PARA EJECUTAR DESDE ECLIPSE USAR:
-//#define PATH_CONFIG "discordiador.config"
-//#define PATH_TAREAS "src/tareas/"
-//-------------------------------------
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,7 +29,28 @@
 #include <shared/conexion.h>
 #include <shared/TAD_PATOTA.h>
 #include <shared/TAD_TRIPULANTE.h>
+// =============== PAHTS =================
+char* PATH_TAREAS;
+char* PATH_CONFIG;
 t_config* config;
+char* PATH_DISCORDIADOR_LOG;
+t_log* logger_discordiador;
+char* PATH_TRIPULANTE_LOG;
+t_log* logger_tripulante;
+char* PATH_CONEXIONES_LOG;
+t_log* logger_conexiones;
+
+//-------------------------------------
+//PARA EJECUTAR DESDE CONSOLA USAR:
+//PATH_CONFIG "../discordiador.config"
+//#define PATH_TAREAS "../src/tareas/"
+//-------------------------------------
+//PARA EJECUTAR DESDE ECLIPSE USAR:
+//#define PATH_CONFIG "discordiador.config"
+//#define PATH_TAREAS "src/tareas/"
+//-------------------------------------
+
+
 sem_t hilosEnEjecucion;
 sem_t multiProcesamiento;
 
@@ -104,6 +114,23 @@ _Bool correr_programa=true;
  */
 //esta funcion es porque no puedo aplicar parcialmente una funcion en c ):
 
+void iniciar_paths(char* s){
+	if (!strcmp(s,"eclipse")){
+		PATH_CONFIG = "discordiador.config";
+		PATH_TAREAS = "src/tareas/";
+		PATH_DISCORDIADOR_LOG = "src/logs/DISCORDIADOR.log";
+		PATH_TRIPULANTE_LOG = "src/logs/TRIPULANTE.log";
+		PATH_CONEXIONES_LOG = "src/logs/CONEXIONES.log";
+	} else {
+		PATH_CONFIG = "../discordiador.config";
+		PATH_TAREAS = "../src/tareas/";
+		PATH_DISCORDIADOR_LOG = "../src/logs/DISCORDIADOR.log";
+		PATH_TRIPULANTE_LOG = "../src/logs/TRIPULANTE.log";
+		PATH_CONEXIONES_LOG = "../src/logs/CONEXIONES.log";
+	}
+
+}
+
 bool cmpTripulantes(Tripulante* uno, Tripulante* dos)
 {
 	return uno->id<dos->id;
@@ -147,7 +174,7 @@ int conectarse_mongo()
 		pthread_mutex_unlock(&socketMongo);
 		sleep(10);
 	}
-
+	log_info(logger_conexiones,"Se creo una conexionn con MONGOSTORE Socket: %d",socket);
 	return socket;
 }
 int conectarse_Mi_Ram()
@@ -165,7 +192,7 @@ int conectarse_Mi_Ram()
 			pthread_mutex_unlock(&socketMiRam);
 			sleep(3);
 		}
-
+	log_info(logger_conexiones,"Se creo una conexionn con MI-RAM Socket: %d",socket);
 	return socket;
 }
 
@@ -195,12 +222,14 @@ void enviar_estado (Tripulante* tripulante){
 
 
 	agregar_paquete_cambio_estado(paquete,estado_actualizado);
+	log_info(logger_conexiones,"Se envia un papquete ENVIAR_ESTADO, id_trip: %d, id_patota: %d, estado: %c",estado_actualizado->id_tripulante,estado_actualizado->id_patota,estado_actualizado->estado);
 	enviar_paquete(paquete,socket_miram);
 	liberar_t_cambio_estado(estado_actualizado);
 
 }
 void cambiar_estado(Tripulante* tripulante,char* estado){
 	free(tripulante->estado);
+	log_info(logger_discordiador,"Se le cambia el estado al tripulante %d a %s ",tripulante->id,estado);
 	tripulante->estado = strdup(estado);
 	enviar_estado(tripulante);
 
@@ -353,6 +382,7 @@ void mover_a_finalizado(Tripulante* tripulante){
 	t_list* lista_ready = ready->elements;
 	t_list* lista_block = bloqueados->elements;
 	pthread_mutex_lock(&trip_comparar);
+	log_info(logger_discordiador,"Se mueve al tripulante %d de %s a EXIT ",tripulante->id,tripulante->estado);
 	trip_cmp = tripulante;
 	if (string_contains(tripulante->estado,"READY")){
 		pthread_mutex_lock(&sem_cola_ready);
@@ -400,21 +430,19 @@ void eliminarTripulante(Tripulante* tripulante)
 	estructura ->posicion_x = 0;
 	estructura ->posicion_y = 0;
 
-	printf("TIPO DE PAQUETE: %d\n",paquete->codigo_operacion);
-	imprimir_paquete_tripulante(estructura);
-
 	agregar_paquete_tripulante(paquete,estructura);
+	log_info(logger_conexiones,"Se envia un paquete %d a MI-RAM, id_tripulante: %d, id_patota: %d",estructura->id_tripulante,estructura->id_patota);
 	enviar_paquete(paquete,socket_miram);
 
 //	int socket_mongo = conectarse_mongo();
 //	paquete = crear_paquete(ELIMINAR_TRIPULANTE);
 //	agregar_paquete_tripulante(paquete,estructura);
+//	log_info(logger_conexiones,"Se envia un paquete %d a MONGOSTORE, id_tripulante: %d, id_patota: %d",estructura->id_tripulante,estructura->id_patota);
 //	enviar_paquete(paquete,socket_mongo);
 
 	liberar_t_tripulante(estructura);
 	free(tripulante->Tarea->nombre);
 	free(tripulante->Tarea);
-
 
 	mover_a_finalizado(tripulante);
 	cambiar_estado(tripulante,"EXIT");
@@ -422,12 +450,14 @@ void eliminarTripulante(Tripulante* tripulante)
 }
 void* iniciar_Planificacion()
 {
+	log_info(logger_discordiador,"SE INICIA LA PLANIFICACION");
 	pthread_detach(firstInit);
 	while (correr_programa){
 		sem_wait(&(pararPlanificacion[0]));
 		sem_wait(&sem_tripulante_en_ready);
-		puts("HAY UN ELEMNTO PARA MOVER EN READY");
+		log_info(logger_discordiador,"Se espera signal para ver mover elementos de READY");
 		sem_wait(&multiProcesamiento);
+
 
 		//ESTE MUTEX ES PARA PROTEGER LA COLA DE READY
 		pthread_mutex_lock(&sem_cola_ready);
@@ -435,8 +465,8 @@ void* iniciar_Planificacion()
 		pthread_mutex_lock(&sem_cola_exec);
 		//AGREGO A LISTA DE EJECUCION
 		Tripulante* tripulante= (Tripulante*) queue_pop(ready);
+		log_info(logger_discordiador,"Se mueve al tripulante %d de %s a EXEC",tripulante->id,tripulante->estado);
 		cambiar_estado(tripulante,"EXEC");
-		printf("MOVI A %d a EXEC\n",tripulante->id);
 		list_add(execute, tripulante);
 		pthread_mutex_unlock(&sem_cola_ready);
 		pthread_mutex_unlock(&sem_cola_exec);
@@ -448,15 +478,15 @@ void* iniciar_Planificacion()
 
 void ejecutando_a_bloqueado(Tripulante* trp )
 {
-	pthread_mutex_lock(&sem_cola_bloqIO);
+		pthread_mutex_lock(&sem_cola_bloqIO);
 		pthread_mutex_lock(&sem_cola_exec);
-		//ACA PUSHEO AL TRIPULANTE A LA COLA DE BLOQUEADOS IO
 		pthread_mutex_lock(&trip_comparar);
 		trip_cmp=trp;
 		queue_push(bloqueados,list_remove_by_condition(execute,esElMismoTripulante));
 		pthread_mutex_unlock(&trip_comparar);
 		pthread_mutex_unlock(&sem_cola_bloqIO);
 		pthread_mutex_unlock(&sem_cola_exec);
+		log_info(logger_discordiador,"Se mueve al tripulante %d de %s a BLOQUEADO ",trp->id, trp->estado);
 		cambiar_estado(trp,"BLOQUEADO_IO");
 }
 
@@ -465,6 +495,7 @@ void bloqueado_a_ready(Tripulante* bloq)
 	pthread_mutex_lock(&sem_cola_ready);
 	queue_push(ready,bloq);
 	pthread_mutex_unlock(&sem_cola_ready);
+	log_info(logger_discordiador,"Se mueve al tripulante %d de %s a READY",bloq->id, bloq->estado);
 	cambiar_estado(bloq,"READY");
 	sem_post(&sem_tripulante_en_ready);
 
@@ -479,6 +510,7 @@ enviar_posicion_mongo(int posx,int posy, Tripulante* tripulante,int socket_clien
 	t_paquete* paquete = crear_paquete(MOVIMIENTO_MONGO);
 	agregar_paquete_movimiento_mongo(paquete,movimiento);
 
+	log_info(logger_conexiones,"Se envia el mensaje ENVIAR_POSICION a MONGOSTORE, %d|%d a %d|%d" ,movimiento->origen_x,movimiento->origen_y,movimiento->destino_x,movimiento->destino_y);
 	enviar_paquete(paquete,socket_cliente);
 	liberar_t_movimiento_mongo(movimiento);
 
@@ -498,7 +530,6 @@ void* moverTripulante(Tripulante* tripu)
 		tripu->posicionX++;
 		enviar_posicion(tripu,socket_miram);
 //		enviar_posicion_mongo(posicion_actual_x,posicion_actual_y,tripu,socket_miram);
-
 		return ret;
 
 	}
@@ -539,8 +570,9 @@ void enviar_posicion(Tripulante* tripulante,int socket_miram){
 		posiciones_actualizadas-> posicion_y = tripulante->posicionY;
 
 		agregar_paquete_tripulante(paquete,posiciones_actualizadas);
-		enviar_paquete(paquete,socket_miram);
 
+		enviar_paquete(paquete,socket_miram);
+		log_info(logger_conexiones,"Se envia el mensaje ENVIAR_POSICION a MI-RAM, tripulante %d de la patota: %d se mueve a %d|%d" ,posiciones_actualizadas->id_tripulante,posiciones_actualizadas->id_patota,posiciones_actualizadas->posicion_x,posiciones_actualizadas->posicion_y);
 		liberar_t_tripulante(posiciones_actualizadas);
 
 }
@@ -737,6 +769,7 @@ void hacerRoundRobin(Tripulante* tripulant) {
 	{
 		tripulant->kuantum = 0;
 		//protejo las colas o listas
+
 		pthread_mutex_lock(&sem_cola_ready);
 		pthread_mutex_lock(&sem_cola_exec);
 		//termino su quantum lo agrego a ready
@@ -746,6 +779,7 @@ void hacerRoundRobin(Tripulante* tripulant) {
 		pthread_mutex_unlock(&trip_comparar);
 		pthread_mutex_unlock(&sem_cola_ready);
 		pthread_mutex_unlock(&sem_cola_exec);
+		log_info(logger_discordiador,"Se mueve al tripulante %d de READY a %s",tripulant->id,tripulant->estado);
 		cambiar_estado(tripulant,"READY");
 	//le aviso al semaforo que libere un recurso para que mande otro tripulante
 		sem_post(&multiProcesamiento);
@@ -778,7 +812,7 @@ void* vivirTripulante(Tripulante* tripulante) {
 			tripulante->espera = tripulante->Tarea->duracion;
 		}
 
-		printf("TAREA: %s\n",tripulante->Tarea->nombre);
+//		printf("TAREA: %s\n",tripulante->Tarea->nombre);
 		if (string_contains(tripulante->Tarea->nombre,"fault")){
 			tripulante->vida = false;
 			continue;
@@ -989,10 +1023,10 @@ void enviar_iniciar_patota(Patota* pato,int cantidad_tripulantes){
 	agregar_paquete_iniciar_patota(paquete,estructura);
 
 //comprobamos que esta bien --------------------
-	printf("TIPO DE PAQUETE: %d\n",paquete->codigo_operacion);
-	imprimir_paquete_iniciar_patota(estructura);
+//	imprimir_paquete_iniciar_patota(estructura);
 //con un paquete ya creado podemos enviarlo y dejar que las funcionen hagan to do--------------------
 	enviar_paquete(paquete,socket_iniciar_patota);
+	log_info(logger_conexiones,"Se envia mensaje INICIAR_PATOTA id: %d, cantidad:%d y tareas: %s",estructura->idPatota,estructura->cantTripulantes,estructura->Tareas);
 	liberar_t_iniciar_patota(estructura);
 
 }
@@ -1019,9 +1053,9 @@ void enviar_tripulante(Tripulante* nuevo_tripulante){
 	tripulante->posicion_y= nuevo_tripulante->posicionY;
 	agregar_paquete_tripulante(paquete,tripulante);
 
-//	printf("TIPO DE PAQUETE: %d\n",paquete_tripulante_a_enviar->codigo_operacion);
 	imprimir_paquete_tripulante(tripulante);
 	enviar_paquete(paquete,socket_miram);
+	log_info(logger_conexiones,"Se envia un tripulante a MI-RAM, id: %d, id_patota: %d, posx: %d, posy: %d",nuevo_tripulante->id,nuevo_tripulante->idPatota,nuevo_tripulante->posicionX,nuevo_tripulante->posicionY);
 	liberar_t_tripulante(tripulante);
 
 }
@@ -1100,7 +1134,9 @@ char* enviar_solicitud_tarea(Tripulante* tripulante){
 	estructura->id_patota = tripulante->idPatota;
 
 	agregar_paquete_tripulante(paquete,estructura);
+	log_info(logger_conexiones,"Se el tripulante %d envio un mensaje PEDIR_TAREA a MI-RAM",tripulante->id);
 	char* tarea = enviar_paquete_respuesta_string(paquete,socket_miram);
+	log_info(logger_conexiones,"El tripulante %d recibio la tarea: %s",estructura->id_tripulante,tarea);
 	liberar_conexion(socket_miram);
 	liberar_t_tripulante(estructura);
 	return tarea;
@@ -1150,6 +1186,7 @@ Tripulante* buscar_tripulante(int tripulante_buscado){
 }
 
 int hacerConsola() {
+	log_info(logger_discordiador,"Consola iniciada");
 	//SIEMPRE HAY QUE SER CORTEZ Y SALUDAR
 	puts("Bienvenido a A-MongOS de Cebollita Subcampeon \n");
 	char* linea = string_new();
@@ -1166,7 +1203,8 @@ int hacerConsola() {
 
 	while (1) {
 //leo los comandos
-		linea =readline(">");
+		linea = readline(">");
+		log_info(logger_discordiador,"comando %s ingresado",linea);
 		char** codigo_dividido = string_n_split(linea,2," ");
 //		[0] CODIGO - [1] PARAMETROS - [2] NULL
 		string_to_upper(codigo_dividido[0]);
@@ -1192,6 +1230,7 @@ int hacerConsola() {
 //			luego de enviar las tareas leidas a miram ya no nos interesa tenerlas en el discordiador
 			free(pato->tareas);
 			list_add(listaPatotas,(void*) pato);
+			log_info(logger_discordiador,"Se creo la patota %d y se agrego a la lista de patotas", pato->id);
 
 			Tripulante* nuevo_tripulante;
 			for(int i=0 ; i< cantidad_tripulantes;i++){
@@ -1205,17 +1244,19 @@ int hacerConsola() {
 				pthread_mutex_unlock(&sem_cola_new);
 
 				enviar_tripulante(nuevo_tripulante);
-
+				log_info(logger_discordiador,"Se creo un tripulante %d con estado: %s y pos inicial %d|%d:",nuevo_tripulante->id, nuevo_tripulante->estado,nuevo_tripulante->posicionX,nuevo_tripulante->posicionY);
 				free(nuevo_tripulante->estado);
-				nuevo_tripulante->estado = strdup("READY");
 				pthread_mutex_lock(&sem_cola_ready);
 				pthread_mutex_lock(&sem_cola_new);
 				queue_push(ready,queue_pop(new));
 				pthread_mutex_unlock(&sem_cola_ready);
 				pthread_mutex_unlock(&sem_cola_new);
+				log_info(logger_discordiador,"Se mueve al tripulante %d NEW a READY ",nuevo_tripulante->id);
+				nuevo_tripulante->estado = strdup("READY");
+				log_info(logger_discordiador,"Se le cambia el estado al tripulante %d a %s ",nuevo_tripulante->id,nuevo_tripulante->estado);
 
 				sem_post(&sem_tripulante_en_ready);
-
+				log_info(logger_discordiador,"Se le hace signal para avisar que hay elementos en READY");
 
 				//inicializamos su hilo y su semaforo
 				sem_init(&(nuevo_tripulante->sem_pasaje_a_exec),NULL,0);
@@ -1237,7 +1278,6 @@ int hacerConsola() {
 
 		if (string_contains(linea,"INICIAR_PLANIFICACION"))
 		{
-			puts("SE INICIO LA PLANIFICACION");
 			if(primerInicio)
 			{
 				//pthread_detach(firstInit);
@@ -1245,98 +1285,24 @@ int hacerConsola() {
 
 				primerInicio=false;
 			}
-			puts("jejepaso");
 			int a = 0;
 			//DEFINO UN SEM CONTADOR QUE NOS VA A SERVIR PARA PAUSAR LA PLANIFICACION DONDE QUERAMOS DESPUES
 			while (a < multiProcesos) {
 				sem_post(&hilosEnEjecucion);
 				a++;
 			}
-			//ESTE SEM NOS VA A PERMITIR FRENAR LOS PROCESOS IO CUANDO NECESITEMOS
 			sem_post(&pararIo);
-			puts("viene muy bien");
-			sem_post(&(pararPlanificacion[1]));
 			sem_post(&(pararPlanificacion[0]));
-			puts("demasiado");
-			//SEM CONTADOR QUE NOS PERMITE PONER EN EJECECUCION SEGUN CUANTO MULTIPROCESAMIENTO TENGAMOS
-		/*	while (correr_programa)
-			{
-				sem_wait(&pararPlanificacion);
-				sem_wait(&multiProcesamiento);
-				//ESTE MUTEX ES PARA PROTEGER LA COLA DE READY
-				pthread_mutex_lock(&sem_cola_ready);
-				//este para proteger la lista de ejecutados
-				pthread_mutex_lock(&sem_cola_exec);
-				//AGREGO A LISTA DE EJECUCION
-				Tripulante* tripulante= (Tripulante*)queue_pop(ready);
-				tripulante->estado = "Execute";
-				int socketM=conectarse_Mi_Ram();
-				serializar_cambio_estado(tripulante, socketM);
-				liberar_conexion(socketM);
-				list_add(execute, queue_pop(ready));
-				pthread_mutex_unlock(&sem_cola_ready);
-				pthread_mutex_unlock(&sem_cola_exec);
-				sem_post(&pararPlanificacion);
 
-			}
-			*/
 
 		}
 		if (string_contains(linea,"LISTAR_TRIPULANTES") )
 		{
+				imprimir_estado_nave();
 
-			t_list* get_all_tripulantes=list_create();
-			int in=0;
-			pthread_mutex_lock(&sem_cola_exit);
-			while(in<list_size(finalizado))
-			{
-				list_add(get_all_tripulantes,list_get(finalizado,in));
-				in++;
-			}
-			pthread_mutex_unlock(&sem_cola_exit);
-			in=0;
-			pthread_mutex_lock(&sem_cola_exec);
-			while(in<list_size(execute))
-			{
-				list_add(get_all_tripulantes,list_get(execute,in));
-				in++;
-			}
-			pthread_mutex_unlock(&sem_cola_exec);
-
-			in=0;
-			pthread_mutex_lock(&sem_cola_ready);
-			while(in<queue_size(ready))
-			{
-				Tripulante* trip_agregar=queue_pop(ready);
-				list_add(get_all_tripulantes,trip_agregar);
-				queue_push(ready,trip_agregar);
-				in++;
-			}
-			pthread_mutex_unlock(&sem_cola_ready);
-
-			in=0;
-			pthread_mutex_lock(&sem_cola_bloqIO);
-			while(in<queue_size(bloqueados))
-			{
-				Tripulante* trip_agregar=queue_pop(bloqueados);
-				list_add(get_all_tripulantes,trip_agregar);
-				queue_push(bloqueados,trip_agregar);
-				in++;
-			}
-			pthread_mutex_unlock(&sem_cola_bloqIO);
-			list_add(get_all_tripulantes,esta_haciendo_IO);
-			list_sort(get_all_tripulantes, (void*)cmpTripulantes);
-
-			while(!list_is_empty(get_all_tripulantes))
-			{
-			Tripulante* trip_mostrar=(Tripulante*)list_remove(get_all_tripulantes,NULL);
-			mostrarTripulante(trip_mostrar);
-			}
-			list_destroy(get_all_tripulantes);
-			puts("TODO PIOLA HASTA ACA AMEO");
 		}
 		if (string_contains(linea,"PAUSAR_PLANIFICACION")) {
-			///ver como lo hacemos
+			log_info(logger_discordiador,"SE PAUSA LA PLANIFICACION");
 			// YA LO HICE LOL BASUCAMENTE LES TIRAS UN WAIT HASTA QUE LLEGUEN A 0 PARA QUE NO PUEDAN EJECUTAR
 			int a = 0;
 			while (a < multiProcesos) {
@@ -1344,9 +1310,7 @@ int hacerConsola() {
 				a++;
 			}
 			sem_wait(&(pararPlanificacion[0]));
-			sem_wait(&(pararPlanificacion[1]));
 			sem_wait(&pararIo);
-			puts("Entra piolax ameo");
 		}
 		if (string_contains(linea, "EXPULSAR_TRIPULANTE"))
 		{
@@ -1356,53 +1320,22 @@ int hacerConsola() {
 			char** obtener_id_trip=string_split(linea, " ");
 			int id_tripulante = strtol(obtener_id_trip[1],NULL,10);
 			Tripulante* tripulante_rip = buscar_tripulante(id_tripulante);
-			printf("EL tripulante buscado es: %d de la patota: %d",tripulante_rip->id,tripulante_rip->idPatota);
+			if (tripulante_rip == NULL){
+				log_info(logger_discordiador,"El tripulante %d ingresado no existe",id_tripulante);
+				continue;
+			}
+
+			log_info(logger_discordiador,"Se encontro al tripulante a expulsar: %d en %s",tripulante_rip->id,tripulante_rip->estado);
 			tripulante_rip->vida = false;
 			sem_post(&(tripulante_rip->sem_pasaje_a_exec));
-			if(tripulante_rip == NULL){
-				puts("no existe ese tripulante");
-			} else{
-				if (string_contains(tripulante_rip->estado,"BLOQUEADO")){
-					eliminarTripulante(tripulante_rip);
-				}
+
+			if (string_contains(tripulante_rip->estado,"BLOQUEADO")){
+				eliminarTripulante(tripulante_rip);
 			}
 
 			free(obtener_id_trip[0]);
 			free(obtener_id_trip[1]);
 			free(obtener_id_trip);
-		}
-
-		if (string_contains(linea, "PRUEBA_MOVER"))
-		{
-//			moverTripulante(tripu_prueba_mov,3,3);
-//			free(tripu_prueba);
-
-		}
-
-		if (string_contains(linea, "PRUEBA_ESTADO"))
-		{
-			char** prueba_estado =string_split(linea, " ");
-//			cambiar_estado(tripu_prueba_mov,prueba_estado[1]);
-
-		}
-
-		if (string_contains(linea,"PRUEBA_LISTAR"))
-		{
-//			queue_push(ready,(void*) tripu_prueba_mov);
-//			list_add(execute,tripu_prueba_mov);
-//			queue_push(bloqueados,(void*) tripu_prueba_mov);
-//			list_add(finalizado,tripu_prueba_mov);
-
-			imprimir_estado_nave();
-
-		}
-
-		if (string_contains(linea,"PRUEBA_PEDIR"))
-		{
-//			pedir_tarea(tripu_prueba_mov);
-//			puts(tripu_prueba_mov->Tarea);
-
-
 		}
 
 		if (string_contains(linea,"OBTENER_BITACORA")){
@@ -1417,8 +1350,9 @@ int hacerConsola() {
 			pedido_bitacora->tamanio_mensaje = strlen(pedido_bitacora->mensaje) + 1;
 
 			agregar_paquete_pedido_mongo(paquete_bitacora,pedido_bitacora);
+			log_info(logger_conexiones, "el tripulante %d envia el mensaje OBTENER_BITCORA a MONGOSTORE",tripulante_id);
 			char* bitacora = enviar_paquete_respuesta_string(paquete_bitacora,socket_bitacora);
-			printf("%s\n",bitacora);
+			log_info(logger_conexiones, "el tripulante %d recibe su bitacora: %s",tripulante_id,bitacora);
 			liberar_t_pedido_mongo(pedido_bitacora);
 
 
@@ -1432,31 +1366,63 @@ int hacerConsola() {
 
 	free(linea);
 }
-int main() {
-//	PATH MARTIN
-//	config = config_create("/home/utnso/Escritorio/tp-2021-1c-Cebollitas-subcampeon/discordiador/discordiador.config");
+int main(int argc, char* argv[]) {
+	iniciar_paths(argv[1]);
+	//=========== LOGS ===============
+	logger_discordiador = log_create(PATH_DISCORDIADOR_LOG, "DISCORDIADOR", false, LOG_LEVEL_INFO);		// Creamos log
+	if (logger_discordiador == NULL) {
+		exit(EXIT_FAILURE);  // log_create ya imprime por ṕantalla si hubo un error
+	}
+	puts("El archivo de logs DISCORDIADOR se creo correctamente");
 
-//	PATH ALE
-	config = config_create(PATH_CONFIG);
+	logger_tripulante = log_create(PATH_TRIPULANTE_LOG, "TRIPULANTE", false, LOG_LEVEL_INFO);		// Creamos log
+	if (logger_tripulante == NULL) {
+		exit(EXIT_FAILURE);  // log_create ya imprime por ṕantalla si hubo un error
+	}
+	puts("El archivo de logs CONEXIONES se creo correctamente");
 
-//	PATH JUAN
-//	config = config_create("/home/utnso/Escritorio/Conexiones/discordiador/discordiador.config");
+	logger_conexiones = log_create(PATH_CONEXIONES_LOG, "CONEXIONES", false, LOG_LEVEL_INFO);		// Creamos log
+	if (logger_conexiones == NULL) {
+		exit(EXIT_FAILURE);  // log_create ya imprime por ṕantalla si hubo un error
+	}
+	puts("El archivo de logs CONEXIONES se creo correctamente");
+	  config = config_create(PATH_CONFIG);														//Creamos config
+	  if (config == NULL) {
+	    puts("No se pudo crear el archivo de configuracion");
+	    exit(EXIT_FAILURE);
+	  }
+	  puts("El archivo config se creo correctamente");
+
+	  //=========== CONFIG ===============
 
 	ipMiRam= config_get_string_value(config, "IP_MI_RAM_HQ");
-	printf("%s miram",ipMiRam);
+	log_info(logger_conexiones, "la IP_MIRAM es: %s", ipMiRam);
+
 	puertoMiRam = config_get_string_value(config, "PUERTO_MI_RAM_HQ");
-	puertoSabotaje = config_get_string_value(config, "PUERTO_SABOTAJE");
-	multiProcesos = config_get_int_value(config, "GRADO_MULTITAREA");
-	retardoCpu = config_get_int_value(config, "RETARDO_CICLO_CPU");
-	algoritmo = config_get_string_value(config, "ALGORITMO");
-	puertoMongoStore = config_get_string_value(config, "PUERTO_I_MONGO_STORE");
+	log_info(logger_conexiones, "El PUERTO miram es: %s", puertoMiRam);
+
 	ipMongoStore = config_get_string_value(config, "IP_I_MONGO_STORE");
+	log_info(logger_conexiones, "la IP_MONGOSTORE es: %s", ipMongoStore);
+
+	puertoMongoStore = config_get_string_value(config, "PUERTO_I_MONGO_STORE");
+	log_info(logger_conexiones, "El PUERTO mongostore es: %s", puertoMongoStore);
+
+	puertoSabotaje = config_get_string_value(config, "PUERTO_SABOTAJE");
+	log_info(logger_conexiones, "El puerto para el sabotaje es: %s",puertoSabotaje);
+
+	multiProcesos = config_get_int_value(config, "GRADO_MULTITAREA");
+	log_info(logger_discordiador, "El grado de multiprocesamiento es: %d",multiProcesos);
+
+	retardoCpu = config_get_int_value(config, "RETARDO_CICLO_CPU");
+	log_info(logger_discordiador, "El duracion del ciclo  de cpu: %d",retardoCpu);
+
+	algoritmo = config_get_string_value(config, "ALGORITMO");
+	log_info(logger_discordiador, "El algoritmo de planificacion es: %s",algoritmo);
+
 	quantum = config_get_int_value(config, "QUANTUM");
-//	tiempo_sabotaje= config_get_int_value(config, "TIEMPO_SABOTAJE");
+	log_info(logger_discordiador, "El quantum por tripulante es: %d",quantum);
 
-	//Patota* pat= iniciarPatota(1,1,execute,"TAREAD:TXT",t_totales);
-
-	//INICIALIAZAMOS LOS SEMAFOROS
+	//=========== INICIALIZACION DE SEMAFOROS===============
 	sem_init(&multiProcesamiento, 0, multiProcesos);
 	sem_init(&hilosEnEjecucion, 0, multiProcesos);
 	sem_init(&pararIo, 0, 1);
@@ -1487,25 +1453,26 @@ int main() {
 
 	bloqueados_sabotaje = list_create();
 
-	printf("hola mundo\n");
 	pthread_t consola;
 	pthread_create(&consola, NULL, (void *) hacerConsola, NULL);
 //	pthread_join(consola,NULL);
 
 	int socket_sabotaje = crear_server(puertoSabotaje);
-	printf("servidor abuerto con el socket %d\n",socket_sabotaje);
+	log_info(logger_conexiones,"Servidor abierto con el socket %d\n",socket_sabotaje);
 	while(correr_programa)
 	{
-		int cliente_Sabo = esperar_cliente(socket_sabotaje, 3);
-//		cliente_sabotaje = esperar_cliente(socket_sabotaje, 3);
+		cliente_sabotaje = esperar_cliente(socket_sabotaje,5);
+		log_info(logger_conexiones, "Nueva conexion recibida con el socket: %d",cliente_sabotaje);
 		int respuesta;
-		t_paquete* paquete_recibido = recibir_paquete(cliente_Sabo, &respuesta);
+		t_paquete* paquete_recibido = recibir_paquete(cliente_sabotaje, &respuesta);
+		log_info(logger_conexiones, "paquete recibido de tipo: %d",paquete_recibido->codigo_operacion);
 		if (paquete_recibido->codigo_operacion == -1 || respuesta == ERROR) {
-			liberar_conexion(cliente_Sabo);
+			liberar_conexion(cliente_sabotaje);
 			eliminar_paquete(paquete_recibido);
+
 		}
 
-//		printf("SABOTAJE RECIBIDO: %d\n",paquete_recibido->codigo_operacion);
+		printf("SABOTAJE RECIBIDO: %d\n",paquete_recibido->codigo_operacion);
 		t_pedido_mongo* posiciciones_sabotaje = deserializar_pedido_mongo(paquete_recibido);
 		int parar_todo_sabotaje=0;
 		  while (parar_todo_sabotaje < multiProcesos)
@@ -1519,9 +1486,6 @@ int main() {
 		pthread_join(&hilo_sabotaje,NULL);
 	}
 
-
-
-	printf("hola mundo\n");
 	return 0;
 }
 	/* ADIO' wachin ! */

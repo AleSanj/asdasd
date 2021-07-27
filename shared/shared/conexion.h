@@ -137,7 +137,6 @@ void eliminar_paquete(t_paquete* paquete);
 int crear_conexion(char*, char*);
 int cliente(CONEXION_A modulo);
 
-
 /*========================== SERVIDOR =================================*/
 int crear_server(char*);
 int esperar_cliente(int,int);
@@ -191,7 +190,7 @@ void liberar_t_cambio_estado(t_cambio_estado* estructura);
 
 //---------------------- SOLICITAR TAREA ----------------------------------
 void serializar_tarea_tripulante( Tripulante* tareaTrip, int socket);
-char* enviar_paquete_tarea(t_paquete* paquete,int socket);
+char* enviar_paquete_respuesta_string(t_paquete* paquete,int socket);
 
 /*
  * CAPAZ PODEMOS USAR UN T_TRIPULANTE O T_ELIMINAR_TRIPULANTE
