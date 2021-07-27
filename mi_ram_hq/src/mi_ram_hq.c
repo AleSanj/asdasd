@@ -209,6 +209,7 @@ void administrar_cliente(int socketCliente){
 					totalDeTareas++;
 					i++;
 				}
+				log_info(logger, "Encontre las tareas: %s\n",tareas);
 				if(tripulanteATraer->proxTarea==totalDeTareas){
 					char* fault = strdup("fault");
 					uint32_t tamanio_fault = strlen(fault)+1;
@@ -230,7 +231,7 @@ void administrar_cliente(int socketCliente){
 						actualizar_indice_segmentacion(tripulante_solicitud->id_tripulante,tripulante_solicitud->id_patota);
 						pthread_mutex_unlock(&mutexMemoria);
 					}
-					log_info(logger, "Mande la tarea %s\n",arrayTareas[tripulanteATraer->proxTarea]);
+					log_info(logger, "Mande la tarea %s (Numero %d) al tripulante %d\n",arrayTareas[tripulanteATraer->proxTarea],tripulanteATraer->proxTarea,tripulanteATraer->id);
 				}
 
 				for (int i = 0; i < list_size(listaDeTablasDePaginas); ++i) {
