@@ -781,6 +781,7 @@ void guardar_en_memoria_segmentacion(void* payload,int idElemento,int tamPayload
         elementoNuevo->tamanio = tamPayload;
         elementoNuevo->ID = idElemento;
         elementoNuevo->PID=pid;
+        log_info(logger,"Segmento en el que guardo las tareas: %d y el tipo: %c",elementoNuevo->segmentoOPagina,elementoNuevo->tipo);
         list_add(listaElementos,elementoNuevo);
     }
     else
@@ -809,6 +810,8 @@ void guardar_en_memoria_segmentacion(void* payload,int idElemento,int tamPayload
                         elementoNuevo->tamanio = tamPayload;
                         elementoNuevo->ID = idElemento;
                         elementoNuevo->PID = pid;
+                        log_info(logger,"Segmento en el que guardo las tareas: %d y el tipo: %c y el ID de la patota",elementoNuevo->segmentoOPagina,elementoNuevo->tipo,elementoNuevo->PID);
+                        actualizar_lista_elementos_segmentacion(elementoNuevo->segmentoOPagina,pid);
                         list_add(listaElementos,elementoNuevo);
                         break;
                     }
@@ -847,6 +850,11 @@ void guardar_en_memoria_segmentacion(void* payload,int idElemento,int tamPayload
                         elementoNuevo->tamanio = tamPayload;
                         elementoNuevo->ID = idElemento;
                         elementoNuevo->PID = pid;
+                        log_info(logger,"Tipo de lo que guardo: %c",elementoNuevo->tipo);
+                        log_info(logger,"Segmento que le pongo a la lista de elementos: %d",elementoNuevo->segmentoOPagina);
+                        log_info(logger,"Inicio del segmento en la lista de segmentos: %d",nuevoSegmento->inicio);
+                        log_info(logger,"Inicio del segmento en la lista global de segmentos: %d",nuevoSegmentoGlobal->inicio);
+                        actualizar_lista_elementos_segmentacion(elementoNuevo->segmentoOPagina,pid);
                         list_add(listaElementos,elementoNuevo);
                         break;
                     }
@@ -919,7 +927,9 @@ void guardar_en_memoria_segmentacion(void* payload,int idElemento,int tamPayload
                     elementoNuevo->tamanio = tamPayload;
                     elementoNuevo->ID = idElemento;
                     elementoNuevo->PID = pid;
+                    actualizar_lista_elementos_segmentacion(elementoNuevo->segmentoOPagina,pid);
                     list_add(listaElementos,elementoNuevo);
+
                 }
                 list_destroy(listaDeEspaciosLibres);
                 break;
@@ -981,12 +991,11 @@ void *buscar_de_memoria_segmentacion(int idElementoABuscar,int idPatota, char ti
         elementoEvaluado= list_get(listaFiltrada,s);
         segmentoEnTabla_struct *segmentoEvaluado = malloc(sizeof(segmentoEnTabla_struct));
         segmentoEvaluado = list_get(listaSegmentos,elementoEvaluado->segmentoOPagina);
-
+        log_info(logger,"Estoy buscando las tareas");
         if (tipoDeElemento == 'T'){
             tcb* elementoABuscar = malloc(sizeof(tcb));
             //elementoABuscar = (tripulante_struct*)segmentoEvaluado->inicio;
             memcpy(elementoABuscar,segmentoEvaluado->inicio, sizeof(tcb));
-            log_info(logger,"Id del elemento encontrado: %d y del buscado: %d\n",elementoABuscar->id,idElementoABuscar);
             if (elementoABuscar->id == idElementoABuscar && elementoEvaluado->tipo=='T'){
                 return elementoABuscar;
             }else{
@@ -995,9 +1004,12 @@ void *buscar_de_memoria_segmentacion(int idElementoABuscar,int idPatota, char ti
             }
         }else if(tipoDeElemento == 'A'){
             char *elementoABuscar = malloc(elementoEvaluado->tamanio);
+            log_info(logger,"Tipo del elemento evaluado: %c y PID %d",elementoEvaluado->tipo,elementoEvaluado->PID);
             if (elementoEvaluado->ID == idElementoABuscar && elementoEvaluado->tipo == 'A'){
                 memcpy(elementoABuscar,segmentoEvaluado->inicio, elementoEvaluado->tamanio);
+                log_info(logger,"Encontre las tareas en la direccion %d y son de tamanio %d",segmentoEvaluado->inicio,elementoEvaluado->tamanio);
                 return elementoABuscar;
+
             }
         }else if(tipoDeElemento == 'P'){
             pcb *elementoABuscar = malloc(sizeof(pcb));
@@ -1210,7 +1222,6 @@ void actualizar_estado_segmentacion(uint32_t idElemento, uint32_t idPatota, char
 
 	segmentoEnTabla_struct *paginaInicial=list_get(tablaDePaginas,elementoAReemplazar->segmentoOPagina);
 	int inicioSegmento = paginaInicial->inicio;
-	log_info(logger, "Rompe despues del log \n");
 	tcb* tcbAModificar = malloc(sizeof(tcb));
 	tcbAModificar = buscar_de_memoria_segmentacion(idElemento, idPatota, 'T');
 	tcbAModificar->estado = nuevoEstado;
@@ -1351,4 +1362,16 @@ void actualizar_indice_paginacion(uint32_t idElemento, uint32_t idPatota){
         payloadYaGuardado = (int)payloadYaGuardado + menorEntreDos(tamPayload-payloadYaGuardado,tamPagina);
         payload = (int)payload + menorEntreDos(tamPayload-payloadYaGuardado,tamPagina);
     }
+}
+
+void actualizar_lista_elementos_segmentacion(int segmentoAgregado,int PID){
+	elementoEnLista_struct* elementoIterante = malloc(sizeof(elementoEnLista_struct));
+	for (int i=0;i<list_size(listaElementos);i++){
+		elementoIterante = list_get(listaElementos,i);
+		if ((elementoIterante->segmentoOPagina >= segmentoAgregado) && (elementoIterante->PID == PID)){
+			log_info(logger,"Entre al maldito if");
+			elementoIterante->segmentoOPagina++;
+			list_replace(listaElementos,i,elementoIterante);
+		}
+	}
 }
