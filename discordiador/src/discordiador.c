@@ -418,11 +418,34 @@ void mover_a_finalizado(Tripulante* tripulante){
 		return;
 		}
 
-
-
-
 }
 
+Patota* buscar_patota(int numero_patota) {
+	bool _patota_en_la_cola(Patota* patota){
+		return (patota->id == numero_patota);
+	}
+	Patota* encontrada = list_find(listaPatotas, (void*) _patota_en_la_cola);
+	return encontrada;
+}
+
+void enviar_fin_patota(Patota* patota){
+	if (!(patota->cantidad_tripulantes))
+		return;
+
+	int socket_miram = conectarse_Mi_Ram();
+	t_paquete* paquete = crear_paquete(FIN_PATOTA);
+	t_tripulante* estructura = malloc(sizeof(t_tripulante));
+	estructura->id_tripulante = 0;
+	estructura->id_patota = patota->id;
+	estructura ->posicion_x = 0;
+	estructura ->posicion_y = 0;
+
+	agregar_paquete_tripulante(paquete,estructura);
+	log_info(logger_conexiones,"Se envia un paquete FIN_PATOTA a MI-RAM,id_patota: %d",estructura->id_patota);
+	log_info(logger_discordiador,"FINALIZARON todos los tripulantes de la patota: %d",estructura->id_patota);
+	enviar_paquete(paquete,socket_miram);
+	liberar_t_tripulante(estructura);
+}
 void eliminarTripulante(Tripulante* tripulante)
 {
 	int socket_miram=conectarse_Mi_Ram();
@@ -449,6 +472,9 @@ void eliminarTripulante(Tripulante* tripulante)
 
 	mover_a_finalizado(tripulante);
 	cambiar_estado(tripulante,"EXIT");
+	Patota* patota_a_eliminar = buscar_patota(tripulante->idPatota);
+	patota_a_eliminar->cantidad_tripulantes--;
+	enviar_fin_patota(patota_a_eliminar);
 	pthread_exit(&(tripulante->hilo_vida));
 }
 void* iniciar_Planificacion()
@@ -457,9 +483,10 @@ void* iniciar_Planificacion()
 	log_info(logger_discordiador,"SE INICIA LA PLANIFICACION");
 	pthread_detach(firstInit);
 	while (correr_programa){
+		sem_wait(&sem_tripulante_en_ready);
+
 		if(!estado_planificacion)
 			sem_wait(&(pararPlanificacion[0]));
-		sem_wait(&sem_tripulante_en_ready);
 		log_info(logger_discordiador,"Se espera signal para ver mover elementos de READY");
 		sem_wait(&multiProcesamiento);
 
@@ -505,7 +532,7 @@ void bloqueado_a_ready(Tripulante* bloq)
 	sem_post(&sem_tripulante_en_ready);
 
 }
-enviar_posicion_mongo(int posx,int posy, Tripulante* tripulante,int socket_cliente){
+void enviar_posicion_mongo(int posx,int posy, Tripulante* tripulante,int socket_cliente){
 	t_movimiento_mongo* movimiento = malloc(sizeof(t_movimiento_mongo));
 	movimiento->origen_x = posx;
 	movimiento->origen_y = posy;
@@ -521,7 +548,22 @@ enviar_posicion_mongo(int posx,int posy, Tripulante* tripulante,int socket_clien
 
 }
 
+void enviar_posicion(Tripulante* tripulante,int socket_miram){
+		t_paquete* paquete = crear_paquete(ACTUALIZAR_POS);
+		t_tripulante* posiciones_actualizadas = malloc(sizeof(t_tripulante));
 
+		posiciones_actualizadas->id_tripulante= tripulante->id;
+		posiciones_actualizadas->id_patota = tripulante->idPatota;
+		posiciones_actualizadas-> posicion_x = tripulante->posicionX;
+		posiciones_actualizadas-> posicion_y = tripulante->posicionY;
+
+		agregar_paquete_tripulante(paquete,posiciones_actualizadas);
+
+		enviar_paquete(paquete,socket_miram);
+		log_info(logger_conexiones,"Se envia el mensaje ENVIAR_POSICION a MI-RAM, tripulante %d de la patota: %d se mueve a %d|%d" ,posiciones_actualizadas->id_tripulante,posiciones_actualizadas->id_patota,posiciones_actualizadas->posicion_x,posiciones_actualizadas->posicion_y);
+		liberar_t_tripulante(posiciones_actualizadas);
+
+}
 
 // esta va a avanzar el tripulante paso a paso Y Enviar a miram
 void* moverTripulante(Tripulante* tripu)
@@ -563,23 +605,6 @@ void* moverTripulante(Tripulante* tripu)
 		return ret;
 	}
 	return NULL;
-}
-
-void enviar_posicion(Tripulante* tripulante,int socket_miram){
-		t_paquete* paquete = crear_paquete(ACTUALIZAR_POS);
-		t_tripulante* posiciones_actualizadas = malloc(sizeof(t_tripulante));
-
-		posiciones_actualizadas->id_tripulante= tripulante->id;
-		posiciones_actualizadas->id_patota = tripulante->idPatota;
-		posiciones_actualizadas-> posicion_x = tripulante->posicionX;
-		posiciones_actualizadas-> posicion_y = tripulante->posicionY;
-
-		agregar_paquete_tripulante(paquete,posiciones_actualizadas);
-
-		enviar_paquete(paquete,socket_miram);
-		log_info(logger_conexiones,"Se envia el mensaje ENVIAR_POSICION a MI-RAM, tripulante %d de la patota: %d se mueve a %d|%d" ,posiciones_actualizadas->id_tripulante,posiciones_actualizadas->id_patota,posiciones_actualizadas->posicion_x,posiciones_actualizadas->posicion_y);
-		liberar_t_tripulante(posiciones_actualizadas);
-
 }
 
 void enviar_inicio_fin_mongo(Tripulante* enviar, char c){
@@ -1328,8 +1353,6 @@ int hacerConsola() {
 			estado_planificacion = 0;
 			log_info(logger_discordiador,"SE PAUSA LA PLANIFICACION");
 			// YA LO HICE LOL BASUCAMENTE LES TIRAS UN WAIT HASTA QUE LLEGUEN A 0 PARA QUE NO PUEDAN EJECUTAR
-			int a = 0;
-			int valor_hilosEnEjecucion;
 			sem_wait(&pararIo);
 		}
 		if (string_contains(linea, "EXPULSAR_TRIPULANTE"))

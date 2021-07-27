@@ -57,7 +57,8 @@ typedef enum {
 /* 11 */ INICIO_SABOTAJE,										//LISTO
 /* 12 */ FIN_SABOTAJE,											//LISTO
 /* 13 */ CONSUMIR_RECURSO,										//LISTO
-/* 14 */ FINALIZAR												//LISTO
+/* 14 */ FINALIZAR,												//LISTO
+/* 15 */ FIN_PATOTA												//LISTO
 
 
 }CODE_OP;

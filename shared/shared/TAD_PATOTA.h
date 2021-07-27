@@ -32,6 +32,7 @@ typedef struct
 	uint8_t id;
 	int inicio;
 	int fin;
+	int cantidad_tripulantes;
 	char* tareas;
 }Patota;
 typedef struct

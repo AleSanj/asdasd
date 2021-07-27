@@ -65,6 +65,7 @@ struct pcb
 	devolverPatota->tareas = strdup(tareas);
 	devolverPatota->inicio = inicio;
 	devolverPatota->fin = inicio + fin - 1;
+	devolverPatota->cantidad_tripulantes = fin;
 
 
 	return devolverPatota;
