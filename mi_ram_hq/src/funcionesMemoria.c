@@ -103,7 +103,7 @@ void *borrar_de_memoria_general(int idElemento, int idPatota, char tipo){
 		borrar_de_memoria_paginacion( idElemento, idPatota,  tipo);
 
 	}else if(strcmp(esquemaMemoria,"SEGMENTACION")==0){
-		borrar_de_memoria_segmentacion( idElemento,idPatota,tipo);
+		borrar_de_memoria_segmentacion(idElemento,idPatota,tipo);
 	}
     pthread_mutex_unlock(&mutexMemoria);
 
@@ -944,9 +944,6 @@ void borrar_de_memoria_segmentacion(int idElementoABorrar, int idPatota, char ti
         segmentoEnTabla_struct *segmentoEvaluado = list_get(listaSegmentos,elementoEvaluado->segmentoOPagina);
 
             if ((elementoEvaluado->ID == idElementoABorrar) && (elementoEvaluado->tipo == tipoDeElemento)){
-                list_remove(listaSegmentos,elementoEvaluado->segmentoOPagina);
-                list_remove(listaElementos,i);
-
                 segmentoEnTablaGlobal_struct *segmentoGlobalIterante = malloc(sizeof(segmentoGlobalIterante));
                 for (int j = 0; j < list_size(listaGlobalDeSegmentos); ++j) {
                     segmentoGlobalIterante = list_get(listaGlobalDeSegmentos,j);
@@ -957,6 +954,8 @@ void borrar_de_memoria_segmentacion(int idElementoABorrar, int idPatota, char ti
                         break;
                     }
                 }
+                list_remove(listaSegmentos,elementoEvaluado->segmentoOPagina);
+                list_remove(listaElementos,i);
                 break;
             }
 
@@ -987,7 +986,8 @@ void *buscar_de_memoria_segmentacion(int idElementoABuscar,int idPatota, char ti
             tcb* elementoABuscar = malloc(sizeof(tcb));
             //elementoABuscar = (tripulante_struct*)segmentoEvaluado->inicio;
             memcpy(elementoABuscar,segmentoEvaluado->inicio, sizeof(tcb));
-            if (elementoABuscar->id == idElementoABuscar){
+            log_info(logger,"Id del elemento encontrado: %d y del buscado: %d\n",elementoABuscar->id,idElementoABuscar);
+            if (elementoABuscar->id == idElementoABuscar && elementoEvaluado->tipo=='T'){
                 return elementoABuscar;
             }else{
                 //free(elementoEvaluado);
@@ -995,7 +995,13 @@ void *buscar_de_memoria_segmentacion(int idElementoABuscar,int idPatota, char ti
             }
         }else if(tipoDeElemento == 'A'){
             char *elementoABuscar = malloc(elementoEvaluado->tamanio);
-            if (elementoEvaluado->ID == idElementoABuscar){
+            if (elementoEvaluado->ID == idElementoABuscar && elementoEvaluado->tipo == 'A'){
+                memcpy(elementoABuscar,segmentoEvaluado->inicio, elementoEvaluado->tamanio);
+                return elementoABuscar;
+            }
+        }else if(tipoDeElemento == 'P'){
+            pcb *elementoABuscar = malloc(sizeof(pcb));
+            if (elementoEvaluado->ID == idElementoABuscar && elementoEvaluado->tipo == 'P'){
                 memcpy(elementoABuscar,segmentoEvaluado->inicio, elementoEvaluado->tamanio);
                 return elementoABuscar;
             }
@@ -1204,12 +1210,11 @@ void actualizar_estado_segmentacion(uint32_t idElemento, uint32_t idPatota, char
 
 	segmentoEnTabla_struct *paginaInicial=list_get(tablaDePaginas,elementoAReemplazar->segmentoOPagina);
 	int inicioSegmento = paginaInicial->inicio;
-
+	log_info(logger, "Rompe despues del log \n");
 	tcb* tcbAModificar = malloc(sizeof(tcb));
 	tcbAModificar = buscar_de_memoria_segmentacion(idElemento, idPatota, 'T');
 	tcbAModificar->estado = nuevoEstado;
 	void* payload = tcbAModificar;
-
 	int* direccionFisica;
 	int payloadYaGuardado=0;
 	int tamPayload = 21;

@@ -1,0 +1,1600 @@
+[INFO] 02:02:25:635 Memoria/(15676:15687): Guarde las tareas de la patota 1
+
+[INFO] 02:02:25:638 Memoria/(15676:15687): Guarde el PCB de la patota 1
+
+[INFO] 02:02:25:638 Memoria/(15676:15689): Guarde el tripulante 1
+
+[INFO] 02:02:25:639 Memoria/(15676:15691): Guarde el tripulante 2
+
+[INFO] 02:02:25:640 Memoria/(15676:15693): Guarde el tripulante 3
+
+[INFO] 02:02:25:640 Memoria/(15676:15695): Guarde el tripulante 4
+
+[INFO] 02:02:30:508 Memoria/(15676:15703): Guarde las tareas de la patota 2
+
+[INFO] 02:02:30:508 Memoria/(15676:15703): Guarde el PCB de la patota 2
+
+[INFO] 02:02:30:508 Memoria/(15676:15704): Guarde el tripulante 5
+
+[INFO] 02:02:30:509 Memoria/(15676:15706): Guarde el tripulante 6
+
+[INFO] 02:02:35:765 Memoria/(15676:15716): Rompe despues de actualizar 
+
+[INFO] 02:02:35:767 Memoria/(15676:15716): Rompe despues del log 
+
+[INFO] 02:02:35:768 Memoria/(15676:15716): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:35:768 Memoria/(15676:15716): Mentira, no rompe 
+
+[INFO] 02:02:35:768 Memoria/(15676:15716): Actualice el estado del tripulante 1 a E
+
+[INFO] 02:02:35:768 Memoria/(15676:15718): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:35:768 Memoria/(15676:15718): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:35:768 Memoria/(15676:15718): Mande la tarea DESCARGAR_ITINERARIO;7;2;10
+
+[INFO] 02:02:35:769 Memoria/(15676:15719): Rompe despues de actualizar 
+
+[INFO] 02:02:35:769 Memoria/(15676:15719): Rompe despues del log 
+
+[INFO] 02:02:35:769 Memoria/(15676:15719): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:35:769 Memoria/(15676:15719): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:35:769 Memoria/(15676:15719): Mentira, no rompe 
+
+[INFO] 02:02:35:769 Memoria/(15676:15719): Actualice el estado del tripulante 2 a E
+
+[INFO] 02:02:35:769 Memoria/(15676:15720): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:35:769 Memoria/(15676:15720): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:35:769 Memoria/(15676:15720): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:35:769 Memoria/(15676:15720): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:35:769 Memoria/(15676:15720): Mande la tarea DESCARGAR_ITINERARIO;7;2;10
+
+[INFO] 02:02:35:769 Memoria/(15676:15721): Rompe despues de actualizar 
+
+[INFO] 02:02:35:769 Memoria/(15676:15721): Rompe despues del log 
+
+[INFO] 02:02:35:769 Memoria/(15676:15721): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:35:769 Memoria/(15676:15721): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:35:769 Memoria/(15676:15721): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:35:769 Memoria/(15676:15721): Mentira, no rompe 
+
+[INFO] 02:02:35:769 Memoria/(15676:15721): Actualice el estado del tripulante 3 a E
+
+[INFO] 02:02:35:769 Memoria/(15676:15722): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:35:769 Memoria/(15676:15722): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:35:769 Memoria/(15676:15722): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:35:769 Memoria/(15676:15722): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:35:769 Memoria/(15676:15722): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:35:769 Memoria/(15676:15722): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:35:769 Memoria/(15676:15722): Mande la tarea DESCARGAR_ITINERARIO;7;2;10
+
+[INFO] 02:02:36:770 Memoria/(15676:15726): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:36:771 Memoria/(15676:15726): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:36:772 Memoria/(15676:15727): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:36:772 Memoria/(15676:15727): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:36:772 Memoria/(15676:15727): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:36:772 Memoria/(15676:15727): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:36:773 Memoria/(15676:15728): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:36:773 Memoria/(15676:15728): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:36:773 Memoria/(15676:15728): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:36:773 Memoria/(15676:15728): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:36:773 Memoria/(15676:15728): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:36:773 Memoria/(15676:15728): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:37:772 Memoria/(15676:15729): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:37:772 Memoria/(15676:15729): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:37:775 Memoria/(15676:15730): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:37:775 Memoria/(15676:15730): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:37:775 Memoria/(15676:15730): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:37:775 Memoria/(15676:15730): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:37:776 Memoria/(15676:15731): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:37:776 Memoria/(15676:15731): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:37:776 Memoria/(15676:15731): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:37:776 Memoria/(15676:15731): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:37:776 Memoria/(15676:15731): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:37:776 Memoria/(15676:15731): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:38:773 Memoria/(15676:15735): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:38:773 Memoria/(15676:15735): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:38:775 Memoria/(15676:15736): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:38:776 Memoria/(15676:15736): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:38:776 Memoria/(15676:15736): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:38:776 Memoria/(15676:15736): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:39:774 Memoria/(15676:15737): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:39:775 Memoria/(15676:15737): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:39:777 Memoria/(15676:15738): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:39:777 Memoria/(15676:15738): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:39:777 Memoria/(15676:15738): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:39:777 Memoria/(15676:15738): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:40:781 Memoria/(15676:15740): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:40:781 Memoria/(15676:15740): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:40:785 Memoria/(15676:15741): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:40:785 Memoria/(15676:15741): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:40:785 Memoria/(15676:15741): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:40:785 Memoria/(15676:15741): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:45:787 Memoria/(15676:15759): Rompe despues de actualizar 
+
+[INFO] 02:02:45:787 Memoria/(15676:15759): Rompe despues del log 
+
+[INFO] 02:02:45:788 Memoria/(15676:15759): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:45:795 Memoria/(15676:15759): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:45:795 Memoria/(15676:15759): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:45:795 Memoria/(15676:15759): Mentira, no rompe 
+
+[INFO] 02:02:45:795 Memoria/(15676:15759): Actualice el estado del tripulante 3 a R
+
+[INFO] 02:02:45:795 Memoria/(15676:15760): Rompe despues de actualizar 
+
+[INFO] 02:02:45:795 Memoria/(15676:15760): Rompe despues del log 
+
+[INFO] 02:02:45:796 Memoria/(15676:15760): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:45:796 Memoria/(15676:15760): Mentira, no rompe 
+
+[INFO] 02:02:45:796 Memoria/(15676:15760): Actualice el estado del tripulante 1 a R
+
+[INFO] 02:02:45:796 Memoria/(15676:15761): Rompe despues de actualizar 
+
+[INFO] 02:02:45:796 Memoria/(15676:15761): Rompe despues del log 
+
+[INFO] 02:02:45:796 Memoria/(15676:15761): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:45:796 Memoria/(15676:15761): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:45:796 Memoria/(15676:15761): Mentira, no rompe 
+
+[INFO] 02:02:45:796 Memoria/(15676:15761): Actualice el estado del tripulante 2 a R
+
+[INFO] 02:02:45:797 Memoria/(15676:15762): Rompe despues de actualizar 
+
+[INFO] 02:02:45:797 Memoria/(15676:15762): Rompe despues del log 
+
+[INFO] 02:02:45:797 Memoria/(15676:15762): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15762): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15762): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15762): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15762): Mentira, no rompe 
+
+[INFO] 02:02:45:797 Memoria/(15676:15762): Actualice el estado del tripulante 4 a E
+
+[INFO] 02:02:45:797 Memoria/(15676:15763): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15763): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15763): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15763): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15763): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15763): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15763): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15763): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:02:45:797 Memoria/(15676:15763): Mande la tarea DESCARGAR_ITINERARIO;7;2;10
+
+[INFO] 02:02:45:798 Memoria/(15676:15764): Rompe despues de actualizar 
+
+[INFO] 02:02:45:798 Memoria/(15676:15764): Rompe despues del log 
+
+[INFO] 02:02:45:798 Memoria/(15676:15764): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:45:798 Memoria/(15676:15764): Mentira, no rompe 
+
+[INFO] 02:02:45:798 Memoria/(15676:15764): Actualice el estado del tripulante 5 a E
+
+[INFO] 02:02:45:798 Memoria/(15676:15765): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:45:798 Memoria/(15676:15765): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:45:798 Memoria/(15676:15765): Mande la tarea DESCARGAR_ITINERARIO;7;2;10
+
+[INFO] 02:02:45:799 Memoria/(15676:15766): Rompe despues de actualizar 
+
+[INFO] 02:02:45:799 Memoria/(15676:15766): Rompe despues del log 
+
+[INFO] 02:02:45:799 Memoria/(15676:15766): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:02:45:799 Memoria/(15676:15766): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:02:45:799 Memoria/(15676:15766): Mentira, no rompe 
+
+[INFO] 02:02:45:799 Memoria/(15676:15766): Actualice el estado del tripulante 6 a E
+
+[INFO] 02:02:45:799 Memoria/(15676:15767): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:02:45:799 Memoria/(15676:15767): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:02:45:799 Memoria/(15676:15767): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:02:45:799 Memoria/(15676:15767): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:02:45:800 Memoria/(15676:15767): Mande la tarea DESCARGAR_ITINERARIO;7;2;10
+
+[INFO] 02:02:46:799 Memoria/(15676:15771): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:02:46:799 Memoria/(15676:15771): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:02:46:799 Memoria/(15676:15771): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:02:46:799 Memoria/(15676:15771): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:02:46:799 Memoria/(15676:15771): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:02:46:800 Memoria/(15676:15771): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:02:46:800 Memoria/(15676:15771): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:02:46:800 Memoria/(15676:15771): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:02:46:801 Memoria/(15676:15772): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:46:801 Memoria/(15676:15772): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:46:802 Memoria/(15676:15773): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:02:46:802 Memoria/(15676:15773): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:02:46:802 Memoria/(15676:15773): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:02:46:803 Memoria/(15676:15773): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:02:47:800 Memoria/(15676:15774): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:02:47:801 Memoria/(15676:15774): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:02:47:801 Memoria/(15676:15774): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:02:47:801 Memoria/(15676:15774): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:02:47:801 Memoria/(15676:15774): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:02:47:801 Memoria/(15676:15774): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:02:47:801 Memoria/(15676:15774): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:02:47:801 Memoria/(15676:15774): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:02:47:803 Memoria/(15676:15775): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:47:803 Memoria/(15676:15775): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:47:804 Memoria/(15676:15776): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:02:47:804 Memoria/(15676:15776): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:02:47:804 Memoria/(15676:15776): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:02:47:804 Memoria/(15676:15776): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:02:48:804 Memoria/(15676:15780): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:48:804 Memoria/(15676:15780): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:49:805 Memoria/(15676:15781): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:49:805 Memoria/(15676:15781): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:50:806 Memoria/(15676:15783): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:50:806 Memoria/(15676:15783): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:51:812 Memoria/(15676:15787): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:51:813 Memoria/(15676:15787): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:52:813 Memoria/(15676:15788): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:52:814 Memoria/(15676:15788): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:55:805 Memoria/(15676:15793): Rompe despues de actualizar 
+
+[INFO] 02:02:55:808 Memoria/(15676:15793): Rompe despues del log 
+
+[INFO] 02:02:55:808 Memoria/(15676:15793): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:02:55:808 Memoria/(15676:15793): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:02:55:808 Memoria/(15676:15793): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:02:55:808 Memoria/(15676:15793): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:02:55:808 Memoria/(15676:15793): Mentira, no rompe 
+
+[INFO] 02:02:55:808 Memoria/(15676:15793): Actualice el estado del tripulante 4 a R
+
+[INFO] 02:02:55:808 Memoria/(15676:15794): Rompe despues de actualizar 
+
+[INFO] 02:02:55:808 Memoria/(15676:15794): Rompe despues del log 
+
+[INFO] 02:02:55:808 Memoria/(15676:15794): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:55:808 Memoria/(15676:15794): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:55:808 Memoria/(15676:15794): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:55:808 Memoria/(15676:15794): Mentira, no rompe 
+
+[INFO] 02:02:55:808 Memoria/(15676:15794): Actualice el estado del tripulante 3 a E
+
+[INFO] 02:02:55:812 Memoria/(15676:15795): Rompe despues de actualizar 
+
+[INFO] 02:02:55:812 Memoria/(15676:15795): Rompe despues del log 
+
+[INFO] 02:02:55:812 Memoria/(15676:15795): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:02:55:812 Memoria/(15676:15795): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:02:55:812 Memoria/(15676:15795): Mentira, no rompe 
+
+[INFO] 02:02:55:812 Memoria/(15676:15795): Actualice el estado del tripulante 6 a R
+
+[INFO] 02:02:55:812 Memoria/(15676:15796): Rompe despues de actualizar 
+
+[INFO] 02:02:55:812 Memoria/(15676:15796): Rompe despues del log 
+
+[INFO] 02:02:55:812 Memoria/(15676:15796): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:02:55:812 Memoria/(15676:15796): Mentira, no rompe 
+
+[INFO] 02:02:55:812 Memoria/(15676:15796): Actualice el estado del tripulante 1 a E
+
+[INFO] 02:02:55:814 Memoria/(15676:15797): Rompe despues de actualizar 
+
+[INFO] 02:02:55:814 Memoria/(15676:15797): Rompe despues del log 
+
+[INFO] 02:02:55:814 Memoria/(15676:15797): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:02:55:814 Memoria/(15676:15797): Mentira, no rompe 
+
+[INFO] 02:02:55:814 Memoria/(15676:15797): Actualice el estado del tripulante 5 a R
+
+[INFO] 02:02:55:814 Memoria/(15676:15798): Rompe despues de actualizar 
+
+[INFO] 02:02:55:814 Memoria/(15676:15798): Rompe despues del log 
+
+[INFO] 02:02:55:814 Memoria/(15676:15798): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:02:55:814 Memoria/(15676:15798): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:02:55:814 Memoria/(15676:15798): Mentira, no rompe 
+
+[INFO] 02:02:55:814 Memoria/(15676:15798): Actualice el estado del tripulante 2 a E
+
+[INFO] 02:02:57:811 Memoria/(15676:15802): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:57:811 Memoria/(15676:15802): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:57:811 Memoria/(15676:15802): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:57:812 Memoria/(15676:15802): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:57:812 Memoria/(15676:15802): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:57:812 Memoria/(15676:15802): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:57:812 Memoria/(15676:15802): Mande la tarea GENERAR_OXIGENO 10;5;3;15
+
+[INFO] 02:02:58:814 Memoria/(15676:15806): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:58:814 Memoria/(15676:15806): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:58:814 Memoria/(15676:15806): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:58:814 Memoria/(15676:15806): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:58:814 Memoria/(15676:15806): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:58:814 Memoria/(15676:15806): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:59:815 Memoria/(15676:15807): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:59:815 Memoria/(15676:15807): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:59:815 Memoria/(15676:15807): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:02:59:815 Memoria/(15676:15807): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:02:59:815 Memoria/(15676:15807): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:02:59:816 Memoria/(15676:15807): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:00:815 Memoria/(15676:15809): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:00:818 Memoria/(15676:15809): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:00:818 Memoria/(15676:15809): Mande la tarea GENERAR_OXIGENO 10;5;3;15
+
+[INFO] 02:03:00:819 Memoria/(15676:15810): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:00:819 Memoria/(15676:15810): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:00:819 Memoria/(15676:15810): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:00:819 Memoria/(15676:15810): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:00:819 Memoria/(15676:15810): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:00:819 Memoria/(15676:15810): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:00:819 Memoria/(15676:15811): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:00:819 Memoria/(15676:15811): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:00:820 Memoria/(15676:15811): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:00:820 Memoria/(15676:15811): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:00:820 Memoria/(15676:15811): Mande la tarea GENERAR_OXIGENO 10;5;3;15
+
+[INFO] 02:03:00:820 Memoria/(15676:15812): Rompe despues de actualizar 
+
+[INFO] 02:03:00:821 Memoria/(15676:15812): Rompe despues del log 
+
+[INFO] 02:03:00:821 Memoria/(15676:15812): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:00:821 Memoria/(15676:15812): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:00:821 Memoria/(15676:15812): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:00:821 Memoria/(15676:15812): Mentira, no rompe 
+
+[INFO] 02:03:00:821 Memoria/(15676:15812): Actualice el estado del tripulante 3 a B
+
+[INFO] 02:03:00:821 Memoria/(15676:15813): Rompe despues de actualizar 
+
+[INFO] 02:03:00:821 Memoria/(15676:15813): Rompe despues del log 
+
+[INFO] 02:03:00:821 Memoria/(15676:15813): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:03:00:821 Memoria/(15676:15813): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:03:00:821 Memoria/(15676:15813): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:03:00:821 Memoria/(15676:15813): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:03:00:821 Memoria/(15676:15813): Mentira, no rompe 
+
+[INFO] 02:03:00:821 Memoria/(15676:15813): Actualice el estado del tripulante 4 a E
+
+[INFO] 02:03:01:819 Memoria/(15676:15817): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:01:819 Memoria/(15676:15817): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:01:821 Memoria/(15676:15818): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:01:821 Memoria/(15676:15818): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:01:821 Memoria/(15676:15818): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:01:821 Memoria/(15676:15818): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:02:822 Memoria/(15676:15819): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:02:823 Memoria/(15676:15819): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:02:825 Memoria/(15676:15820): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:02:825 Memoria/(15676:15820): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:02:825 Memoria/(15676:15820): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:02:825 Memoria/(15676:15820): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:02:827 Memoria/(15676:15821): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:03:02:827 Memoria/(15676:15821): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:03:02:827 Memoria/(15676:15821): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:03:02:827 Memoria/(15676:15821): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:03:02:828 Memoria/(15676:15821): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:03:02:828 Memoria/(15676:15821): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:03:02:828 Memoria/(15676:15821): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:03:02:828 Memoria/(15676:15821): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:03:02:828 Memoria/(15676:15821): Mande la tarea GENERAR_OXIGENO 10;5;3;15
+
+[INFO] 02:03:03:823 Memoria/(15676:15826): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:03:823 Memoria/(15676:15826): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:03:825 Memoria/(15676:15827): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:03:825 Memoria/(15676:15827): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:03:825 Memoria/(15676:15827): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:03:825 Memoria/(15676:15827): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:03:828 Memoria/(15676:15828): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:03:03:828 Memoria/(15676:15828): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:03:03:828 Memoria/(15676:15828): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:03:03:828 Memoria/(15676:15828): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:03:03:828 Memoria/(15676:15828): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:03:03:828 Memoria/(15676:15828): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:03:03:828 Memoria/(15676:15828): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:03:03:828 Memoria/(15676:15828): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:03:04:829 Memoria/(15676:15831): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:03:04:829 Memoria/(15676:15831): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:03:04:829 Memoria/(15676:15831): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:03:04:829 Memoria/(15676:15831): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:03:04:829 Memoria/(15676:15831): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:03:04:829 Memoria/(15676:15831): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:03:04:829 Memoria/(15676:15831): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:03:04:829 Memoria/(15676:15831): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:03:05:829 Memoria/(15676:15833): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:03:05:829 Memoria/(15676:15833): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:03:05:829 Memoria/(15676:15833): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:03:05:829 Memoria/(15676:15833): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:03:05:829 Memoria/(15676:15833): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:03:05:829 Memoria/(15676:15833): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:03:05:829 Memoria/(15676:15833): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:03:05:829 Memoria/(15676:15833): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:03:15:826 Memoria/(15676:15847): Rompe despues de actualizar 
+
+[INFO] 02:03:15:832 Memoria/(15676:15847): Rompe despues del log 
+
+[INFO] 02:03:15:832 Memoria/(15676:15847): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:15:832 Memoria/(15676:15847): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:15:832 Memoria/(15676:15847): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:15:832 Memoria/(15676:15847): Mentira, no rompe 
+
+[INFO] 02:03:15:832 Memoria/(15676:15847): Actualice el estado del tripulante 3 a R
+
+[INFO] 02:03:15:833 Memoria/(15676:15849): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:15:833 Memoria/(15676:15849): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:15:833 Memoria/(15676:15849): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:15:833 Memoria/(15676:15849): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:15:833 Memoria/(15676:15849): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:15:833 Memoria/(15676:15849): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:15:833 Memoria/(15676:15849): Mande la tarea TOMAR_AGUA;2;2;2
+
+[INFO] 02:03:15:838 Memoria/(15676:15850): Rompe despues de actualizar 
+
+[INFO] 02:03:15:838 Memoria/(15676:15850): Rompe despues del log 
+
+[INFO] 02:03:15:838 Memoria/(15676:15850): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:15:838 Memoria/(15676:15850): Mentira, no rompe 
+
+[INFO] 02:03:15:838 Memoria/(15676:15850): Actualice el estado del tripulante 1 a B
+
+[INFO] 02:03:15:838 Memoria/(15676:15851): Rompe despues de actualizar 
+
+[INFO] 02:03:15:838 Memoria/(15676:15851): Rompe despues del log 
+
+[INFO] 02:03:15:838 Memoria/(15676:15851): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:15:838 Memoria/(15676:15851): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:15:838 Memoria/(15676:15851): Mentira, no rompe 
+
+[INFO] 02:03:15:838 Memoria/(15676:15851): Actualice el estado del tripulante 2 a B
+
+[INFO] 02:03:15:838 Memoria/(15676:15852): Rompe despues de actualizar 
+
+[INFO] 02:03:15:838 Memoria/(15676:15852): Rompe despues del log 
+
+[INFO] 02:03:15:838 Memoria/(15676:15852): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:03:15:838 Memoria/(15676:15852): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:03:15:838 Memoria/(15676:15852): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:03:15:838 Memoria/(15676:15852): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:03:15:838 Memoria/(15676:15852): Mentira, no rompe 
+
+[INFO] 02:03:15:838 Memoria/(15676:15852): Actualice el estado del tripulante 4 a B
+
+[INFO] 02:03:15:839 Memoria/(15676:15853): Rompe despues de actualizar 
+
+[INFO] 02:03:15:839 Memoria/(15676:15853): Rompe despues del log 
+
+[INFO] 02:03:15:839 Memoria/(15676:15853): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:03:15:839 Memoria/(15676:15853): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:03:15:839 Memoria/(15676:15853): Mentira, no rompe 
+
+[INFO] 02:03:15:839 Memoria/(15676:15853): Actualice el estado del tripulante 6 a E
+
+[INFO] 02:03:15:839 Memoria/(15676:15854): Rompe despues de actualizar 
+
+[INFO] 02:03:15:840 Memoria/(15676:15854): Rompe despues del log 
+
+[INFO] 02:03:15:840 Memoria/(15676:15854): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:15:840 Memoria/(15676:15854): Mentira, no rompe 
+
+[INFO] 02:03:15:840 Memoria/(15676:15854): Actualice el estado del tripulante 5 a E
+
+[INFO] 02:03:15:840 Memoria/(15676:15855): Rompe despues de actualizar 
+
+[INFO] 02:03:15:840 Memoria/(15676:15855): Rompe despues del log 
+
+[INFO] 02:03:15:840 Memoria/(15676:15855): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:15:840 Memoria/(15676:15855): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:15:840 Memoria/(15676:15855): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:15:840 Memoria/(15676:15855): Mentira, no rompe 
+
+[INFO] 02:03:15:840 Memoria/(15676:15855): Actualice el estado del tripulante 3 a E
+
+[INFO] 02:03:16:834 Memoria/(15676:15859): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:16:834 Memoria/(15676:15859): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:16:834 Memoria/(15676:15859): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:16:834 Memoria/(15676:15859): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:16:834 Memoria/(15676:15859): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:16:834 Memoria/(15676:15859): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:17:835 Memoria/(15676:15860): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:17:835 Memoria/(15676:15860): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:17:835 Memoria/(15676:15860): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:17:835 Memoria/(15676:15860): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:17:835 Memoria/(15676:15860): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:17:835 Memoria/(15676:15860): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:17:840 Memoria/(15676:15861): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:03:17:840 Memoria/(15676:15861): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:03:17:841 Memoria/(15676:15861): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:03:17:841 Memoria/(15676:15861): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:03:17:841 Memoria/(15676:15861): Mande la tarea GENERAR_OXIGENO 10;5;3;15
+
+[INFO] 02:03:18:836 Memoria/(15676:15865): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:18:836 Memoria/(15676:15865): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:18:836 Memoria/(15676:15865): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:18:836 Memoria/(15676:15865): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:18:836 Memoria/(15676:15865): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:18:836 Memoria/(15676:15865): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:18:841 Memoria/(15676:15866): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:03:18:841 Memoria/(15676:15866): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:03:18:841 Memoria/(15676:15866): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:03:18:841 Memoria/(15676:15866): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:03:19:836 Memoria/(15676:15867): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:19:836 Memoria/(15676:15867): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:19:837 Memoria/(15676:15867): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:19:837 Memoria/(15676:15867): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:19:837 Memoria/(15676:15867): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:19:837 Memoria/(15676:15867): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:19:841 Memoria/(15676:15868): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:03:19:842 Memoria/(15676:15868): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:03:19:842 Memoria/(15676:15868): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:03:19:842 Memoria/(15676:15868): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:03:20:837 Memoria/(15676:15870): Rompe despues de actualizar 
+
+[INFO] 02:03:20:837 Memoria/(15676:15870): Rompe despues del log 
+
+[INFO] 02:03:20:837 Memoria/(15676:15870): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:20:837 Memoria/(15676:15870): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:20:837 Memoria/(15676:15870): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:20:837 Memoria/(15676:15870): Mentira, no rompe 
+
+[INFO] 02:03:20:837 Memoria/(15676:15870): Actualice el estado del tripulante 3 a R
+
+[INFO] 02:03:20:838 Memoria/(15676:15871): Rompe despues de actualizar 
+
+[INFO] 02:03:20:838 Memoria/(15676:15871): Rompe despues del log 
+
+[INFO] 02:03:20:838 Memoria/(15676:15871): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:20:838 Memoria/(15676:15871): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:20:838 Memoria/(15676:15871): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:20:838 Memoria/(15676:15871): Mentira, no rompe 
+
+[INFO] 02:03:20:838 Memoria/(15676:15871): Actualice el estado del tripulante 3 a E
+
+[INFO] 02:03:20:842 Memoria/(15676:15872): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:03:20:842 Memoria/(15676:15872): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:03:20:842 Memoria/(15676:15872): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:03:20:842 Memoria/(15676:15872): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:03:21:837 Memoria/(15676:15876): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:21:837 Memoria/(15676:15876): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:21:837 Memoria/(15676:15876): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:21:837 Memoria/(15676:15876): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:21:837 Memoria/(15676:15876): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:21:837 Memoria/(15676:15876): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:21:837 Memoria/(15676:15876): Mande la tarea GENERAR_OXIGENO 10;1;3;15
+
+[INFO] 02:03:22:838 Memoria/(15676:15877): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:22:838 Memoria/(15676:15877): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:22:838 Memoria/(15676:15877): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:22:838 Memoria/(15676:15877): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:22:838 Memoria/(15676:15877): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:22:838 Memoria/(15676:15877): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:22:842 Memoria/(15676:15878): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:22:842 Memoria/(15676:15878): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:22:842 Memoria/(15676:15878): Mande la tarea GENERAR_OXIGENO 10;5;3;15
+
+[INFO] 02:03:23:838 Memoria/(15676:15882): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:23:838 Memoria/(15676:15882): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:23:839 Memoria/(15676:15882): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:23:839 Memoria/(15676:15882): Id del elemento encontrado: 1 y del buscado: 3
+
+[INFO] 02:03:23:839 Memoria/(15676:15882): Id del elemento encontrado: 2 y del buscado: 3
+
+[INFO] 02:03:23:839 Memoria/(15676:15882): Id del elemento encontrado: 3 y del buscado: 3
+
+[INFO] 02:03:23:842 Memoria/(15676:15883): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:23:842 Memoria/(15676:15883): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:24:843 Memoria/(15676:15884): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:24:843 Memoria/(15676:15884): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:25:844 Memoria/(15676:15886): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:25:844 Memoria/(15676:15886): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:25:845 Memoria/(15676:15887): Rompe despues de actualizar 
+
+[INFO] 02:03:25:845 Memoria/(15676:15887): Rompe despues del log 
+
+[INFO] 02:03:25:845 Memoria/(15676:15887): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:25:845 Memoria/(15676:15887): Mentira, no rompe 
+
+[INFO] 02:03:25:845 Memoria/(15676:15887): Actualice el estado del tripulante 5 a R
+
+[INFO] 02:03:25:845 Memoria/(15676:15888): Rompe despues de actualizar 
+
+[INFO] 02:03:25:846 Memoria/(15676:15888): Rompe despues del log 
+
+[INFO] 02:03:25:846 Memoria/(15676:15888): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:25:846 Memoria/(15676:15888): Mentira, no rompe 
+
+[INFO] 02:03:25:846 Memoria/(15676:15888): Actualice el estado del tripulante 5 a E
+
+[INFO] 02:03:30:841 Memoria/(15676:15895): Rompe despues de actualizar 
+
+[INFO] 02:03:30:841 Memoria/(15676:15895): Rompe despues del log 
+
+[INFO] 02:03:30:841 Memoria/(15676:15895): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:30:841 Memoria/(15676:15895): Mentira, no rompe 
+
+[INFO] 02:03:30:841 Memoria/(15676:15895): Actualice el estado del tripulante 1 a R
+
+[INFO] 02:03:30:841 Memoria/(15676:15896): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:30:846 Memoria/(15676:15896): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:30:846 Memoria/(15676:15896): Mande la tarea TOMAR_AGUA;2;2;2
+
+[INFO] 02:03:30:848 Memoria/(15676:15898): Rompe despues de actualizar 
+
+[INFO] 02:03:30:848 Memoria/(15676:15898): Rompe despues del log 
+
+[INFO] 02:03:30:848 Memoria/(15676:15898): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:03:30:848 Memoria/(15676:15898): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:03:30:848 Memoria/(15676:15898): Mentira, no rompe 
+
+[INFO] 02:03:30:848 Memoria/(15676:15898): Actualice el estado del tripulante 6 a B
+
+[INFO] 02:03:30:848 Memoria/(15676:15899): Rompe despues de actualizar 
+
+[INFO] 02:03:30:848 Memoria/(15676:15899): Rompe despues del log 
+
+[INFO] 02:03:30:848 Memoria/(15676:15899): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:30:848 Memoria/(15676:15899): Mentira, no rompe 
+
+[INFO] 02:03:30:848 Memoria/(15676:15899): Actualice el estado del tripulante 1 a E
+
+[INFO] 02:03:31:842 Memoria/(15676:15903): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:31:842 Memoria/(15676:15903): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:32:843 Memoria/(15676:15904): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:32:843 Memoria/(15676:15904): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:32:844 Memoria/(15676:15905): Rompe despues de actualizar 
+
+[INFO] 02:03:32:844 Memoria/(15676:15905): Rompe despues del log 
+
+[INFO] 02:03:32:844 Memoria/(15676:15905): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:32:844 Memoria/(15676:15905): Mentira, no rompe 
+
+[INFO] 02:03:32:844 Memoria/(15676:15905): Actualice el estado del tripulante 1 a R
+
+[INFO] 02:03:32:844 Memoria/(15676:15906): Rompe despues de actualizar 
+
+[INFO] 02:03:32:844 Memoria/(15676:15906): Rompe despues del log 
+
+[INFO] 02:03:32:844 Memoria/(15676:15906): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:32:844 Memoria/(15676:15906): Mentira, no rompe 
+
+[INFO] 02:03:32:844 Memoria/(15676:15906): Actualice el estado del tripulante 1 a E
+
+[INFO] 02:03:33:844 Memoria/(15676:15910): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:33:844 Memoria/(15676:15910): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:34:846 Memoria/(15676:15911): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:34:846 Memoria/(15676:15911): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:36:847 Memoria/(15676:15916): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:36:847 Memoria/(15676:15916): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:36:847 Memoria/(15676:15916): Mande la tarea GENERAR_OXIGENO 10;1;3;15
+
+[INFO] 02:03:37:847 Memoria/(15676:15917): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:37:848 Memoria/(15676:15917): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:38:848 Memoria/(15676:15921): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:38:848 Memoria/(15676:15921): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:03:45:845 Memoria/(15676:15934): Rompe despues de actualizar 
+
+[INFO] 02:03:45:851 Memoria/(15676:15934): Rompe despues del log 
+
+[INFO] 02:03:45:851 Memoria/(15676:15934): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:45:851 Memoria/(15676:15934): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:45:851 Memoria/(15676:15934): Mentira, no rompe 
+
+[INFO] 02:03:45:851 Memoria/(15676:15934): Actualice el estado del tripulante 2 a R
+
+[INFO] 02:03:45:853 Memoria/(15676:15936): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:45:853 Memoria/(15676:15936): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:45:853 Memoria/(15676:15936): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:45:853 Memoria/(15676:15936): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:45:853 Memoria/(15676:15936): Mande la tarea TOMAR_AGUA;2;2;2
+
+[INFO] 02:03:45:854 Memoria/(15676:15937): Rompe despues de actualizar 
+
+[INFO] 02:03:45:854 Memoria/(15676:15937): Rompe despues del log 
+
+[INFO] 02:03:45:854 Memoria/(15676:15937): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:03:45:854 Memoria/(15676:15937): Mentira, no rompe 
+
+[INFO] 02:03:45:854 Memoria/(15676:15937): Actualice el estado del tripulante 5 a B
+
+[INFO] 02:03:45:854 Memoria/(15676:15938): Rompe despues de actualizar 
+
+[INFO] 02:03:45:855 Memoria/(15676:15938): Rompe despues del log 
+
+[INFO] 02:03:45:855 Memoria/(15676:15938): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:45:855 Memoria/(15676:15938): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:45:855 Memoria/(15676:15938): Mentira, no rompe 
+
+[INFO] 02:03:45:855 Memoria/(15676:15938): Actualice el estado del tripulante 2 a E
+
+[INFO] 02:03:46:854 Memoria/(15676:15942): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:46:854 Memoria/(15676:15942): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:46:854 Memoria/(15676:15942): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:46:854 Memoria/(15676:15942): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:47:856 Memoria/(15676:15943): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:47:856 Memoria/(15676:15943): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:47:856 Memoria/(15676:15943): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:47:856 Memoria/(15676:15943): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:47:858 Memoria/(15676:15944): Rompe despues de actualizar 
+
+[INFO] 02:03:47:858 Memoria/(15676:15944): Rompe despues del log 
+
+[INFO] 02:03:47:858 Memoria/(15676:15944): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:47:858 Memoria/(15676:15944): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:47:858 Memoria/(15676:15944): Mentira, no rompe 
+
+[INFO] 02:03:47:858 Memoria/(15676:15944): Actualice el estado del tripulante 2 a R
+
+[INFO] 02:03:47:859 Memoria/(15676:15945): Rompe despues de actualizar 
+
+[INFO] 02:03:47:859 Memoria/(15676:15945): Rompe despues del log 
+
+[INFO] 02:03:47:859 Memoria/(15676:15945): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:47:859 Memoria/(15676:15945): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:47:859 Memoria/(15676:15945): Mentira, no rompe 
+
+[INFO] 02:03:47:859 Memoria/(15676:15945): Actualice el estado del tripulante 2 a E
+
+[INFO] 02:03:48:859 Memoria/(15676:15949): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:48:859 Memoria/(15676:15949): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:48:859 Memoria/(15676:15949): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:48:859 Memoria/(15676:15949): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:49:859 Memoria/(15676:15950): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:49:859 Memoria/(15676:15950): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:49:859 Memoria/(15676:15950): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:49:859 Memoria/(15676:15950): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:51:860 Memoria/(15676:15960): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:51:860 Memoria/(15676:15960): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:51:860 Memoria/(15676:15960): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:51:860 Memoria/(15676:15960): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:51:860 Memoria/(15676:15960): Mande la tarea GENERAR_OXIGENO 10;1;3;15
+
+[INFO] 02:03:52:861 Memoria/(15676:15961): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:52:861 Memoria/(15676:15961): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:52:861 Memoria/(15676:15961): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:52:861 Memoria/(15676:15961): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:53:863 Memoria/(15676:15965): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:53:863 Memoria/(15676:15965): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:03:53:863 Memoria/(15676:15965): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:03:53:863 Memoria/(15676:15965): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:04:00:850 Memoria/(15676:15973): Rompe despues de actualizar 
+
+[INFO] 02:04:00:854 Memoria/(15676:15973): Rompe despues del log 
+
+[INFO] 02:04:00:856 Memoria/(15676:15973): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:00:856 Memoria/(15676:15973): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:00:856 Memoria/(15676:15973): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:00:856 Memoria/(15676:15973): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:00:856 Memoria/(15676:15973): Mentira, no rompe 
+
+[INFO] 02:04:00:856 Memoria/(15676:15973): Actualice el estado del tripulante 4 a R
+
+[INFO] 02:04:00:864 Memoria/(15676:15975): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:00:864 Memoria/(15676:15975): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:00:865 Memoria/(15676:15975): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:00:865 Memoria/(15676:15975): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:00:867 Memoria/(15676:15975): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:00:867 Memoria/(15676:15975): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:00:867 Memoria/(15676:15975): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:00:867 Memoria/(15676:15975): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:00:867 Memoria/(15676:15975): Mande la tarea TOMAR_AGUA;2;2;2
+
+[INFO] 02:04:00:868 Memoria/(15676:15976): Rompe despues de actualizar 
+
+[INFO] 02:04:00:868 Memoria/(15676:15976): Rompe despues del log 
+
+[INFO] 02:04:00:868 Memoria/(15676:15976): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:04:00:868 Memoria/(15676:15976): Mentira, no rompe 
+
+[INFO] 02:04:00:868 Memoria/(15676:15976): Actualice el estado del tripulante 1 a B
+
+[INFO] 02:04:00:869 Memoria/(15676:15977): Rompe despues de actualizar 
+
+[INFO] 02:04:00:869 Memoria/(15676:15977): Rompe despues del log 
+
+[INFO] 02:04:00:869 Memoria/(15676:15977): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:00:869 Memoria/(15676:15977): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:00:869 Memoria/(15676:15977): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:00:869 Memoria/(15676:15977): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:00:869 Memoria/(15676:15977): Mentira, no rompe 
+
+[INFO] 02:04:00:869 Memoria/(15676:15977): Actualice el estado del tripulante 4 a E
+
+[INFO] 02:04:01:868 Memoria/(15676:15981): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:01:868 Memoria/(15676:15981): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:01:869 Memoria/(15676:15981): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:01:869 Memoria/(15676:15981): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:01:869 Memoria/(15676:15981): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:01:869 Memoria/(15676:15981): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:01:869 Memoria/(15676:15981): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:01:869 Memoria/(15676:15981): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:02:870 Memoria/(15676:15982): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:02:870 Memoria/(15676:15982): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:02:870 Memoria/(15676:15982): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:02:870 Memoria/(15676:15982): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:02:870 Memoria/(15676:15982): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:02:870 Memoria/(15676:15982): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:02:870 Memoria/(15676:15982): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:02:870 Memoria/(15676:15982): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:03:871 Memoria/(15676:15986): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:03:871 Memoria/(15676:15986): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:03:871 Memoria/(15676:15986): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:03:871 Memoria/(15676:15986): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:03:871 Memoria/(15676:15986): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:03:871 Memoria/(15676:15986): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:03:871 Memoria/(15676:15986): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:03:871 Memoria/(15676:15986): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:04:872 Memoria/(15676:15989): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:04:872 Memoria/(15676:15989): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:04:873 Memoria/(15676:15989): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:04:873 Memoria/(15676:15989): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:04:873 Memoria/(15676:15989): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:04:873 Memoria/(15676:15989): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:04:873 Memoria/(15676:15989): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:04:873 Memoria/(15676:15989): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:05:873 Memoria/(15676:15991): Rompe despues de actualizar 
+
+[INFO] 02:04:05:873 Memoria/(15676:15991): Rompe despues del log 
+
+[INFO] 02:04:05:873 Memoria/(15676:15991): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:05:873 Memoria/(15676:15991): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:05:873 Memoria/(15676:15991): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:05:873 Memoria/(15676:15991): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:05:873 Memoria/(15676:15991): Mentira, no rompe 
+
+[INFO] 02:04:05:873 Memoria/(15676:15991): Actualice el estado del tripulante 4 a R
+
+[INFO] 02:04:05:874 Memoria/(15676:15992): Rompe despues de actualizar 
+
+[INFO] 02:04:05:874 Memoria/(15676:15992): Rompe despues del log 
+
+[INFO] 02:04:05:874 Memoria/(15676:15992): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:05:874 Memoria/(15676:15992): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:05:874 Memoria/(15676:15992): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:05:874 Memoria/(15676:15992): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:05:874 Memoria/(15676:15992): Mentira, no rompe 
+
+[INFO] 02:04:05:874 Memoria/(15676:15992): Actualice el estado del tripulante 4 a E
+
+[INFO] 02:04:06:874 Memoria/(15676:15996): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:06:874 Memoria/(15676:15996): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:06:874 Memoria/(15676:15996): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:06:874 Memoria/(15676:15996): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:06:875 Memoria/(15676:15996): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:06:875 Memoria/(15676:15996): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:06:875 Memoria/(15676:15996): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:06:875 Memoria/(15676:15996): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:06:875 Memoria/(15676:15996): Mande la tarea GENERAR_OXIGENO 10;1;3;15
+
+[INFO] 02:04:07:877 Memoria/(15676:15997): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:07:877 Memoria/(15676:15997): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:07:877 Memoria/(15676:15997): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:07:877 Memoria/(15676:15997): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:07:878 Memoria/(15676:15997): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:07:878 Memoria/(15676:15997): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:07:878 Memoria/(15676:15997): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:07:878 Memoria/(15676:15997): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:08:878 Memoria/(15676:16001): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:08:878 Memoria/(15676:16001): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:08:878 Memoria/(15676:16001): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:08:878 Memoria/(15676:16001): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:08:878 Memoria/(15676:16001): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:08:878 Memoria/(15676:16001): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:08:878 Memoria/(15676:16001): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:08:878 Memoria/(15676:16001): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:15:856 Memoria/(15676:16009): Rompe despues de actualizar 
+
+[INFO] 02:04:15:869 Memoria/(15676:16009): Rompe despues del log 
+
+[INFO] 02:04:15:870 Memoria/(15676:16009): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:15:870 Memoria/(15676:16009): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:15:870 Memoria/(15676:16009): Mentira, no rompe 
+
+[INFO] 02:04:15:870 Memoria/(15676:16009): Actualice el estado del tripulante 6 a R
+
+[INFO] 02:04:15:870 Memoria/(15676:16011): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:15:870 Memoria/(15676:16011): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:15:870 Memoria/(15676:16011): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:15:870 Memoria/(15676:16011): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:15:870 Memoria/(15676:16011): Mande la tarea TOMAR_AGUA;2;2;2
+
+[INFO] 02:04:15:871 Memoria/(15676:16012): Rompe despues de actualizar 
+
+[INFO] 02:04:15:871 Memoria/(15676:16012): Rompe despues del log 
+
+[INFO] 02:04:15:871 Memoria/(15676:16012): Id del elemento encontrado: 1 y del buscado: 2
+
+[INFO] 02:04:15:871 Memoria/(15676:16012): Id del elemento encontrado: 2 y del buscado: 2
+
+[INFO] 02:04:15:871 Memoria/(15676:16012): Mentira, no rompe 
+
+[INFO] 02:04:15:871 Memoria/(15676:16012): Actualice el estado del tripulante 2 a B
+
+[INFO] 02:04:15:872 Memoria/(15676:16013): Rompe despues de actualizar 
+
+[INFO] 02:04:15:872 Memoria/(15676:16013): Rompe despues del log 
+
+[INFO] 02:04:15:872 Memoria/(15676:16013): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:15:872 Memoria/(15676:16013): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:15:872 Memoria/(15676:16013): Mentira, no rompe 
+
+[INFO] 02:04:15:872 Memoria/(15676:16013): Actualice el estado del tripulante 6 a E
+
+[INFO] 02:04:16:872 Memoria/(15676:16017): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:16:872 Memoria/(15676:16017): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:16:872 Memoria/(15676:16017): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:16:872 Memoria/(15676:16017): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:17:873 Memoria/(15676:16018): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:17:873 Memoria/(15676:16018): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:17:873 Memoria/(15676:16018): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:17:873 Memoria/(15676:16018): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:18:874 Memoria/(15676:16022): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:18:874 Memoria/(15676:16022): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:18:874 Memoria/(15676:16022): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:18:875 Memoria/(15676:16022): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:19:876 Memoria/(15676:16023): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:19:876 Memoria/(15676:16023): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:19:876 Memoria/(15676:16023): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:19:876 Memoria/(15676:16023): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:20:877 Memoria/(15676:16025): Rompe despues de actualizar 
+
+[INFO] 02:04:20:877 Memoria/(15676:16025): Rompe despues del log 
+
+[INFO] 02:04:20:877 Memoria/(15676:16025): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:20:877 Memoria/(15676:16025): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:20:877 Memoria/(15676:16025): Mentira, no rompe 
+
+[INFO] 02:04:20:877 Memoria/(15676:16025): Actualice el estado del tripulante 6 a R
+
+[INFO] 02:04:20:877 Memoria/(15676:16026): Rompe despues de actualizar 
+
+[INFO] 02:04:20:877 Memoria/(15676:16026): Rompe despues del log 
+
+[INFO] 02:04:20:877 Memoria/(15676:16026): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:20:877 Memoria/(15676:16026): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:20:877 Memoria/(15676:16026): Mentira, no rompe 
+
+[INFO] 02:04:20:877 Memoria/(15676:16026): Actualice el estado del tripulante 6 a E
+
+[INFO] 02:04:21:877 Memoria/(15676:16030): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:21:878 Memoria/(15676:16030): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:21:878 Memoria/(15676:16030): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:21:878 Memoria/(15676:16030): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:21:878 Memoria/(15676:16030): Mande la tarea GENERAR_OXIGENO 10;1;3;15
+
+[INFO] 02:04:22:880 Memoria/(15676:16032): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:22:880 Memoria/(15676:16032): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:22:880 Memoria/(15676:16032): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:22:880 Memoria/(15676:16032): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:23:881 Memoria/(15676:16036): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:23:881 Memoria/(15676:16036): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:23:881 Memoria/(15676:16036): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:23:881 Memoria/(15676:16036): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:30:861 Memoria/(15676:16044): Rompe despues de actualizar 
+
+[INFO] 02:04:30:863 Memoria/(15676:16044): Rompe despues del log 
+
+[INFO] 02:04:30:863 Memoria/(15676:16044): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:30:863 Memoria/(15676:16044): Mentira, no rompe 
+
+[INFO] 02:04:30:863 Memoria/(15676:16044): Actualice el estado del tripulante 5 a R
+
+[INFO] 02:04:30:863 Memoria/(15676:16046): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:30:864 Memoria/(15676:16046): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:30:864 Memoria/(15676:16046): Mande la tarea TOMAR_AGUA;2;2;2
+
+[INFO] 02:04:30:865 Memoria/(15676:16047): Rompe despues de actualizar 
+
+[INFO] 02:04:30:865 Memoria/(15676:16047): Rompe despues del log 
+
+[INFO] 02:04:30:865 Memoria/(15676:16047): Id del elemento encontrado: 1 y del buscado: 4
+
+[INFO] 02:04:30:865 Memoria/(15676:16047): Id del elemento encontrado: 2 y del buscado: 4
+
+[INFO] 02:04:30:865 Memoria/(15676:16047): Id del elemento encontrado: 3 y del buscado: 4
+
+[INFO] 02:04:30:865 Memoria/(15676:16047): Id del elemento encontrado: 4 y del buscado: 4
+
+[INFO] 02:04:30:865 Memoria/(15676:16047): Mentira, no rompe 
+
+[INFO] 02:04:30:865 Memoria/(15676:16047): Actualice el estado del tripulante 4 a B
+
+[INFO] 02:04:30:865 Memoria/(15676:16048): Rompe despues de actualizar 
+
+[INFO] 02:04:30:865 Memoria/(15676:16048): Rompe despues del log 
+
+[INFO] 02:04:30:865 Memoria/(15676:16048): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:30:865 Memoria/(15676:16048): Mentira, no rompe 
+
+[INFO] 02:04:30:865 Memoria/(15676:16048): Actualice el estado del tripulante 5 a E
+
+[INFO] 02:04:31:865 Memoria/(15676:16052): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:31:865 Memoria/(15676:16052): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:32:866 Memoria/(15676:16053): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:32:866 Memoria/(15676:16053): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:33:867 Memoria/(15676:16057): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:33:867 Memoria/(15676:16057): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:34:869 Memoria/(15676:16058): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:34:869 Memoria/(15676:16058): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:36:871 Memoria/(15676:16063): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:36:872 Memoria/(15676:16063): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:36:872 Memoria/(15676:16063): Mande la tarea GENERAR_OXIGENO 10;1;3;15
+
+[INFO] 02:04:37:872 Memoria/(15676:16064): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:37:872 Memoria/(15676:16064): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:38:873 Memoria/(15676:16068): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:38:873 Memoria/(15676:16068): Id del elemento encontrado: 5 y del buscado: 5
+
+[INFO] 02:04:45:865 Memoria/(15676:16076): Rompe despues de actualizar 
+
+[INFO] 02:04:45:872 Memoria/(15676:16076): Rompe despues del log 
+
+[INFO] 02:04:45:872 Memoria/(15676:16076): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:04:45:872 Memoria/(15676:16076): Mentira, no rompe 
+
+[INFO] 02:04:45:872 Memoria/(15676:16076): Actualice el estado del tripulante 1 a R
+
+[INFO] 02:04:45:872 Memoria/(15676:16078): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:04:45:873 Memoria/(15676:16078): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:04:45:873 Memoria/(15676:16078): Mande la tarea IRSE_A_DORMIR;1;1;1
+
+[INFO] 02:04:45:881 Memoria/(15676:16079): Rompe despues de actualizar 
+
+[INFO] 02:04:45:881 Memoria/(15676:16079): Rompe despues del log 
+
+[INFO] 02:04:45:882 Memoria/(15676:16079): Id del elemento encontrado: 5 y del buscado: 6
+
+[INFO] 02:04:45:882 Memoria/(15676:16079): Id del elemento encontrado: 6 y del buscado: 6
+
+[INFO] 02:04:45:882 Memoria/(15676:16079): Mentira, no rompe 
+
+[INFO] 02:04:45:882 Memoria/(15676:16079): Actualice el estado del tripulante 6 a B
+
+[INFO] 02:04:45:882 Memoria/(15676:16080): Rompe despues de actualizar 
+
+[INFO] 02:04:45:882 Memoria/(15676:16080): Rompe despues del log 
+
+[INFO] 02:04:45:882 Memoria/(15676:16080): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:04:45:882 Memoria/(15676:16080): Mentira, no rompe 
+
+[INFO] 02:04:45:882 Memoria/(15676:16080): Actualice el estado del tripulante 1 a E
+
+[INFO] 02:04:46:874 Memoria/(15676:16084): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:04:46:874 Memoria/(15676:16084): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:04:47:875 Memoria/(15676:16085): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:04:47:876 Memoria/(15676:16085): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:04:48:877 Memoria/(15676:16089): Id del elemento encontrado: 1 y del buscado: 1
+
+[INFO] 02:04:48:878 Memoria/(15676:16089): Mande la tarea fault
+
+[INFO] 02:04:48:879 Memoria/(15676:16090): Borre el tripulante 1
+
+[INFO] 02:04:48:881 Memoria/(15676:16091): Rompe despues de actualizar 
+
+[INFO] 02:04:48:881 Memoria/(15676:16091): Rompe despues del log 
+
+[INFO] 02:04:48:881 Memoria/(15676:16091): Id del elemento encontrado: 2 y del buscado: 1
+
+[INFO] 02:04:48:881 Memoria/(15676:16091): Id del elemento encontrado: 3 y del buscado: 1
+
+[INFO] 02:04:48:881 Memoria/(15676:16091): Id del elemento encontrado: 4 y del buscado: 1
+
+[INFO] 02:04:48:881 Memoria/(15676:16091): Id del elemento encontrado: 2 y del buscado: 1
+
+[INFO] 02:04:48:881 Memoria/(15676:16091): Id del elemento encontrado: 3 y del buscado: 1
+
