@@ -120,8 +120,11 @@ void administrar_cliente(int socketCliente){
 			espacioNecesario = estructura_iniciar_patota->tamanio_tareas + (estructura_iniciar_patota->cantTripulantes*21)+8;
 			if(espacioLibre<espacioNecesario){
 				log_info(logger, "No tengo espacio en la memoria para guardar la patota %d\n",estructura_iniciar_patota->idPatota);
-				send(socketCliente,6,sizeof(uint32_t),0);
-				send(socketCliente, "fault",6,0);
+				char* fault = strdup("fault");
+				uint32_t tamanio_fault = strlen(fault)+1;
+				send(socketCliente,&tamanio_fault,sizeof(uint32_t),0);
+				send(socketCliente, fault,tamanio_fault,0);
+				free(fault);
 			}else{
 
 				pcb* nuevaPatota = malloc(sizeof(pcb));
@@ -129,6 +132,7 @@ void administrar_cliente(int socketCliente){
 				if (strcmp(esquemaMemoria,"PAGINACION")==0){
 					tablaEnLista_struct *nuevaTablaPatota = malloc(sizeof(tablaEnLista_struct));
 					nuevaTablaPatota->idPatota = nuevaPatota->id;
+					log_info(logger, "Recibi la patota: %d\n",nuevaPatota->id);
 					nuevaTablaPatota->tablaDePaginas = list_create();
 					list_add(listaDeTablasDePaginas, nuevaTablaPatota);
 				}else{
@@ -210,21 +214,28 @@ void administrar_cliente(int socketCliente){
 					send(socketCliente,&tamanio_fault,sizeof(uint32_t),0);
 					send(socketCliente, fault,tamanio_fault,0);
 					free(fault);
-
 					log_info(logger, "Mande la tarea fault\n");
 				}else{
+					//log_info(logger, "Soy el tripulante %d, estoy en x=%d y=%d\n",tripulanteATraer->id,tripulanteATraer->posX,tripulanteATraer->posY);
 					int tamanio_tarea = strlen(arrayTareas[tripulanteATraer->proxTarea])+1;
 					send(socketCliente, &tamanio_tarea,sizeof(uint32_t),0);
 					send(socketCliente, arrayTareas[tripulanteATraer->proxTarea],tamanio_tarea,0);
 					if(strcmp(esquemaMemoria,"PAGINACION")==0){
+						pthread_mutex_lock(&mutexMemoria);
 						actualizar_indice_paginacion(tripulante_solicitud->id_tripulante,tripulante_solicitud->id_patota);
+						pthread_mutex_unlock(&mutexMemoria);
 					}else if (strcmp(esquemaMemoria,"SEGMENTACION")==0){
+						pthread_mutex_lock(&mutexMemoria);
 						actualizar_indice_segmentacion(tripulante_solicitud->id_tripulante,tripulante_solicitud->id_patota);
+						pthread_mutex_unlock(&mutexMemoria);
 					}
 					log_info(logger, "Mande la tarea %s\n",arrayTareas[tripulanteATraer->proxTarea]);
 				}
 
-
+				for (int i = 0; i < list_size(listaDeTablasDePaginas); ++i) {
+				    tablaEnLista_struct *tablaBuscada= malloc(sizeof(tablaEnLista_struct));
+					tablaBuscada = list_get(listaDeTablasDePaginas,i);
+				}
 				liberar_conexion(socketCliente);
 
 				break;
@@ -239,9 +250,13 @@ void administrar_cliente(int socketCliente){
 				tripulanteAMover->posX = tripulante_a_mover->posicion_x;
 				tripulanteAMover->posY = tripulante_a_mover->posicion_y;
 				if(strcmp(esquemaMemoria,"PAGINACION")==0){
+					pthread_mutex_lock(&mutexMemoria);
 					actualizar_posicion_paginacion(tripulante_a_mover->id_tripulante,tripulante_a_mover->id_patota,tripulante_a_mover->posicion_x,tripulante_a_mover->posicion_y);
+					pthread_mutex_unlock(&mutexMemoria);
 				}else if (strcmp(esquemaMemoria,"SEGMENTACION")==0){
+					pthread_mutex_lock(&mutexMemoria);
 					actualizar_posicion_segmentacion(tripulante_a_mover->id_tripulante,tripulante_a_mover->id_patota,tripulante_a_mover->posicion_x,tripulante_a_mover->posicion_y);
+					pthread_mutex_unlock(&mutexMemoria);
 				}
 				id_and_pos *tripulanteEnMapa = malloc(sizeof(id_and_pos));
 				tripulanteEnMapa->idTripulante = tripulanteAMover->id;
@@ -256,7 +271,10 @@ void administrar_cliente(int socketCliente){
 						break;
 					}
 				}
-				log_info(logger, "Actualice el estado del tripulante %d a X=%d Y=%d\n",tripulante_a_mover->id_tripulante, tripulante_a_mover->posicion_x,tripulante_a_mover->posicion_y);
+				for (int i = 0; i < list_size(listaDeTablasDePaginas); ++i) {
+					tablaEnLista_struct *tablaBuscada= malloc(sizeof(tablaEnLista_struct));
+					tablaBuscada = list_get(listaDeTablasDePaginas,i);
+				}
 				break;
 
 		case ACTUALIZAR_ESTADO:;
@@ -267,23 +285,23 @@ void administrar_cliente(int socketCliente){
 					pthread_mutex_lock(&mutexMemoria);
 					actualizar_estado_paginacion(tripulante_a_actualizar->id_tripulante,tripulante_a_actualizar->id_patota,tripulante_a_actualizar->estado);
 					pthread_mutex_unlock(&mutexMemoria);
-					tcb* tcbDePrueba = malloc(sizeof(tcb));
-					tcbDePrueba = buscar_en_memoria_general(tripulante_a_actualizar->id_tripulante,tripulante_a_actualizar->id_patota,'T');
 					//printf("CAMBIO ESTADO: %c\n",tcbDePrueba->estado);
 				}else{
 					pthread_mutex_lock(&mutexMemoria);
 					actualizar_estado_segmentacion(tripulante_a_actualizar->id_tripulante,tripulante_a_actualizar->id_patota,tripulante_a_actualizar->estado);
 					pthread_mutex_unlock(&mutexMemoria);
-					tcb* tcbDePrueba = malloc(sizeof(tcb));
-					tcbDePrueba = buscar_en_memoria_general(tripulante_a_actualizar->id_tripulante,tripulante_a_actualizar->id_patota,'T');
 				}
 				log_info(logger, "Actualice el estado del tripulante %d a %c\n",tripulante_a_actualizar->id_tripulante, tripulante_a_actualizar->estado);
+				for (int i = 0; i < list_size(listaDeTablasDePaginas); ++i) {
+					tablaEnLista_struct *tablaBuscada= malloc(sizeof(tablaEnLista_struct));
+					tablaBuscada = list_get(listaDeTablasDePaginas,i);
+				}
 				break;
 
 		//case FINALIZAR:;
 			//break;
 		default:;
-			puts("No hizo nada");
+
 			break;
 
 
@@ -321,7 +339,7 @@ void borrarTripulante( char id){
 
 NIVEL *crear_mapa(){
 		NIVEL *nivel;
-		int cols, rows;
+		int cols=9, rows=9;
 		int err;
 
 		nivel_gui_inicializar();
