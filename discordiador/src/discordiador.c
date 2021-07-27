@@ -98,6 +98,7 @@ int multiProcesos;
 int quantum;
 int retardoCpu;
 int tiempo_sabotaje;
+int estado_planificacion;
 _Bool primerInicio=true;
 uint8_t t_totales=1;
 uint8_t p_totales=1;
@@ -452,10 +453,12 @@ void eliminarTripulante(Tripulante* tripulante)
 }
 void* iniciar_Planificacion()
 {
+	estado_planificacion = 1;
 	log_info(logger_discordiador,"SE INICIA LA PLANIFICACION");
 	pthread_detach(firstInit);
 	while (correr_programa){
-		sem_wait(&(pararPlanificacion[0]));
+		if(!estado_planificacion)
+			sem_wait(&(pararPlanificacion[0]));
 		sem_wait(&sem_tripulante_en_ready);
 		log_info(logger_discordiador,"Se espera signal para ver mover elementos de READY");
 		sem_wait(&multiProcesamiento);
@@ -472,7 +475,6 @@ void* iniciar_Planificacion()
 		list_add(execute, tripulante);
 		pthread_mutex_unlock(&sem_cola_ready);
 		pthread_mutex_unlock(&sem_cola_exec);
-		sem_post(&(pararPlanificacion[0]));
 		sem_post(&(tripulante->sem_pasaje_a_exec));
 
 	}
@@ -682,11 +684,11 @@ void hacerFifo(Tripulante* tripu) {
 	//obtener_parametros_tarea(tripu,&tarea_x,&tarea_y);
 	while ((tripu->posicionX != tripu->Tarea->posicion_x || tripu->posicionY != tripu->Tarea->posiciion_y) && tripu->vida) {
 		//este es el semaforo para pausar laejecucion
-		sem_wait(&hilosEnEjecucion);
+		if (!estado_planificacion)
+			sem_wait(&(tripu->hilosEnEjecucion));
 		sleep(retardoCpu);
 		moverTripulante(tripu);
 		//le tiroun post al semaforo que me permite frenar la ejecucion
-		sem_post(&hilosEnEjecucion);
 
 	}
 
@@ -699,9 +701,9 @@ void hacerFifo(Tripulante* tripu) {
 		enviar_inicio_fin_mongo(tripu,'I');
 		while((tripu->espera !=0) && tripu->vida)
 		{
-			sem_wait(&hilosEnEjecucion);
+			if (!estado_planificacion)
+				sem_wait(&(tripu->hilosEnEjecucion));
 			sleep(retardoCpu);
-			sem_post(&hilosEnEjecucion);
 			tripu->espera --;
 		}
 		enviar_inicio_fin_mongo(tripu,'F');
@@ -728,11 +730,11 @@ void hacerRoundRobin(Tripulante* tripulant) {
 		}
 		//este es el semaforo para pausar laejecucion
 //		todo este semaforo entiendo que es para
-		sem_wait(&hilosEnEjecucion);
+		if (!estado_planificacion)
+			sem_wait(&(tripulant->hilosEnEjecucion));
 		sleep(retardoCpu);
 		moverTripulante(tripulant);
 		contadorQuantum++;
-		sem_post(&hilosEnEjecucion);
 		//le tiroun post al semaforo que me permite frenar la ejecucion
 
 	}
@@ -745,8 +747,8 @@ void hacerRoundRobin(Tripulante* tripulant) {
 	enviar_inicio_fin_mongo(tripulant,'I');
 	while ((contadorQuantum < quantum) && tripulant->vida && tripulant->espera > 0)
 	{
-
-		sem_wait(&hilosEnEjecucion);
+		if (!estado_planificacion)
+			sem_wait(&(tripulant->hilosEnEjecucion));
 		sleep(retardoCpu);
 		if (tripulant->posicionX == tripulant->Tarea->posicion_x && tripulant->posicionY == tripulant->Tarea->posiciion_y){
 		tripulant->espera--;
@@ -754,7 +756,6 @@ void hacerRoundRobin(Tripulante* tripulant) {
 			moverTripulante(tripulant);
 		}
 		contadorQuantum++;
-		sem_post(&hilosEnEjecucion);
 	}
 
 
@@ -978,10 +979,7 @@ void* atender_sabotaje(char* posiciones)
 		pthread_mutex_unlock(&sem_cola_exec);
 		int a = 0;
 		//DEFINO UN SEM CONTADOR QUE NOS VA A SERVIR PARA PAUSAR LA PLANIFICACION DONDE QUERAMOS DESPUES
-		while (a < multiProcesos) {
-			sem_post(&hilosEnEjecucion);
-			a++;
-		}
+		postear_exec();
 
 		 in=0;
 				pthread_mutex_lock(&sem_cola_ready);
@@ -1076,6 +1074,29 @@ void recorrer_lista(t_list* lista){
 	}
 	puts("");
 }
+
+void postear_exec(){
+	if (list_is_empty(execute)){
+		return;
+	}
+	int i;
+	for (i = 0; i < list_size(execute); i++) {
+		Tripulante* tripulante = (Tripulante*) list_get(execute,i);
+		sem_post(&(tripulante->hilosEnEjecucion));
+	}
+}
+
+void waitear_exec(){
+	if (list_is_empty(execute)){
+		return;
+	}
+	int i;
+	for (i = 0; i < list_size(execute); i++) {
+		Tripulante* tripulante = (Tripulante*) list_get(execute,i);
+		sem_wait(&(tripulante->hilosEnEjecucion));
+	}
+}
+
 
 void recorrer_lista_patota(t_list* lista){
 	if (list_is_empty(lista)){
@@ -1264,6 +1285,7 @@ int hacerConsola() {
 
 				//inicializamos su hilo y su semaforo
 				sem_init(&(nuevo_tripulante->sem_pasaje_a_exec),NULL,0);
+				sem_init(&(nuevo_tripulante->hilosEnEjecucion), 0, 0);
 				pthread_create(&(nuevo_tripulante->hilo_vida), NULL, (void*) vivirTripulante, (void*) nuevo_tripulante);
 				t_totales++;
 			}
@@ -1282,22 +1304,19 @@ int hacerConsola() {
 
 		if (string_contains(linea,"INICIAR_PLANIFICACION"))
 		{
+			estado_planificacion = 1;
 			if(primerInicio)
 			{
-				//pthread_detach(firstInit);
 				pthread_create(&firstInit,NULL,(void*) iniciar_Planificacion,NULL);
 
 				primerInicio=false;
-			}
+			} else {
 			int a = 0;
 			//DEFINO UN SEM CONTADOR QUE NOS VA A SERVIR PARA PAUSAR LA PLANIFICACION DONDE QUERAMOS DESPUES
-			while (a < multiProcesos) {
-				sem_post(&hilosEnEjecucion);
-				a++;
+			postear_exec();
+			sem_post(&(pararPlanificacion[0]));
 			}
 			sem_post(&pararIo);
-			sem_post(&(pararPlanificacion[0]));
-
 
 		}
 		if (string_contains(linea,"LISTAR") )
@@ -1306,14 +1325,11 @@ int hacerConsola() {
 
 		}
 		if (string_contains(linea,"PAUSAR_PLANIFICACION")) {
+			estado_planificacion = 0;
 			log_info(logger_discordiador,"SE PAUSA LA PLANIFICACION");
 			// YA LO HICE LOL BASUCAMENTE LES TIRAS UN WAIT HASTA QUE LLEGUEN A 0 PARA QUE NO PUEDAN EJECUTAR
 			int a = 0;
-			while (a < multiProcesos) {
-				sem_wait(&hilosEnEjecucion);
-				a++;
-			}
-			sem_wait(&(pararPlanificacion[0]));
+			int valor_hilosEnEjecucion;
 			sem_wait(&pararIo);
 		}
 		if (string_contains(linea, "EXPULSAR_TRIPULANTE"))
@@ -1371,6 +1387,7 @@ int hacerConsola() {
 	free(linea);
 }
 int main(int argc, char* argv[]) {
+	estado_planificacion= 0;
 	iniciar_paths(argv[1]);
 	//=========== LOGS ===============
 	logger_discordiador = log_create(PATH_DISCORDIADOR_LOG, "DISCORDIADOR", false, LOG_LEVEL_INFO);		// Creamos log
@@ -1428,8 +1445,7 @@ int main(int argc, char* argv[]) {
 
 	//=========== INICIALIZACION DE SEMAFOROS===============
 	sem_init(&multiProcesamiento, 0, multiProcesos);
-	sem_init(&hilosEnEjecucion, 0, multiProcesos);
-	sem_init(&pararIo, 0, 1);
+	sem_init(&pararIo, 0, 0);
 	sem_init(&(pararPlanificacion[0]),0,0);
 	sem_init(&sem_tripulante_en_ready,0,0);
 
@@ -1482,12 +1498,10 @@ int main(int argc, char* argv[]) {
 		printf("SABOTAJE RECIBIDO: %d\n",paquete_recibido->codigo_operacion);
 		t_pedido_mongo* posiciciones_sabotaje = deserializar_pedido_mongo(paquete_recibido);
 		int parar_todo_sabotaje=0;
-		  while (parar_todo_sabotaje < multiProcesos)
-		  {
-		  sem_wait(&hilosEnEjecucion);
-		  parar_todo_sabotaje++;
-		  }
-		  sem_wait(&pararIo);
+
+		waitear_exec();
+		sem_wait(&pararIo);
+		sem_wait(&(pararPlanificacion[0]));
 
 		pthread_create(&hilo_sabotaje,NULL,(void*) atender_sabotaje,posiciciones_sabotaje->mensaje);
 		pthread_join(&hilo_sabotaje,NULL);
