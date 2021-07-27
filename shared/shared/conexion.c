@@ -167,16 +167,16 @@ void crear_buffer(t_paquete* paquete) {
 }
 
 int enviar_paquete(t_paquete* paquete, int socket_cliente) {
-	printf("paquete a enviar de tipo: %d\n",paquete->codigo_operacion);
+//	printf("paquete a enviar de tipo: %d\n",paquete->codigo_operacion);
 	int bytes = paquete->buffer->size + sizeof(uint8_t) + sizeof(uint32_t);
 	void* a_enviar = serializar_paquete(paquete, bytes);
 	int respuesta = ERROR;
 
 	if (send(socket_cliente, a_enviar, bytes, 0) > 0) {
-		puts("Paquete enviado");
+//		puts("Paquete enviado");
 		recv(socket_cliente, &respuesta, sizeof(uint8_t), 0); // Recordar que aca se puede recibir cualquier estructura que se necesite, en este caso recibimos un int con el que verificamos que se envio \todo correctamente
 		if (respuesta) {
-			puts("Respuesta recibida\n");
+//			puts("Respuesta recibida\n");
 
 
 		} else {
@@ -191,7 +191,7 @@ int enviar_paquete(t_paquete* paquete, int socket_cliente) {
 }
 
 char* enviar_paquete_respuesta_string(t_paquete* paquete,int socket){
-	printf("paquete a enviar de tipo: %d\n",paquete->codigo_operacion);
+//	printf("paquete a enviar de tipo: %d\n",paquete->codigo_operacion);
 	int bytes = paquete->buffer->size + sizeof(uint8_t) + sizeof(uint32_t);
 	void* a_enviar = serializar_paquete(paquete, bytes);
 	uint8_t respuesta=0;
@@ -200,7 +200,7 @@ char* enviar_paquete_respuesta_string(t_paquete* paquete,int socket){
 	char* tarea = NULL;
 
 	if (send(socket, a_enviar, bytes, 0) > 0) {
-		puts("Paquete enviado");
+//		puts("Paquete enviado");
 
 		if(recv(socket, &respuesta, sizeof(uint8_t), 0) <=0){
 			liberar_conexion(socket);
@@ -223,7 +223,7 @@ char* enviar_paquete_respuesta_string(t_paquete* paquete,int socket){
 			return NULL;
 		}
 
-		puts("Respuesta recibida\n");
+//		puts("Respuesta recibida\n");
 
 		} else {
 			puts("No se pudo enviar el paquete\n");

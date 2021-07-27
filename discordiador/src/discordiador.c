@@ -499,6 +499,7 @@ void bloqueado_a_ready(Tripulante* bloq)
 	pthread_mutex_unlock(&sem_cola_ready);
 	log_info(logger_discordiador,"Se mueve al tripulante %d de %s a READY",bloq->id, bloq->estado);
 	cambiar_estado(bloq,"READY");
+	log_info(logger_discordiador,"Se hace signal para avisar que hay elementos en READY");
 	sem_post(&sem_tripulante_en_ready);
 
 }
@@ -785,6 +786,7 @@ void hacerRoundRobin(Tripulante* tripulant) {
 		cambiar_estado(tripulant,"READY");
 	//le aviso al semaforo que libere un recurso para que mande otro tripulante
 		sem_post(&multiProcesamiento);
+		log_info(logger_discordiador,"Se hace signal para avisar que hay elementos en READY");
 		sem_post(&sem_tripulante_en_ready);
 	}
 }
@@ -1257,8 +1259,8 @@ int hacerConsola() {
 				nuevo_tripulante->estado = strdup("READY");
 				log_info(logger_discordiador,"Se le cambia el estado al tripulante %d a %s ",nuevo_tripulante->id,nuevo_tripulante->estado);
 
+				log_info(logger_discordiador,"Se hace signal para avisar que hay elementos en READY");
 				sem_post(&sem_tripulante_en_ready);
-				log_info(logger_discordiador,"Se le hace signal para avisar que hay elementos en READY");
 
 				//inicializamos su hilo y su semaforo
 				sem_init(&(nuevo_tripulante->sem_pasaje_a_exec),NULL,0);
@@ -1298,7 +1300,7 @@ int hacerConsola() {
 
 
 		}
-		if (string_contains(linea,"LISTAR_TRIPULANTES") )
+		if (string_contains(linea,"LISTAR") )
 		{
 				imprimir_estado_nave();
 
@@ -1464,6 +1466,9 @@ int main(int argc, char* argv[]) {
 	while(correr_programa)
 	{
 		cliente_sabotaje = esperar_cliente(socket_sabotaje,5);
+		if (cliente_sabotaje == -1)
+			continue;
+
 		log_info(logger_conexiones, "Nueva conexion recibida con el socket: %d",cliente_sabotaje);
 		int respuesta;
 		t_paquete* paquete_recibido = recibir_paquete(cliente_sabotaje, &respuesta);
