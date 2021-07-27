@@ -214,13 +214,9 @@ void administrar_cliente(int socketCliente){
 					send(socketCliente,&tamanio_fault,sizeof(uint32_t),0);
 					send(socketCliente, fault,tamanio_fault,0);
 					free(fault);
-<<<<<<< HEAD
-=======
-
->>>>>>> ad355c22e82ffd0ae7f567101a016383ede713ef
 					log_info(logger, "Mande la tarea fault\n");
 				}else{
-					log_info(logger, "Soy el tripulante %d, estoy en x=%d y=%d\n",tripulanteATraer->id,tripulanteATraer->posX,tripulanteATraer->posY);
+					//log_info(logger, "Soy el tripulante %d, estoy en x=%d y=%d\n",tripulanteATraer->id,tripulanteATraer->posX,tripulanteATraer->posY);
 					int tamanio_tarea = strlen(arrayTareas[tripulanteATraer->proxTarea])+1;
 					send(socketCliente, &tamanio_tarea,sizeof(uint32_t),0);
 					send(socketCliente, arrayTareas[tripulanteATraer->proxTarea],tamanio_tarea,0);
@@ -343,7 +339,7 @@ void borrarTripulante( char id){
 
 NIVEL *crear_mapa(){
 		NIVEL *nivel;
-		int cols, rows;
+		int cols=9, rows=9;
 		int err;
 
 		nivel_gui_inicializar();
