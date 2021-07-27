@@ -92,6 +92,7 @@ void guardar_en_swap(void*,int,int,int,char);
 void actualizar_estado_segmentacion(uint32_t,uint32_t,char);
 void actualizar_estado_paginacion(uint32_t,uint32_t,char);
 void actualizar_posicion_segmentacion(uint32_t, uint32_t, uint32_t,uint32_t);
+void actualizar_lista_elementos_segmentacion(int,int);
 int punteroReemplazo;
 void actualizar_indice_segmentacion(uint32_t idElemento, uint32_t idPatota);
 

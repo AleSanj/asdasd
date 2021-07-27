@@ -144,6 +144,7 @@ void administrar_cliente(int socketCliente){
 				guardar_en_memoria_general(estructura_iniciar_patota->Tareas,estructura_iniciar_patota->idPatota,estructura_iniciar_patota->tamanio_tareas,estructura_iniciar_patota->idPatota,'A');
 				log_info(logger, "Guarde las tareas de la patota %d\n",estructura_iniciar_patota->idPatota);
 				nuevaPatota->tareas =  calcular_direccion_logica_archivo(estructura_iniciar_patota->idPatota);
+				log_info(logger, "Tareas: %s\n",estructura_iniciar_patota->Tareas);
 				guardar_en_memoria_general(nuevaPatota,estructura_iniciar_patota->idPatota,sizeof(pcb),estructura_iniciar_patota->idPatota,'P');
 				log_info(logger, "Guarde el PCB de la patota %d\n",estructura_iniciar_patota->idPatota);
 			}
@@ -188,7 +189,6 @@ void administrar_cliente(int socketCliente){
 					}
 				}
 				log_info(logger, "Borre el tripulante %d\n",tripulante_a_eliminar->id_tripulante);
-				dumpDeMemoria();
 				break;
 
 		case PEDIR_TAREA:;
@@ -290,9 +290,7 @@ void administrar_cliente(int socketCliente){
 					//printf("CAMBIO ESTADO: %c\n",tcbDePrueba->estado);
 				}else{
 					pthread_mutex_lock(&mutexMemoria);
-					log_info(logger, "Rompe despues de actualizar \n",tripulante_a_actualizar->id_tripulante, tripulante_a_actualizar->estado);
 					actualizar_estado_segmentacion(tripulante_a_actualizar->id_tripulante,tripulante_a_actualizar->id_patota,tripulante_a_actualizar->estado);
-					log_info(logger, "Mentira, no rompe \n",tripulante_a_actualizar->id_tripulante, tripulante_a_actualizar->estado);
 					pthread_mutex_unlock(&mutexMemoria);
 				}
 				log_info(logger, "Actualice el estado del tripulante %d a %c\n",tripulante_a_actualizar->id_tripulante, tripulante_a_actualizar->estado);
@@ -391,7 +389,7 @@ void dumpDeMemoria(){
 			for(int k=0; k<list_size(tablaDePaginas->tablaDePaginas);k++){
 				segmentoEnTabla_struct* segmentoIterante = malloc(sizeof(segmentoEnTabla_struct));
 				segmentoIterante = list_get(tablaDePaginas->tablaDePaginas,k);
-				fprintf(dmp,"Proceso:%d  Segmento:%d  Inicio:%X  Tamanio:%dB \n",tablaDePaginas->idPatota,k,segmentoIterante->inicio,segmentoIterante->tamanio);
+				fprintf(dmp,"Proceso:%d  Segmento:%d  Inicio:%d  Tamanio:%dB \n",tablaDePaginas->idPatota,k,segmentoIterante->inicio,segmentoIterante->tamanio);
 			}
 		}
 	}
