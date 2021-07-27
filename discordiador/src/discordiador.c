@@ -212,6 +212,8 @@ int string_to_int(char* palabra)
 
 
 void enviar_estado (Tripulante* tripulante){
+	if (!strcmp(tripulante->estado,"EXIT"))
+		return;
 	int socket_miram = conectarse_Mi_Ram();
 	t_paquete* paquete = crear_paquete(ACTUALIZAR_ESTADO);
 	t_cambio_estado* estado_actualizado  = malloc(sizeof(t_cambio_estado));
@@ -431,7 +433,7 @@ void eliminarTripulante(Tripulante* tripulante)
 	estructura ->posicion_y = 0;
 
 	agregar_paquete_tripulante(paquete,estructura);
-	log_info(logger_conexiones,"Se envia un paquete %d a MI-RAM, id_tripulante: %d, id_patota: %d",estructura->id_tripulante,estructura->id_patota);
+	log_info(logger_conexiones,"Se envia un paquete ELIMINAR_TRIPULANTE a MI-RAM, id_tripulante: %d, id_patota: %d",estructura->id_tripulante,estructura->id_patota);
 	enviar_paquete(paquete,socket_miram);
 
 //	int socket_mongo = conectarse_mongo();

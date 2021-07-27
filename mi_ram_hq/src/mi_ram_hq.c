@@ -48,7 +48,7 @@ int main(void) {
 	}else{
 		tipoDeGuardado = BESTFIT;
 	}
-	if((logger = log_create("../log.txt", "Memoria", 0, LOG_LEVEL_INFO)) == NULL)
+	if((logger = log_create("../log.log", "Memoria", 0, LOG_LEVEL_INFO)) == NULL)
 		{
 			printf(" No pude leer el logger\n");
 			exit(1);
