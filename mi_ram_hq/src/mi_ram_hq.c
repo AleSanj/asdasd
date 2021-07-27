@@ -48,7 +48,7 @@ int main(void) {
 	}else{
 		tipoDeGuardado = BESTFIT;
 	}
-	if((logger = log_create("../log.log", "Memoria", 0, LOG_LEVEL_INFO)) == NULL)
+	if((logger = log_create("../log.txt", "Memoria", 0, LOG_LEVEL_INFO)) == NULL)
 		{
 			printf(" No pude leer el logger\n");
 			exit(1);
@@ -188,7 +188,8 @@ void administrar_cliente(int socketCliente){
 					}
 				}
 				log_info(logger, "Borre el tripulante %d\n",tripulante_a_eliminar->id_tripulante);
-					break;
+				dumpDeMemoria();
+				break;
 
 		case PEDIR_TAREA:;
 			//printf("PEDIR TAREA /n");
@@ -208,6 +209,7 @@ void administrar_cliente(int socketCliente){
 					totalDeTareas++;
 					i++;
 				}
+				log_info(logger, "Encontre las tareas: %s\n",tareas);
 				if(tripulanteATraer->proxTarea==totalDeTareas){
 					char* fault = strdup("fault");
 					uint32_t tamanio_fault = strlen(fault)+1;
@@ -229,7 +231,7 @@ void administrar_cliente(int socketCliente){
 						actualizar_indice_segmentacion(tripulante_solicitud->id_tripulante,tripulante_solicitud->id_patota);
 						pthread_mutex_unlock(&mutexMemoria);
 					}
-					log_info(logger, "Mande la tarea %s\n",arrayTareas[tripulanteATraer->proxTarea]);
+					log_info(logger, "Mande la tarea %s (Numero %d) al tripulante %d\n",arrayTareas[tripulanteATraer->proxTarea],tripulanteATraer->proxTarea,tripulanteATraer->id);
 				}
 
 				for (int i = 0; i < list_size(listaDeTablasDePaginas); ++i) {
@@ -288,14 +290,12 @@ void administrar_cliente(int socketCliente){
 					//printf("CAMBIO ESTADO: %c\n",tcbDePrueba->estado);
 				}else{
 					pthread_mutex_lock(&mutexMemoria);
+					log_info(logger, "Rompe despues de actualizar \n",tripulante_a_actualizar->id_tripulante, tripulante_a_actualizar->estado);
 					actualizar_estado_segmentacion(tripulante_a_actualizar->id_tripulante,tripulante_a_actualizar->id_patota,tripulante_a_actualizar->estado);
+					log_info(logger, "Mentira, no rompe \n",tripulante_a_actualizar->id_tripulante, tripulante_a_actualizar->estado);
 					pthread_mutex_unlock(&mutexMemoria);
 				}
 				log_info(logger, "Actualice el estado del tripulante %d a %c\n",tripulante_a_actualizar->id_tripulante, tripulante_a_actualizar->estado);
-				for (int i = 0; i < list_size(listaDeTablasDePaginas); ++i) {
-					tablaEnLista_struct *tablaBuscada= malloc(sizeof(tablaEnLista_struct));
-					tablaBuscada = list_get(listaDeTablasDePaginas,i);
-				}
 				break;
 
 		//case FINALIZAR:;
